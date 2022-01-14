@@ -4,8 +4,8 @@ import axios from 'axios'
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+// import FormControlLabel from '@material-ui/core/FormControlLabel';
+// import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Alert from '@material-ui/lab/Alert';
@@ -14,7 +14,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-// import API_BASE_URL from './Config/config';/
+import API_BASE_URL from '../Config/config';
 
 function Copyright() {
   return (
@@ -66,39 +66,39 @@ export default function SignUp(props) {
       [evt.target.name]: value
     });
   }
-  // let regurl = API_BASE_URL + 'register/'
-  // function handleSubmit(e) {
-  //   e.preventDefault();
-  //   let userinfo = {
-  //     username: state.uname,
-  //     password: state.password,
-  //     password2: state.cpassword,
-  //     email: state.email,
-  //     first_name: state.fname,
-  //     last_name: state.lname
-  //   }
+  let regurl = API_BASE_URL + 'register/'
+  function handleSubmit(e) {
+    e.preventDefault();
+    let userinfo = {
+      username: state.uname,
+      password: state.password,
+      password2: state.cpassword,
+      email: state.email,
+      first_name: state.fname,
+      last_name: state.lname
+    }
 
-  //   if (state.uname === '' || state.password === '' || state.cpassword === '' || state.fname === '' || state.lname === '' || state.email === "") {
-  //     setMsg('Please Enter All Details !!')
-  //   } else if ((userinfo.password !== userinfo.password2)) {
-  //     setMsg('Both Password and Confirm Password Are not same')
-  //   } else {
-  //     axios.post(regurl, userinfo)
-  //       .then((res) => {
-  //         setMsg('User Registered Redirecting to Login Page')
-  //         setTimeout(() => {
-  //           window.location.href = '/login'
-  //         }, 2000);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error)
-  //         setMsg('Something Went Wrong')
-  //       })
+    if (state.uname === '' || state.password === '' || state.cpassword === '' || state.fname === '' || state.lname === '' || state.email === "") {
+      setMsg('Please Enter All Details !!')
+    } else if ((userinfo.password !== userinfo.password2)) {
+      setMsg('Both Password and Confirm Password Are not same')
+    } else {
+      axios.post(regurl, userinfo)
+        .then((res) => {
+          setMsg('User Registered Redirecting to Login Page')
+          setTimeout(() => {
+            window.location.href = '/login'
+          }, 2000);
+        })
+        .catch((error) => {
+          console.log(error)
+          setMsg('Something Went Wrong')
+        })
 
-  //   }
+    }
 
 
-  // }
+  }
   var display_msg = null;
   if (msg.length > 0) {
     display_msg = <Alert variant="filled" severity="info">{msg}</Alert>

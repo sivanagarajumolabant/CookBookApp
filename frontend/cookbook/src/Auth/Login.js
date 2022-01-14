@@ -14,7 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import SignUp from './Signup';
 import axios from 'axios'
-// import API_BASE_URL from './Config/config';/
+import API_BASE_URL from '../Config/config';
 import Alert from '@material-ui/lab/Alert';
 
 function Copyright() {
@@ -67,22 +67,22 @@ function SignIn() {
 
 
   const login = (user) => {
-    // let loginurl = API_BASE_URL + 'login/'
-    // axios.post(loginurl, user).then((res) => {
-    //   if (res.status === 200 && res.data.access !== null) {
-    //     sessionStorage.setItem('quadranttoken', res.data.access)
-    //     sessionStorage.setItem('quser', user.username)
-    //     window.location.href = "/"
-    //   }
-    //   else if (res.status === 401 || res.status === 404) {
-    //     setMsg(res.data.message)
-    //   }
-    //   else {
-    //     setMsg("Please Enter Valid Credentials !!")
-    //   }
-    // }).catch((error) => {
-    //   setMsg('Please Enter Valid Credentials !!')
-    // })
+    let loginurl = API_BASE_URL + 'login/'
+    axios.post(loginurl, user).then((res) => {
+      if (res.status === 200 && res.data.access !== null) {
+        sessionStorage.setItem('quadranttoken', res.data.access)
+        sessionStorage.setItem('quser', user.username)
+        window.location.href = "/"
+      }
+      else if (res.status === 401 || res.status === 404) {
+        setMsg(res.data.message)
+      }
+      else {
+        setMsg("Please Enter Valid Credentials !!")
+      }
+    }).catch((error) => {
+      setMsg('Please Enter Valid Credentials !!')
+    })
 
   }
 
