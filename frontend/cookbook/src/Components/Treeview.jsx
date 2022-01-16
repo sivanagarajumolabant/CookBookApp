@@ -16,6 +16,7 @@ import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import ViewModuleIcon from '@material-ui/icons/ViewModule';
  import ActionMenu from '../../src/Redux/actions/Menuaction'
   import {useDispatch} from 'react-redux'
+import { useHistory } from 'react-router-dom';
 const useTreeItemStyles = makeStyles((theme) => ({
   root: {
     color: theme.palette.text.secondary,
@@ -126,8 +127,10 @@ const useStyles = makeStyles({
 export default function GmailTreeView({menuList}) {
   const classes = useStyles();
    const dispatch = useDispatch()
+  let history =useHistory()
    const MenuSelected=(value)=>{
     dispatch(ActionMenu.ActionMenu(value))
+    history.push('/dashboard')
 
    }
 

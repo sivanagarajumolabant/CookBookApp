@@ -33,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
   },
-  
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
   },
@@ -53,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
-    width: '100%'
+     width:'100%'
   },
   notchedOutline: {
     borderWidth: "1px",
@@ -61,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
   },
   inputRoot: {
     color: "white",
-
+     
     // This matches the specificity of the default styles at https://github.com/mui-org/material-ui/blob/v4.11.3/packages/material-ui-lab/src/Autocomplete/Autocomplete.js#L90
     '&[class*="MuiOutlinedInput-root"] .MuiAutocomplete-input:first-child': {
       // Default left padding is 6px
@@ -90,7 +89,7 @@ export default function ClippedDrawer({ children }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openview = Boolean(anchorEl);
   const [menuList, setmenuList] = React.useState([]);
-  const history = useHistory()
+const history =useHistory()
   const handleChange = (event) => {
     setAuth(event.target.checked);
   };
@@ -101,9 +100,16 @@ export default function ClippedDrawer({ children }) {
 
   const handleClose = () => {
     setAnchorEl(null);
-    sessionStorage.clear()
-    history.push('/')
+    //  localStorage.clear()
+    //  history.push('/')
   };
+
+   const handleroute=()=>{
+    setAnchorEl(null);
+    localStorage.clear()
+    history.push('/')
+      
+   }
   const getmenus = async (value) => {
     const res = await axios.get(`${API_BASE_URL}/fol/${value}`);
     setmenuList(res.data);
@@ -128,8 +134,8 @@ export default function ClippedDrawer({ children }) {
             style={{ paddingLeft: "3rem" }}
           >
             <Grid item
-
-              onClick={() => history.push('/dashboard')}
+            
+             onClick={()=>history.push('/dashboard')}
             >
               <Typography variant="h6" className={classes.title}>
                 Cookbook
@@ -142,21 +148,22 @@ export default function ClippedDrawer({ children }) {
                 id="grouped-demo"
                 className={classes.inputRoot}
                 options={[
-                  { title: "Oracle To Postgres" },
-                  { title: "Oracle TO SQLServer" },
-                  { title: "Oracle To MYSQL" },
+                  { title: "Oracle To Postgres" , code: 1},
+                  { title: "Oracle TO SQLServer", code: 2 },
+                  { title: "Oracle To MYSQL" , code: 3},
                 ]}
                 groupBy={""}
                 defaultValue={{ title: "Oracle To Postgres" }}
                 getOptionLabel={(option) => option.title}
                 style={{ width: 300 }}
+                onChange={(e, v) => handleversion(v)}
                 InputProps={{
                   classes: {
                     notchedOutline: classes.notchedOutline,
                   },
                 }}
                 renderInput={(params) => (
-                  <TextField 
+                  <TextField
                     InputProps={{
                       classes: {
                         notchedOutline: classes.notchedOutline,
@@ -178,12 +185,12 @@ export default function ClippedDrawer({ children }) {
                   { title: "v2", code: 2 },
                   { title: "v3", code: 3 },
                 ]}
-                className={classes.inputRoot}
+                 className={classes.inputRoot}
                 groupBy={""}
                 getOptionLabel={(option) => option.title}
                 defaultValue={{ title: "v1", code: 1 }}
                 style={{ width: 300 }}
-                onChange={(e, v) => handleversion(v)}
+              
                 InputProps={{
                   classes: {
                     notchedOutline: classes.notchedOutline,
@@ -230,7 +237,7 @@ export default function ClippedDrawer({ children }) {
                 open={openview}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <MenuItem onClick={handleroute}>Logout</MenuItem>
               </Menu>
             </div>
           )}

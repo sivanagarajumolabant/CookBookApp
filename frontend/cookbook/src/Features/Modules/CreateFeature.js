@@ -31,90 +31,90 @@ const useStyles = makeStyles((theme) => ({
 export default function CreateFeature() {
     const classes = useStyles();
     // const [value, setValue] = React.useState('Controlled');
-    // const [objecttype, setObjecettype] = React.useState('Procedure');
-    // const [versionid, setVersionid] = useState()
-    // const [migtype, setMigtype] = useState('1')
-    // const [source_code, setSource_code] = useState()
-    // const [source_FeatureDescription, setSource_FeatureDescription] = useState()
-    // const [target_FeatureDescription, setTarget_FeatureDescription] = useState()
-    // const [actualtarget_code, setActualtartget_code] = useState()
-    // const [expectedtarget_code, setExpectedtartget_code] = useState()
-    // const [conversion_code, setConversion_code] = useState()
-    // const [conversion_code_Despcrition, setConversion_code_Despcrition] = useState()
-    // const [featurename, setFeaturename] = useState()
+    const [objecttype, setObjecettype] = React.useState('Procedure');
+    const [versionid, setVersionid] = useState()
+    const [migtype, setMigtype] = useState('1')
+    const [source_code, setSource_code] = useState()
+    const [source_FeatureDescription, setSource_FeatureDescription] = useState()
+    const [target_FeatureDescription, setTarget_FeatureDescription] = useState()
+    const [actualtarget_code, setActualtartget_code] = useState()
+    const [expectedtarget_code, setExpectedtartget_code] = useState()
+    const [conversion_code, setConversion_code] = useState()
+    const [conversion_code_Despcrition, setConversion_code_Despcrition] = useState()
+    const [featurename, setFeaturename] = useState()
     const [formValues, setformvalues] = useState({})
     const [file, setfile] = useState([])
 
-    // const handleObjecttype = (event) => {
-    //     setObjecettype(event.target.value);
-    // };
-    // const handleVersionid = (event) => {
-    //     setVersionid(event.target.value);
-    // };
-    // const handleMigtype = (event) => {
-    //     setMigtype(event.target.value);
-    // };
-    // const handleSourcecode = (event) => {
-    //     setSource_code(event.target.value);
-    // };
-    // const handleSourceDesc = (event) => {
-    //     setSource_FeatureDescription(event.target.value);
-    // };
-    // const handleTargetDesc = (event) => {
-    //     setTarget_FeatureDescription(event.target.value);
-    // };
-    // const handleActualtartget_code = (event) => {
-    //     setActualtartget_code(event.target.value);
-    // };
-    // const handleTargetExpectedcode = (event) => {
-    //     setExpectedtartget_code(event.target.value);
-    // };
-    // const handleConversion_code_Despcrition = (event) => {
-    //     setConversion_code_Despcrition(event.target.value);
-    // };
-    // const handleConversion_code = (event) => {
-    //     setConversion_code(event.target.value);
-    // };
+    const handleObjecttype = (event) => {
+        setObjecettype(event.target.value);
+    };
+    const handleVersionid = (event) => {
+        setVersionid(event.target.value);
+    };
+    const handleMigtype = (event) => {
+        setMigtype(event.target.value);
+    };
+    const handleSourcecode = (event) => {
+        setSource_code(event.target.value);
+    };
+    const handleSourceDesc = (event) => {
+        setSource_FeatureDescription(event.target.value);
+    };
+    const handleTargetDesc = (event) => {
+        setTarget_FeatureDescription(event.target.value);
+    };
+    const handleActualtartget_code = (event) => {
+        setActualtartget_code(event.target.value);
+    };
+    const handleTargetExpectedcode = (event) => {
+        setExpectedtartget_code(event.target.value);
+    };
+    const handleConversion_code_Despcrition = (event) => {
+        setConversion_code_Despcrition(event.target.value);
+    };
+    const handleConversion_code = (event) => {
+        setConversion_code(event.target.value);
+    };
 
-    // const handleFeaturename = (event) => {
-    //     setFeaturename(event.target.value);
-    // };
+    const handleFeaturename = (event) => {
+        setFeaturename(event.target.value);
+    };
 
 
-    // const handlePreviewdata = () => {
-    //     let formData = {
-    //         Migration_TypeId: migtype,
-    //         Version_Id: versionid,
-    //         Feature_Name: featurename,
-    //         Object_Type: objecttype,
-    //         Source_FeatureDescription: source_FeatureDescription,
-    //         Source_Code: source_code,
-    //         Conversion_Description: conversion_code_Despcrition,
-    //         Conversion_Code: conversion_code,
-    //         Target_FeatureDescription: target_FeatureDescription,
-    //         Target_Expected_Output: expectedtarget_code,
-    //         Target_ActualCode: actualtarget_code
-    //     }
+    const handlePreviewdata = () => {
+        let formData = {
+            Migration_TypeId: migtype,
+            Version_Id: versionid,
+            Feature_Name: featurename,
+            Object_Type: objecttype,
+            Source_FeatureDescription: source_FeatureDescription,
+            Source_Code: source_code,
+            Conversion_Description: conversion_code_Despcrition,
+            Conversion_Code: conversion_code,
+            Target_FeatureDescription: target_FeatureDescription,
+            Target_Expected_Output: expectedtarget_code,
+            Target_ActualCode: actualtarget_code
+        }
 
-    // }
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // let formData = {
-        //     Migration_TypeId: migtype,
-        //     Version_Id: versionid,
-        //     Feature_Name: featurename,
-        //     Object_Type: objecttype,
-        //     Source_FeatureDescription: source_FeatureDescription,
-        //     Source_Code: source_code,
-        //     Conversion_Description: conversion_code_Despcrition,
-        //     Conversion_Code: conversion_code,
-        //     Target_FeatureDescription: target_FeatureDescription,
-        //     Target_Expected_Output: expectedtarget_code,
-        //     Target_ActualCode: actualtarget_code
+        let formData = {
+            Migration_TypeId: migtype,
+            Version_Id: versionid,
+            Feature_Name: featurename,
+            Object_Type: objecttype,
+            Source_FeatureDescription: source_FeatureDescription,
+            Source_Code: source_code,
+            Conversion_Description: conversion_code_Despcrition,
+            Conversion_Code: conversion_code,
+            Target_FeatureDescription: target_FeatureDescription,
+            Target_Expected_Output: expectedtarget_code,
+            Target_ActualCode: actualtarget_code
 
-        // }
-        axios.post("http://127.0.0.1:8000/api/create", formValues)
+        }
+        axios.post("http://127.0.0.1:8000/api/create", formData)
             .then(res => {
                 console.log(res.data)
             }, error => {
@@ -123,38 +123,38 @@ export default function CreateFeature() {
 
     }
 
-    // const ObjectTypes = [
-    //     {
-    //         value: 'Procedure',
-    //         label: 'PROCEDURE',
-    //     },
-    //     {
-    //         value: 'Function',
-    //         label: 'FUNCTION',
-    //     },
-    //     {
-    //         value: 'Package',
-    //         label: 'PACKAGE',
-    //     },
-    //     {
-    //         value: 'Trigger',
-    //         label: 'TRIGGER',
-    //     },
-    // ];
-    // const MigTypes = [
-    //     {
-    //         value: 1,
-    //         label: 'Oracle To Postgres',
-    //     },
-    //     {
-    //         value: 2,
-    //         label: 'Oracle To SQLServer',
-    //     },
-    //     {
-    //         value: 3,
-    //         label: 'Oracle To MYSQL',
-    //     }
-    // ];
+    const ObjectTypes = [
+        {
+            value: 'Procedure',
+            label: 'PROCEDURE',
+        },
+        {
+            value: 'Function',
+            label: 'FUNCTION',
+        },
+        {
+            value: 'Package',
+            label: 'PACKAGE',
+        },
+        {
+            value: 'Trigger',
+            label: 'TRIGGER',
+        },
+    ];
+    const MigTypes = [
+        {
+            value: 1,
+            label: 'Oracle To Postgres',
+        },
+        {
+            value: 2,
+            label: 'Oracle To SQLServer',
+        },
+        {
+            value: 3,
+            label: 'Oracle To MYSQL',
+        }
+    ];
 
     const handleChange = (e) => {
         setformvalues({
@@ -179,7 +179,7 @@ export default function CreateFeature() {
 
 
     }
-    // console.log(formValues)
+    console.log(formValues)
 
     const onchangefile = (e) => {
         const { files } = e.target;
@@ -197,6 +197,8 @@ export default function CreateFeature() {
                 setfile(filesystem);
 
                 // setUploadingDoc(false);
+
+
             }
             console.log(filesystem)
         }
@@ -213,11 +215,11 @@ export default function CreateFeature() {
 
     }
 
-    const handledetale = (value) => {
-        const data = file.filter((item) => item.name != value.name)
-        setfile(data)
+     const handledetale=(value)=>{
+const data= file.filter((item)=> item.name != value.name)
+ setfile(data)
 
-    }
+     }
 
     return (
 
@@ -263,9 +265,9 @@ export default function CreateFeature() {
                             fullWidth
                             id="grouped-demo"
                             options={[
-                                { title: "Procedure", code: '"Procedure"' },
-                                { title: "Function", code: "Function" },
-                                { title: "Package", code: "Package" },
+                                { title: "v1", code: 1 },
+                                { title: "v2", code: 2 },
+                                { title: "v3", code: 3 },
                             ]}
                             groupBy={""}
                             getOptionLabel={(option) => option.title}
@@ -460,7 +462,7 @@ export default function CreateFeature() {
                                     accept="image/*"
                                     className={classes.input}
                                     id="contained-button-file"
-                                    multiple={true}
+                                    multiple={false}
                                     onChange={onchangefile}
                                     type="file"
                                 />
@@ -483,31 +485,7 @@ export default function CreateFeature() {
                                     accept="image/*"
                                     className={classes.input}
                                     id="contained-button-file"
-                                    multiple={true}
-
-                                    onChange={onchangefile}
-                                    type="file"
-                                />
-                                <label htmlFor="contained-button-file">
-                                    <Button variant="contained" color="primary" component="span" startIcon={<CloudUploadIcon />}>
-                                        Upload
-                                    </Button>
-                                </label>
-
-                            </div>
-                        </Grid>
-
-                        <Grid item style={{ marginTop: "6px" }}>
-                            <Typography variant='body2'> Automation Attachemnts :</Typography>
-
-                        </Grid>
-                        <Grid item>
-                            <div className={classes.rootc}>
-                                <input
-                                    accept="image/*"
-                                    className={classes.input}
-                                    id="contained-button-file"
-                                    multiple={true}
+                                    multiple={false}
 
                                     onChange={onchangefile}
                                     type="file"
@@ -526,7 +504,7 @@ export default function CreateFeature() {
                 <Box py={3}>
                     <Grid container xs={8}>
 
-
+                 
 
                         <Grid item xs>
                             <Grid container direction='column'>
@@ -547,7 +525,7 @@ export default function CreateFeature() {
 
 
                                                     <Grid item>
-                                                        <CloseIcon onClick={() => handledetale(item)} />
+                                                        <CloseIcon  onClick={()=>handledetale(item)} />
                                                     </Grid>
                                                 </Grid>
 
@@ -571,7 +549,7 @@ export default function CreateFeature() {
 
                     <Grid container direction='row ' justifyContent='center' spacing={2}>
 
-                        {/* <Grid item>
+                        <Grid item>
                             <Button
                                 type="submit"
                                 fullWidth
@@ -583,7 +561,7 @@ export default function CreateFeature() {
                             >
                                 Preview
                             </Button>
-                        </Grid> */}
+                        </Grid>
                         <Grid item>
                             <Button
                                 type="submit"
