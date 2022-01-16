@@ -15,78 +15,77 @@ export default function PreviewCode(props) {
   // console.log(menuitem);
 
   useEffect(() => {
-     if(menuitem)
-     {
+    if (menuitem) {
 
-     
-    axios.get(`http://127.0.0.1:8000/api/detail/${menuitem}`).then(
-      (res) => {
-        console.log(res);
-        setDetaildata(res.data);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-     }
+
+      axios.get(`http://127.0.0.1:8000/api/detail/${menuitem}`).then(
+        (res) => {
+          console.log(res);
+          setDetaildata(res.data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
   }, [menuitem]);
 
 
-  
+
 
   return (
-      <>
-    <Box py={4}>
-            <Grid container direction='row' justifyContent='center'>
-                <Grid item>
-                    <Typography variant='h6'>
-                        Detail View
-                    </Typography>
-                </Grid>
+    <>
+      <Box py={4}>
+        <Grid container direction='row' justifyContent='center'>
+          <Grid item>
+            <Typography variant='h6'>
+              Detail View
+            </Typography>
+          </Grid>
 
-            </Grid>
-            </Box>
+        </Grid>
+      </Box>
 
-    <form autoComplete="off">
-      <Grid container direction="row" xs={12} spacing={4}>
-        {detaildata.map((item, ind) => {
-          return (
-            <>
-              {Object.keys(item).map((list) => {
-                return (
-                  <Grid item xs={6}>
-                    <TextField
-                      id="outlined-multiline-static"
-                      label="Feature Name"
-                      multiline
-                      InputProps={{ disableUnderline: true}}
-                      label={list}
-                      rows={
-                        list ==="Source_Code" ||
-                        list ==="Target_ActualCode" ||
-                        list ==="Target_Expected_Output" ||
-                        list ==="Conversion_Code"||list==="Conversion_Description"||list==="Target_FeatureDescription"
-                        
-                          ? 10
-                          : 1
-                      }
-                    //   rows={1}
-                      value={item[list]}
-                      // defaultValue="Default Value"
-                      // onChange={handleFeaturename}
-                      variant="outlined"
-                      required
-                      fullWidth
-                      disabled
-                    />
-                  </Grid>
-                );
-              })}
-            </>
-          );
-        })}
-      </Grid>
-    </form>
+      <form autoComplete="off">
+        <Grid container direction="row" xs={12} spacing={4}>
+          {detaildata.map((item, ind) => {
+            return (
+              <>
+                {Object.keys(item).map((list) => {
+                  return (
+                    <Grid item xs={6}>
+                      <TextField
+                        id="outlined-multiline-static"
+                        label="Feature Name"
+                        multiline
+                        InputProps={{ disableUnderline: true }}
+                        label={list}
+                        rows={
+                          list === "Source_Code" ||
+                            list === "Target_ActualCode" ||
+                            list === "Target_Expected_Output" ||
+                            list === "Conversion_Code" || list === "Conversion_Description" || list === "Target_FeatureDescription"
+
+                            ? 10
+                            : 1
+                        }
+                        //   rows={1}
+                        value={item[list]}
+                        // defaultValue="Default Value"
+                        // onChange={handleFeaturename}
+                        variant="outlined"
+                        required
+                        fullWidth
+                        disabled
+                      />
+                    </Grid>
+                  );
+                })}
+              </>
+            );
+          })}
+        </Grid>
+      </form>
     </>
   );
 }
