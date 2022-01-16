@@ -573,7 +573,7 @@ export default function CreateFeature() {
 
                     <Grid container direction='row ' justifyContent='center' spacing={2}>
 
-                        <Grid item>
+                        {/* <Grid item>
                             <Button
                                 type="submit"
                                 fullWidth
@@ -585,7 +585,7 @@ export default function CreateFeature() {
                             >
                                 Preview
                             </Button>
-                        </Grid>
+                        </Grid> */}
                         <Grid item>
                             <Button
                                 type="submit"
