@@ -265,9 +265,9 @@ const data= file.filter((item)=> item.name != value.name)
                             fullWidth
                             id="grouped-demo"
                             options={[
-                                { title: "v1", code: 1 },
-                                { title: "v2", code: 2 },
-                                { title: "v3", code: 3 },
+                                { title: "Procedure", code: '"Procedure"' },
+                                { title: "Function", code: "Function" },
+                                { title: "Package", code: "Package" },
                             ]}
                             groupBy={""}
                             getOptionLabel={(option) => option.title}
@@ -477,6 +477,30 @@ const data= file.filter((item)=> item.name != value.name)
 
                         <Grid item style={{ marginTop: "6px" }}>
                             <Typography variant='body2'> Target Attachemnts :</Typography>
+
+                        </Grid>
+                        <Grid item>
+                            <div className={classes.rootc}>
+                                <input
+                                    accept="image/*"
+                                    className={classes.input}
+                                    id="contained-button-file"
+                                    multiple={false}
+
+                                    onChange={onchangefile}
+                                    type="file"
+                                />
+                                <label htmlFor="contained-button-file">
+                                    <Button variant="contained" color="primary" component="span" startIcon={<CloudUploadIcon />}>
+                                        Upload
+                                    </Button>
+                                </label>
+
+                            </div>
+                        </Grid>
+
+                        <Grid item style={{ marginTop: "6px" }}>
+                            <Typography variant='body2'> Automation Attachemnts :</Typography>
 
                         </Grid>
                         <Grid item>
