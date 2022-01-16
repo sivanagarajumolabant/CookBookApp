@@ -100,21 +100,21 @@ export default function CreateFeature() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        let formData = {
-            Migration_TypeId: migtype,
-            Version_Id: versionid,
-            Feature_Name: featurename,
-            Object_Type: objecttype,
-            Source_FeatureDescription: source_FeatureDescription,
-            Source_Code: source_code,
-            Conversion_Description: conversion_code_Despcrition,
-            Conversion_Code: conversion_code,
-            Target_FeatureDescription: target_FeatureDescription,
-            Target_Expected_Output: expectedtarget_code,
-            Target_ActualCode: actualtarget_code
+        // let formData = {
+        //     Migration_TypeId: migtype,
+        //     Version_Id: versionid,
+        //     Feature_Name: featurename,
+        //     Object_Type: objecttype,
+        //     Source_FeatureDescription: source_FeatureDescription,
+        //     Source_Code: source_code,
+        //     Conversion_Description: conversion_code_Despcrition,
+        //     Conversion_Code: conversion_code,
+        //     Target_FeatureDescription: target_FeatureDescription,
+        //     Target_Expected_Output: expectedtarget_code,
+        //     Target_ActualCode: actualtarget_code
 
-        }
-        axios.post("http://127.0.0.1:8000/api/create", formData)
+        // }
+        axios.post("http://127.0.0.1:8000/api/create", formValues)
             .then(res => {
                 console.log(res.data)
             }, error => {
@@ -215,11 +215,11 @@ export default function CreateFeature() {
 
     }
 
-     const handledetale=(value)=>{
-const data= file.filter((item)=> item.name != value.name)
- setfile(data)
+    const handledetale = (value) => {
+        const data = file.filter((item) => item.name != value.name)
+        setfile(data)
 
-     }
+    }
 
     return (
 
@@ -528,7 +528,7 @@ const data= file.filter((item)=> item.name != value.name)
                 <Box py={3}>
                     <Grid container xs={8}>
 
-                 
+
 
                         <Grid item xs>
                             <Grid container direction='column'>
@@ -549,7 +549,7 @@ const data= file.filter((item)=> item.name != value.name)
 
 
                                                     <Grid item>
-                                                        <CloseIcon  onClick={()=>handledetale(item)} />
+                                                        <CloseIcon onClick={() => handledetale(item)} />
                                                     </Grid>
                                                 </Grid>
 
