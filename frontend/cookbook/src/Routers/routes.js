@@ -7,6 +7,7 @@ import SignUp from '../Auth/Signup';
 import ClippedDrawer from '../Components/header';
 import Home from '../Features/Home';
 import CreateFeature from '../Features/Modules/CreateFeature';
+import ProtectedRoute from './PrivateRoute';
 
 
 const Routing = () => {
@@ -15,9 +16,9 @@ const Routing = () => {
             <Switch>
                 <Route exact path="/" component={SignIn} />
                 <Route exact path="/register" component={SignUp} />
-                <Route exact path="/dashboard" component={Home} />
-                <Route exact path="/CreateModule" component={CreateFeature} />
-                
+                <ProtectedRoute exact path="/dashboard" component={Home} />
+                <ProtectedRoute exact path="/CreateModule" component={CreateFeature} />
+
 
             </Switch>
 

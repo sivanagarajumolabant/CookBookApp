@@ -10,12 +10,21 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import MenuAppBar from '../../Components/header'
 import { Box, Grid, Typography } from '@material-ui/core';
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import CloseIcon from '@material-ui/icons/Close';
 const useStyles = makeStyles((theme) => ({
     root: {
         '& .MuiTextField-root': {
             margin: theme.spacing(1),
             width: '25ch',
         },
+    },
+    rootc: {
+        '& > *': {
+            margin: theme.spacing(1),
+        },
+    },
+    input: {
+        display: 'none',
     },
 }));
 
@@ -33,6 +42,8 @@ export default function CreateFeature() {
     const [conversion_code, setConversion_code] = useState()
     const [conversion_code_Despcrition, setConversion_code_Despcrition] = useState()
     const [featurename, setFeaturename] = useState()
+    const [formValues, setformvalues] = useState({})
+    const [file, setfile] = useState([])
 
     const handleObjecttype = (event) => {
         setObjecettype(event.target.value);
@@ -144,18 +155,84 @@ export default function CreateFeature() {
             label: 'Oracle To MYSQL',
         }
     ];
+
+    const handleChange = (e) => {
+        setformvalues({
+            ...formValues,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const handlechangedropdown = (v) => {
+        setformvalues({
+            ...formValues,
+            "Migration_TypeId": v.title
+        })
+
+
+    }
+    const handlechangedropdownobj = (v) => {
+        setformvalues({
+            ...formValues,
+            "Object_Type": v.code
+        })
+
+
+    }
+    console.log(formValues)
+
+    const onchangefile = (e) => {
+        const { files } = e.target;
+        if (files.length > 0) {
+            const filesystem = [...file];
+            for (let i = 0; i < files.length; i++) {
+
+                const file = files[i];
+
+                filesystem.push({
+                    name: file.name,
+                    size: file.size,
+                    type: file.type
+                });
+                setfile(filesystem);
+
+                // setUploadingDoc(false);
+
+
+            }
+            console.log(filesystem)
+        }
+
+
+
+        // setformvalues({
+        //     ...formValues,
+        //  files:[
+        //      ...file,
+        //      e.target.files[0]
+        //  ]
+        // })
+
+    }
+
+     const handledetale=(value)=>{
+const data= file.filter((item)=> item.name != value.name)
+ setfile(data)
+
+     }
+
     return (
 
         <MenuAppBar>
             <Box py={4}>
-            <Grid container direction='row' justifyContent='center'>
-                <Grid item>
-                    <Typography variant='h6'>
-                        Create Feature
-                    </Typography>
-                </Grid>
+                <Grid container direction='row' justifyContent='center'>
+                    <Grid item>
+                        <Typography variant='h6'>
+                            Create Feature
+                        </Typography>
+                    </Grid>
 
-            </Grid>
+                </Grid>
             </Box>
 
             <form autoComplete="off">
@@ -165,10 +242,14 @@ export default function CreateFeature() {
                         <Autocomplete
                             fullWidth
                             id="grouped-demo"
-                            options={[{ title: "material ui" }]}
+                            options={[
+                                { title: "Oracle To Postgres" },
+                                { title: "Oracle TO SQLServer" },
+                                { title: "Oracle To MYSQL" },
+                            ]}
                             groupBy={""}
                             getOptionLabel={(option) => option.title}
-
+                            onChange={(e, v) => handlechangedropdown(v)}
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
@@ -183,13 +264,19 @@ export default function CreateFeature() {
                         <Autocomplete
                             fullWidth
                             id="grouped-demo"
-                            options={[{ title: "material ui" }]}
+                            options={[
+                                { title: "v1", code: 1 },
+                                { title: "v2", code: 2 },
+                                { title: "v3", code: 3 },
+                            ]}
                             groupBy={""}
                             getOptionLabel={(option) => option.title}
-
+                            name="Object_Type"
+                            onChange={(e, v) => handlechangedropdownobj(v)}
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
+                                    name="Object_Type"
                                     fullWidth
                                     label="Object Type"
                                     variant="outlined"
@@ -208,8 +295,10 @@ export default function CreateFeature() {
                             label="Feature Name"
                             multiline
                             rows={1}
+                            onChange={(e) => handleChange(e)}
+                            name={"Feature_Name"}
                             // defaultValue="Default Value"
-                            onChange={handleFeaturename}
+
                             variant="outlined"
                             required
                             fullWidth
@@ -223,9 +312,11 @@ export default function CreateFeature() {
                             label="Version ID"
                             multiline
                             fullWidth
+                            onChange={(e) => handleChange(e)}
                             rows={1}
+                            name='Version_Id'
                             // defaultValue="Default Value"
-                            onChange={handleVersionid}
+
                             variant="outlined"
                             required
                         />
@@ -240,9 +331,10 @@ export default function CreateFeature() {
                             multiline
                             rows={10}
                             // defaultValue="Default Value"
+                            name="Source_FeatureDescription"
 
                             fullWidth
-                            onChange={handleSourceDesc}
+                            onChange={(e) => handleChange(e)}
                             variant="outlined"
                             required
                         />
@@ -258,9 +350,10 @@ export default function CreateFeature() {
                             label="Target Description"
 
                             fullWidth
+                            name='Target_FeatureDescription'
                             multiline
                             rows={10}
-                            onChange={handleTargetDesc}
+                            onChange={(e) => handleChange(e)}
                             // defaultValue="Default Value"
                             variant="outlined"
                             required
@@ -278,7 +371,8 @@ export default function CreateFeature() {
                             label="Source Code"
                             multiline
                             rows={10}
-                            onChange={handleSourcecode}
+                            name='Source_Code'
+                            onChange={(e) => handleChange(e)}
                             // defaultValue="Default Value"
                             fullWidth
                             variant="outlined"
@@ -294,7 +388,8 @@ export default function CreateFeature() {
                             label="Actual Target Code"
                             multiline
                             rows={10}
-                            onChange={handleActualtartget_code}
+                            name='Target_ActualCode'
+                            onChange={(e) => handleChange(e)}
                             // defaultValue="Default Value"
                             variant="outlined"
                             required
@@ -312,7 +407,8 @@ export default function CreateFeature() {
                             label="Expected Target Code"
                             multiline
                             rows={10}
-                            onChange={handleTargetExpectedcode}
+                            name='Target_Expected_Output'
+                            onChange={(e) => handleChange(e)}
                             // defaultValue="Default Value"
                             variant="outlined"
                             required
@@ -325,8 +421,9 @@ export default function CreateFeature() {
                             id="outlined-multiline-static"
                             label="Conversion Code"
                             multiline
+                            name='Conversion_Code'
                             rows={10}
-                            onChange={handleConversion_code}
+                            onChange={(e) => handleChange(e)}
                             // defaultValue="Default Value"
                             variant="outlined"
                             required
@@ -340,8 +437,9 @@ export default function CreateFeature() {
                             id="outlined-multiline-static"
                             label="Conversion Code Description"
                             multiline
+                            name='Conversion_Description'
                             rows={10}
-                            onChange={handleConversion_code_Despcrition}
+                            onChange={(e) => handleChange(e)}
                             // defaultValue="Default Value"
                             variant="outlined"
                             required
@@ -352,39 +450,100 @@ export default function CreateFeature() {
                 </Grid>
 
 
-<Box py={4}>
-    <Grid container direction='row'  spacing={3}>
-        <Grid item>
-            <Typography variant='body1'>   Source Attachemnts </Typography>
-     
-        </Grid>
-        <Grid item>
-        <Button
-                        variant="contained"
-                        color="primary"
-                        className={classes.button}
-                        startIcon={<CloudUploadIcon />}
-                    >
-                        Upload
-                    </Button>
-        </Grid>
+                <Box py={4}>
+                    <Grid container direction='row' spacing={1}>
+                        <Grid item style={{ marginTop: "6px" }}>
+                            <Typography variant='body1'>   Source Attachemnts </Typography>
 
-        <Grid item>
-            <Typography variant='body1'> Target Attachemnts :</Typography>
-       
-        </Grid>
-        <Grid item>
-        <Button
-                        variant="contained"
-                        color="primary"
-                        className={classes.button}
-                        startIcon={<CloudUploadIcon />}
-                    >
-                        Upload
-                    </Button>
-        </Grid>
-    </Grid>
-</Box>
+                        </Grid>
+                        <Grid item>
+                            <div className={classes.rootc}>
+                                <input
+                                    accept="image/*"
+                                    className={classes.input}
+                                    id="contained-button-file"
+                                    multiple={false}
+                                    onChange={onchangefile}
+                                    type="file"
+                                />
+                                <label htmlFor="contained-button-file">
+                                    <Button variant="contained" color="primary" component="span" startIcon={<CloudUploadIcon />}>
+                                        Upload
+                                    </Button>
+                                </label>
+
+                            </div>
+                        </Grid>
+
+                        <Grid item style={{ marginTop: "6px" }}>
+                            <Typography variant='body2'> Target Attachemnts :</Typography>
+
+                        </Grid>
+                        <Grid item>
+                            <div className={classes.rootc}>
+                                <input
+                                    accept="image/*"
+                                    className={classes.input}
+                                    id="contained-button-file"
+                                    multiple={false}
+
+                                    onChange={onchangefile}
+                                    type="file"
+                                />
+                                <label htmlFor="contained-button-file">
+                                    <Button variant="contained" color="primary" component="span" startIcon={<CloudUploadIcon />}>
+                                        Upload
+                                    </Button>
+                                </label>
+
+                            </div>
+                        </Grid>
+                    </Grid>
+                </Box>
+
+                <Box py={3}>
+                    <Grid container xs={8}>
+
+                 
+
+                        <Grid item xs>
+                            <Grid container direction='column'>
+                                {file.map(item => {
+                                    return (
+                                        <>
+
+                                            <Grid item>
+
+                                                <Grid container direction='row' justifyContent='space-around'>
+
+                                                    <Grid item>
+                                                        <Typography variant='caption'>
+                                                            {item.name}
+                                                        </Typography>
+                                                    </Grid>
+
+
+
+                                                    <Grid item>
+                                                        <CloseIcon  onClick={()=>handledetale(item)} />
+                                                    </Grid>
+                                                </Grid>
+
+
+
+                                            </Grid>
+
+                                        </>
+                                    )
+                                })}
+
+                            </Grid>
+                        </Grid>
+
+
+
+                    </Grid>
+                </Box>
 
                 <Box py={5}>
 
@@ -421,7 +580,7 @@ export default function CreateFeature() {
             </form>
 
 
-          
+
         </MenuAppBar>
     );
 }

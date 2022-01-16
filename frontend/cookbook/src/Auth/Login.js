@@ -16,7 +16,7 @@ import SignUp from './Signup';
 import axios from 'axios'
 import API_BASE_URL from '../Config/config';
 import Alert from '@material-ui/lab/Alert';
-
+import { useHistory } from "react-router-dom";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -57,7 +57,7 @@ function SignIn() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [msg, setMsg] = useState('')
-
+  let history = useHistory();
   const handleInputChangeUsername = (event) => {
     setUsername(event.target.value)
   }
@@ -67,12 +67,16 @@ function SignIn() {
 
 
   const login = (user) => {
-    let loginurl = API_BASE_URL + 'login/'
+    // history.push("/dashboard");
+    // localStorage.setItem('isAuth', true)
+    // history.push("/dashboard");
+    let loginurl = API_BASE_URL + '/login/'
     axios.post(loginurl, user).then((res) => {
       if (res.status === 200 && res.data.access !== null) {
+         localStorage.setItem('isAuth', true)
         sessionStorage.setItem('quadranttoken', res.data.access)
         sessionStorage.setItem('quser', user.username)
-        window.location.href = "/"
+        history.push("/dashboard");
       }
       else if (res.status === 401 || res.status === 404) {
         setMsg(res.data.message)

@@ -13,7 +13,9 @@ import ForumIcon from '@material-ui/icons/Forum';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-
+import ViewModuleIcon from '@material-ui/icons/ViewModule';
+ import ActionMenu from '../../src/Redux/actions/Menuaction'
+  import {useDispatch} from 'react-redux'
 const useTreeItemStyles = makeStyles((theme) => ({
   root: {
     color: theme.palette.text.secondary,
@@ -73,10 +75,17 @@ function StyledTreeItem(props) {
       label={
         <div className={classes.labelRoot}>
           <LabelIcon color="inherit" className={classes.labelIcon} />
-          <Typography variant="body2" className={classes.labelText}>
+          <Typography variant="body2" className={classes.labelText}
+             style={{color:"white"}}
+          >
             {labelText}
           </Typography>
-          <Typography variant="caption" color="inherit">
+          
+          
+          <Typography variant="caption" color="inherit"
+
+style={{color:"white"}}
+          >
             {labelInfo}
           </Typography>
         </div>
@@ -114,8 +123,13 @@ const useStyles = makeStyles({
   },
 });
 
-export default function GmailTreeView() {
+export default function GmailTreeView({menuList}) {
   const classes = useStyles();
+   const dispatch = useDispatch()
+   const MenuSelected=(value)=>{
+    dispatch(ActionMenu.ActionMenu(value))
+
+   }
 
   return (
     <TreeView
@@ -125,43 +139,26 @@ export default function GmailTreeView() {
       defaultExpandIcon={<ArrowRightIcon />}
       defaultEndIcon={<div style={{ width: 24 }} />}
     >
-      <StyledTreeItem nodeId="1" labelText="All Mail" labelIcon={MailIcon} />
-      <StyledTreeItem nodeId="2" labelText="Trash" labelIcon={DeleteIcon} />
-      <StyledTreeItem nodeId="3" labelText="Categories" labelIcon={Label}>
-        <StyledTreeItem
-          nodeId="5"
-          labelText="Social"
-          labelIcon={SupervisorAccountIcon}
-          labelInfo="90"
-          color="#ffffff"
-          bgColor="#e8f0fe"
-        />
-        <StyledTreeItem
-          nodeId="6"
-          labelText="Updates"
-          labelIcon={InfoIcon}
-          labelInfo="2,294"
-          color="#ffffff"
-          bgColor="#fcefe3"
-        />
-        <StyledTreeItem
-          nodeId="7"
-          labelText="Forums"
-          labelIcon={ForumIcon}
-          labelInfo="3,566"
-          color="#ffffff"
-          bgColor="#f3e8fd"
-        />
-        <StyledTreeItem
-          nodeId="8"
-          labelText="Promotions"
-          labelIcon={LocalOfferIcon}
-          labelInfo="733"
-          color="#ffffff"
-          bgColor="#e6f4ea"
-        />
-      </StyledTreeItem>
-      <StyledTreeItem nodeId="4" labelText="History" labelIcon={Label} />
+      {menuList.map((Data, Index) => {
+              return (
+                <StyledTreeItem nodeId={Index} labelText={Data.Label} labelIcon={Label} key={Index}
+                
+                style={{color:"white"}}
+                >
+                  {Data.subMenu.map((data, index) => {
+                    return (
+                      <StyledTreeItem
+                      style={{color:"white"}}
+                        onClick={()=>MenuSelected(data.Feature_Id)}
+                        nodeId={"S" + Index + index}
+                        labelText={data.Feature_Name}
+                        labelIcon={ViewModuleIcon}
+                      />
+                    )
+                  })}
+                </StyledTreeItem>
+              )
+            })}
     </TreeView>
   );
 }
