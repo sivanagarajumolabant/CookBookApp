@@ -73,9 +73,9 @@ function SignIn() {
     let loginurl = API_BASE_URL + '/login/'
     axios.post(loginurl, user).then((res) => {
       if (res.status === 200 && res.data.access !== null) {
-         localStorage.setItem('isAuth', true)
-        sessionStorage.setItem('quadranttoken', res.data.access)
-        sessionStorage.setItem('quser', user.username)
+        localStorage.setItem('isAuth', true)
+        localStorage.setItem('quadranttoken', res.data.access)
+        localStorage.setItem('quser', user.username)
         history.push("/dashboard");
       }
       else if (res.status === 401 || res.status === 404) {

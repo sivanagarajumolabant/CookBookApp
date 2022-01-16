@@ -498,6 +498,30 @@ export default function CreateFeature() {
 
                             </div>
                         </Grid>
+
+                        <Grid item style={{ marginTop: "6px" }}>
+                            <Typography variant='body2'> Target Attachemnts :</Typography>
+
+                        </Grid>
+                        <Grid item>
+                            <div className={classes.rootc}>
+                                <input
+                                    accept="image/*"
+                                    className={classes.input}
+                                    id="contained-button-file"
+                                    multiple={false}
+
+                                    onChange={onchangefile}
+                                    type="file"
+                                />
+                                <label htmlFor="contained-button-file">
+                                    <Button variant="contained" color="primary" component="span" startIcon={<CloudUploadIcon />}>
+                                        Upload
+                                    </Button>
+                                </label>
+
+                            </div>
+                        </Grid>
                     </Grid>
                 </Box>
 

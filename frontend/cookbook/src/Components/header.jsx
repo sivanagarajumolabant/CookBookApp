@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
-     width:'100%'
+    width: '100%'
   },
   notchedOutline: {
     borderWidth: "1px",
@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
   },
   inputRoot: {
     color: "white",
-     
+
     // This matches the specificity of the default styles at https://github.com/mui-org/material-ui/blob/v4.11.3/packages/material-ui-lab/src/Autocomplete/Autocomplete.js#L90
     '&[class*="MuiOutlinedInput-root"] .MuiAutocomplete-input:first-child': {
       // Default left padding is 6px
@@ -89,7 +89,7 @@ export default function ClippedDrawer({ children }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openview = Boolean(anchorEl);
   const [menuList, setmenuList] = React.useState([]);
-const history =useHistory()
+  const history = useHistory()
   const handleChange = (event) => {
     setAuth(event.target.checked);
   };
@@ -104,12 +104,12 @@ const history =useHistory()
     //  history.push('/')
   };
 
-   const handleroute=()=>{
+  const handleroute = () => {
     setAnchorEl(null);
     localStorage.clear()
     history.push('/')
-      
-   }
+
+  }
   const getmenus = async (value) => {
     const res = await axios.get(`${API_BASE_URL}/fol/${value}`);
     setmenuList(res.data);
@@ -134,8 +134,8 @@ const history =useHistory()
             style={{ paddingLeft: "3rem" }}
           >
             <Grid item
-            
-             onClick={()=>history.push('/dashboard')}
+
+              onClick={() => history.push('/dashboard')}
             >
               <Typography variant="h6" className={classes.title}>
                 Cookbook
@@ -148,9 +148,9 @@ const history =useHistory()
                 id="grouped-demo"
                 className={classes.inputRoot}
                 options={[
-                  { title: "Oracle To Postgres" , code: 1},
+                  { title: "Oracle To Postgres", code: 1 },
                   { title: "Oracle TO SQLServer", code: 2 },
-                  { title: "Oracle To MYSQL" , code: 3},
+                  { title: "Oracle To MYSQL", code: 3 },
                 ]}
                 groupBy={""}
                 defaultValue={{ title: "Oracle To Postgres" }}
@@ -185,12 +185,12 @@ const history =useHistory()
                   { title: "v2", code: 2 },
                   { title: "v3", code: 3 },
                 ]}
-                 className={classes.inputRoot}
+                className={classes.inputRoot}
                 groupBy={""}
                 getOptionLabel={(option) => option.title}
                 defaultValue={{ title: "v1", code: 1 }}
                 style={{ width: 300 }}
-              
+
                 InputProps={{
                   classes: {
                     notchedOutline: classes.notchedOutline,
@@ -257,7 +257,7 @@ const history =useHistory()
           </Box>
         </div>
       </Drawer>
-      <Box py={3}>
+      <Box py={0}>
         <main className={classes.content}>
           <Toolbar />
           {children}

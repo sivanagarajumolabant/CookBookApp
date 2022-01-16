@@ -83,7 +83,7 @@ export default function PreviewCode(props) {
                         list ==="Source_Code" ||
                         list ==="Target_ActualCode" ||
                         list ==="Target_Expected_Output" ||
-                        list ==="Conversion_Code"||list==="Conversion_Description "||list==="Target_FeatureDescription"
+                        list ==="Conversion_Code"||list==="Conversion_Description"||list==="Target_FeatureDescription"
                         
                           ? 10
                           : 1
