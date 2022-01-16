@@ -12,7 +12,7 @@ export default function PreviewCode(props) {
 
 
   const { menuitem } = useSelector(state => state.dashboardReducer);
-  console.log(menuitem);
+  // console.log(menuitem);
 
   useEffect(() => {
      if(menuitem)
