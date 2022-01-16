@@ -215,11 +215,11 @@ export default function CreateFeature() {
 
     }
 
-     const handledetale=(value)=>{
-const data= file.filter((item)=> item.name != value.name)
- setfile(data)
+    const handledetale = (value) => {
+        const data = file.filter((item) => item.name != value.name)
+        setfile(data)
 
-     }
+    }
 
     return (
 
@@ -504,7 +504,7 @@ const data= file.filter((item)=> item.name != value.name)
                 <Box py={3}>
                     <Grid container xs={8}>
 
-                 
+
 
                         <Grid item xs>
                             <Grid container direction='column'>
@@ -525,7 +525,7 @@ const data= file.filter((item)=> item.name != value.name)
 
 
                                                     <Grid item>
-                                                        <CloseIcon  onClick={()=>handledetale(item)} />
+                                                        <CloseIcon onClick={() => handledetale(item)} />
                                                     </Grid>
                                                 </Grid>
 

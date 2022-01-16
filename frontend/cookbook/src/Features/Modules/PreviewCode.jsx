@@ -66,6 +66,7 @@ export default function PreviewCode(props) {
 
     <form autoComplete="off">
       <Grid container direction="row" xs={12} spacing={4}>
+     
         {detaildata.map((item, ind) => {
           return (
             <>
