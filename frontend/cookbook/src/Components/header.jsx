@@ -100,7 +100,7 @@ const history =useHistory()
 
   const handleClose = () => {
     setAnchorEl(null);
-     localStorage.clear()
+     sessionStorage.clear()
      history.push('/')
   };
   const getmenus = async (value) => {
