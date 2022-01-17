@@ -249,7 +249,7 @@ export default function CreateFeature() {
                             ]}
                             groupBy={""}
                             getOptionLabel={(option) => option.title}
-                            onChange={(e, v) => handlechangedropdown(v)}
+                            onChange={(e, v) => handleMigtype(e)}
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
@@ -272,7 +272,7 @@ export default function CreateFeature() {
                             groupBy={""}
                             getOptionLabel={(option) => option.title}
                             name="Object_Type"
-                            onChange={(e, v) => handlechangedropdownobj(v)}
+                            onChange={(e, v) => handleObjecttype(e)}
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
@@ -295,7 +295,7 @@ export default function CreateFeature() {
                             label="Feature Name"
                             multiline
                             rows={1}
-                            onChange={(e) => handleChange(e)}
+                            onChange={(e) => handleFeaturename(e)}
                             name={"Feature_Name"}
                             // defaultValue="Default Value"
 
@@ -312,7 +312,7 @@ export default function CreateFeature() {
                             label="Version ID"
                             multiline
                             fullWidth
-                            onChange={(e) => handleChange(e)}
+                            onChange={(e) => handleVersionid(e)}
                             rows={1}
                             name='Version_Id'
                             // defaultValue="Default Value"
@@ -334,7 +334,7 @@ export default function CreateFeature() {
                             name="Source_FeatureDescription"
 
                             fullWidth
-                            onChange={(e) => handleChange(e)}
+                            onChange={(e) => handleSourceDesc(e)}
                             variant="outlined"
                             required
                         />
@@ -353,7 +353,7 @@ export default function CreateFeature() {
                             name='Target_FeatureDescription'
                             multiline
                             rows={10}
-                            onChange={(e) => handleChange(e)}
+                            onChange={(e) => handleTargetDesc(e)}
                             // defaultValue="Default Value"
                             variant="outlined"
                             required
@@ -372,7 +372,7 @@ export default function CreateFeature() {
                             multiline
                             rows={10}
                             name='Source_Code'
-                            onChange={(e) => handleChange(e)}
+                            onChange={(e) => handleSourcecode(e)}
                             // defaultValue="Default Value"
                             fullWidth
                             variant="outlined"
@@ -389,7 +389,7 @@ export default function CreateFeature() {
                             multiline
                             rows={10}
                             name='Target_ActualCode'
-                            onChange={(e) => handleChange(e)}
+                            onChange={(e) => handleActualtartget_code(e)}
                             // defaultValue="Default Value"
                             variant="outlined"
                             required
@@ -408,7 +408,7 @@ export default function CreateFeature() {
                             multiline
                             rows={10}
                             name='Target_Expected_Output'
-                            onChange={(e) => handleChange(e)}
+                            onChange={(e) => handleTargetExpectedcode(e)}
                             // defaultValue="Default Value"
                             variant="outlined"
                             required
@@ -423,7 +423,7 @@ export default function CreateFeature() {
                             multiline
                             name='Conversion_Code'
                             rows={10}
-                            onChange={(e) => handleChange(e)}
+                            onChange={(e) => handleConversion_code(e)}
                             // defaultValue="Default Value"
                             variant="outlined"
                             required
@@ -439,7 +439,7 @@ export default function CreateFeature() {
                             multiline
                             name='Conversion_Description'
                             rows={10}
-                            onChange={(e) => handleChange(e)}
+                            onChange={(e) => handleConversion_code_Despcrition(e)}
                             // defaultValue="Default Value"
                             variant="outlined"
                             required
