@@ -101,17 +101,12 @@ export default function CreateFeature() {
     const handleSubmit = (e) => {
         e.preventDefault();
         let formData = {
-            Migration_TypeId: migtype,
-            Version_Id: versionid,
-            Feature_Name: featurename,
-            Object_Type: objecttype,
-            Source_FeatureDescription: source_FeatureDescription,
-            Source_Code: source_code,
-            Conversion_Description: conversion_code_Despcrition,
-            Conversion_Code: conversion_code,
-            Target_FeatureDescription: target_FeatureDescription,
-            Target_Expected_Output: expectedtarget_code,
-            Target_ActualCode: actualtarget_code
+            ...formValues,
+            "upload_files": {
+                "Source_Attachment": null,
+                "Conversion_Attachment": null,
+                "Target_Attachment": null
+            }
 
         }
         axios.post("http://127.0.0.1:8000/api/create", formData)
@@ -249,7 +244,7 @@ export default function CreateFeature() {
                             ]}
                             groupBy={""}
                             getOptionLabel={(option) => option.title}
-                            onChange={(e, v) => handleMigtype(e)}
+                            onChange={(e, v) => handlechangedropdown(v)}
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
@@ -265,14 +260,14 @@ export default function CreateFeature() {
                             fullWidth
                             id="grouped-demo"
                             options={[
-                                { title: "Procedure", code: 'Procedure' },
-                                { title: "Function", code: 'Function' },
-                                { title: "Package", code: "Package" },
+                                { title: "v1", code: 1 },
+                                { title: "v2", code: 2 },
+                                { title: "v3", code: 3 },
                             ]}
                             groupBy={""}
                             getOptionLabel={(option) => option.title}
                             name="Object_Type"
-                            onChange={(e, v) => handleObjecttype(e)}
+                            onChange={(e, v) => handlechangedropdownobj(v)}
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
@@ -295,7 +290,7 @@ export default function CreateFeature() {
                             label="Feature Name"
                             multiline
                             rows={1}
-                            onChange={(e) => handleFeaturename(e)}
+                            onChange={(e) => handleChange(e)}
                             name={"Feature_Name"}
                             // defaultValue="Default Value"
 
@@ -312,7 +307,7 @@ export default function CreateFeature() {
                             label="Version ID"
                             multiline
                             fullWidth
-                            onChange={(e) => handleVersionid(e)}
+                            onChange={(e) => handleChange(e)}
                             rows={1}
                             name='Version_Id'
                             // defaultValue="Default Value"
@@ -334,7 +329,7 @@ export default function CreateFeature() {
                             name="Source_FeatureDescription"
 
                             fullWidth
-                            onChange={(e) => handleSourceDesc(e)}
+                            onChange={(e) => handleChange(e)}
                             variant="outlined"
                             required
                         />
@@ -353,7 +348,7 @@ export default function CreateFeature() {
                             name='Target_FeatureDescription'
                             multiline
                             rows={10}
-                            onChange={(e) => handleTargetDesc(e)}
+                            onChange={(e) => handleChange(e)}
                             // defaultValue="Default Value"
                             variant="outlined"
                             required
@@ -372,7 +367,7 @@ export default function CreateFeature() {
                             multiline
                             rows={10}
                             name='Source_Code'
-                            onChange={(e) => handleSourcecode(e)}
+                            onChange={(e) => handleChange(e)}
                             // defaultValue="Default Value"
                             fullWidth
                             variant="outlined"
@@ -389,7 +384,7 @@ export default function CreateFeature() {
                             multiline
                             rows={10}
                             name='Target_ActualCode'
-                            onChange={(e) => handleActualtartget_code(e)}
+                            onChange={(e) => handleChange(e)}
                             // defaultValue="Default Value"
                             variant="outlined"
                             required
@@ -408,7 +403,7 @@ export default function CreateFeature() {
                             multiline
                             rows={10}
                             name='Target_Expected_Output'
-                            onChange={(e) => handleTargetExpectedcode(e)}
+                            onChange={(e) => handleChange(e)}
                             // defaultValue="Default Value"
                             variant="outlined"
                             required
@@ -423,7 +418,7 @@ export default function CreateFeature() {
                             multiline
                             name='Conversion_Code'
                             rows={10}
-                            onChange={(e) => handleConversion_code(e)}
+                            onChange={(e) => handleChange(e)}
                             // defaultValue="Default Value"
                             variant="outlined"
                             required
@@ -439,7 +434,7 @@ export default function CreateFeature() {
                             multiline
                             name='Conversion_Description'
                             rows={10}
-                            onChange={(e) => handleConversion_code_Despcrition(e)}
+                            onChange={(e) => handleChange(e)}
                             // defaultValue="Default Value"
                             variant="outlined"
                             required
@@ -475,30 +470,6 @@ export default function CreateFeature() {
                             </div>
                         </Grid>
 
-                        {/* <Grid item style={{ marginTop: "6px" }}>
-                            <Typography variant='body2'> Target Attachemnts :</Typography>
-
-                        </Grid>
-                        <Grid item>
-                            <div className={classes.rootc}>
-                                <input
-                                    accept="image/*"
-                                    className={classes.input}
-                                    id="contained-button-file"
-                                    multiple={false}
-
-                                    onChange={onchangefile}
-                                    type="file"
-                                />
-                                <label htmlFor="contained-button-file">
-                                    <Button variant="contained" color="primary" component="span" startIcon={<CloudUploadIcon />}>
-                                        Upload
-                                    </Button>
-                                </label>
-
-                            </div>
-                        </Grid>
-
                         <Grid item style={{ marginTop: "6px" }}>
                             <Typography variant='body2'> Target Attachemnts :</Typography>
 
@@ -521,7 +492,7 @@ export default function CreateFeature() {
                                 </label>
 
                             </div>
-                        </Grid> */}
+                        </Grid>
                     </Grid>
                 </Box>
 
