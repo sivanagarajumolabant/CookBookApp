@@ -265,9 +265,9 @@ export default function CreateFeature() {
                             fullWidth
                             id="grouped-demo"
                             options={[
-                                { title: "v1", code: 1 },
-                                { title: "v2", code: 2 },
-                                { title: "v3", code: 3 },
+                                { title: "Procedure", code: 'Procedure' },
+                                { title: "Function", code: 'Function' },
+                                { title: "Package", code: "Package" },
                             ]}
                             groupBy={""}
                             getOptionLabel={(option) => option.title}
@@ -475,7 +475,7 @@ export default function CreateFeature() {
                             </div>
                         </Grid>
 
-                        <Grid item style={{ marginTop: "6px" }}>
+                        {/* <Grid item style={{ marginTop: "6px" }}>
                             <Typography variant='body2'> Target Attachemnts :</Typography>
 
                         </Grid>
@@ -521,7 +521,7 @@ export default function CreateFeature() {
                                 </label>
 
                             </div>
-                        </Grid>
+                        </Grid> */}
                     </Grid>
                 </Box>
 
