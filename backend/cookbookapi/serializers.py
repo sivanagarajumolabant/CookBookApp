@@ -3,7 +3,7 @@ from cookbook.models import *
 from django.contrib.auth.models import User
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
-
+import collections
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
@@ -99,8 +99,8 @@ class commonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Feature
         # fields = '__all__'
-        fields = ['Migration_TypeId', 'Version_Id', 'Object_Type',
-                                         'Feature_Id', 'Feature_Name', 'Source_FeatureDescription',
+        fields = ['Migration_TypeId', 'Level', 'Object_Type',
+                                         'Feature_Id', 'Feature_Name', 'Sequence_Number', 'Source_FeatureDescription',
                                          'Source_Code', 'Conversion_Description', 'Conversion_Code',
                                          'Target_FeatureDescription', 'Target_Expected_Output',
                                          'Target_ActualCode', 'upload_files']
@@ -108,17 +108,20 @@ class commonSerializer(serializers.ModelSerializer):
         # feature = validated_data.pop('feature')
         upload = validated_data.pop('upload_files')
         abc = Feature.objects.create(**validated_data)
-        # for file in upload:
         Upload_file.objects.create(Feature_Id=abc, **upload)
         return abc
 
     def update(self, instance, validated_data):
         upload = validated_data.pop('upload_files')
+        print('upload value', upload)
         upl = (instance.upload_files).all()
+        print('upl values', upl)
         upl = list(upl)
         instance.Migration_TypeId = validated_data.get('Migration_TypeId', instance.Migration_TypeId)
+        instance.Level = validated_data.get('Level', instance.Level)
         instance.Object_Type = validated_data.get('Object_Type', instance.Object_Type)
         instance.Feature_Name = validated_data.get('Feature_Name', instance.Feature_Name)
+        instance.Sequence_Number = validated_data.get('Sequence_Number', instance.Sequence_Number)
         instance.Source_FeatureDescription = validated_data.get('Source_FeatureDescription', instance.Source_FeatureDescription)
         instance.Source_Code = validated_data.get('Source_Code', instance.Source_Code)
         instance.Conversion_Description = validated_data.get('Conversion_Description', instance.Conversion_Description)
@@ -131,6 +134,7 @@ class commonSerializer(serializers.ModelSerializer):
         # for upload_data in upload:
 
         upl1 = upl.pop(0)
+        print('upl1 values', upl1)
         upl1.Source_Attachment = upload.get('Source_Attachment', upl1.Source_Attachment)
         upl1.Conversion_Attachment = upload.get('Conversion_Attachment', upl1.Conversion_Attachment)
         upl1.Target_Attachment = upload.get('Target_Attachment', upl1.Target_Attachment)

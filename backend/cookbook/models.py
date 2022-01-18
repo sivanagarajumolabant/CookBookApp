@@ -25,11 +25,18 @@ class Feature(models.Model):
     # Postgres_ActualCode = models.TextField()
     #
     #
+    choices = [
+        ('Programlevel', 'programlevel'),
+        ('Statementlevel', 'statementlevel'),
+    ]
     Migration_TypeId = models.CharField(max_length=50)
-    Version_Id = models.SmallIntegerField(null=True, blank=True)
+    Level = models.CharField(max_length=50, choices=choices, null=True, blank=True)
+    Version_Id = models.SmallIntegerField(default=0)
+    Feature_Version = models.SmallIntegerField(default=0)
     Object_Type = models.CharField(max_length=50)
     Feature_Id = models.BigAutoField(primary_key=True)
-    Feature_Name = models.CharField(max_length=100)
+    Feature_Name = models.CharField(max_length=100, unique=True)
+    Sequence_Number = models.SmallIntegerField(null=True, blank=True)
     Source_FeatureDescription = models.TextField()
     Source_Code = models.TextField()
     Conversion_Description = models.TextField()
@@ -37,6 +44,11 @@ class Feature(models.Model):
     Target_FeatureDescription = models.TextField()
     Target_Expected_Output = models.TextField()
     Target_ActualCode = models.TextField()
+
+    def save(self, *args, **kwargs):
+        self.Version_Id = self.Version_Id + 1
+        self.Feature_Version = self.Feature_Version + 1
+        super().save(*args, **kwargs)
 
     @property
     def upload_files(self):
