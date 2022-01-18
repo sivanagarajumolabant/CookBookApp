@@ -148,6 +148,7 @@ export default function CreateFeature() {
                             ]}
                             groupBy={""}
                             getOptionLabel={(option) => option.title}
+                            name="Migration_TypeId"
                             onChange={(e, v) => handlechangedropdown(v)}
                             renderInput={(params) => (
                                 <TextField
@@ -188,14 +189,14 @@ export default function CreateFeature() {
 
 
 
-                    <Grid item xs={6}>
+                    <Grid item xs={4}>
                         <TextField
                             id="outlined-multiline-static"
                             label="Feature Name"
                             multiline
                             rows={1}
                             onChange={(e) => handleChange(e)}
-                            name={"Feature_Name"}
+                            name='Feature_Name'
                             // defaultValue="Default Value"
 
                             variant="outlined"
@@ -204,7 +205,25 @@ export default function CreateFeature() {
                         />
 
                     </Grid>
-                    <Grid item xs={6}>
+
+                    <Grid item xs={4}>
+
+                        <TextField
+                            id="outlined-multiline-static"
+                            label="Level"
+                            multiline
+                            fullWidth
+                            onChange={(e) => handleChange(e)}
+                            rows={1}
+                            name='Level'
+                            // defaultValue="Default Value"
+
+                            variant="outlined"
+                            required
+                        />
+
+                    </Grid>
+                    <Grid item xs={4}>
 
                         <TextField
                             id="outlined-multiline-static"
@@ -213,7 +232,7 @@ export default function CreateFeature() {
                             fullWidth
                             onChange={(e) => handleChange(e)}
                             rows={1}
-                            name='sequencenum'
+                            name='Sequence_Number'
                             // defaultValue="Default Value"
 
                             variant="outlined"

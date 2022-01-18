@@ -56,7 +56,7 @@ export default function PreviewCode(props) {
   if (detaildata.length > 0) {
     data = <>
       <Grid container spacing={2}>
-        <Grid item xs={12}>
+        <Grid item xs={6}>
           <Typography gutterBottom variant="h5" component="h2">
             Object Type
           </Typography>
@@ -71,7 +71,7 @@ export default function PreviewCode(props) {
 
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={6}>
           <Typography gutterBottom variant="h5" component="h2">
             Feature Name
           </Typography>
@@ -82,6 +82,31 @@ export default function PreviewCode(props) {
             })
             }
             {/* </Typography> */}
+          </div>
+
+        </Grid>
+        <Grid item xs={6}>
+          <Typography gutterBottom variant="h5" component="h2">
+            Level
+          </Typography>
+          {/* <Typography component="h2"> */}
+          <div style={{ paddingLeft: 30 }}>
+            {detaildata[0].Level.split("\n").map((i, key) => {
+              return <div key={key}>{i}</div>;
+            })
+            }
+            {/* </Typography> */}
+          </div>
+
+        </Grid>
+
+        <Grid item xs={6}>
+          <Typography gutterBottom variant="h5" component="h2">
+            Seq No
+          </Typography>
+          {/* <Typography component="h2"> */}
+          <div style={{ paddingLeft: 30 }}>
+            {detaildata[0].Sequence_Number}
           </div>
 
         </Grid>
@@ -187,7 +212,7 @@ export default function PreviewCode(props) {
 
         <Grid item xs={12}>
           <Typography gutterBottom variant="h5" component="h2">
-            Conversion Code
+            Conversion Module
           </Typography>
           <div style={{ paddingLeft: 30 }}>
             <Card style={{ paddingLeft: 30, backgroundColor: "black", color: "white" }}>
@@ -196,6 +221,46 @@ export default function PreviewCode(props) {
                 return <div key={key}>{i}</div>;
               })
               }
+            </Card>
+          </div>
+          {/* </Typography> */}
+
+        </Grid>
+
+        <Grid item xs={12}>
+          <Typography gutterBottom variant="h5" component="h2">
+            Source Attachments
+          </Typography>
+          <div style={{ paddingLeft: 30 }}>
+            <Card style={{ paddingLeft: 30, backgroundColor: "black", color: "white" }}>
+              {/* <Typography component="h2"> */}
+              {detaildata[0].upload_files.Source_Attachment}
+            </Card>
+          </div>
+          {/* </Typography> */}
+
+        </Grid>
+        <Grid item xs={12}>
+          <Typography gutterBottom variant="h5" component="h2">
+            Target Attachments
+          </Typography>
+          <div style={{ paddingLeft: 30 }}>
+            <Card style={{ paddingLeft: 30, backgroundColor: "black", color: "white" }}>
+              {/* <Typography component="h2"> */}
+              {detaildata[0].upload_files.Target_Attachment}
+            </Card>
+          </div>
+          {/* </Typography> */}
+
+        </Grid>
+        <Grid item xs={12}>
+          <Typography gutterBottom variant="h5" component="h2">
+            Conversion Attachments
+          </Typography>
+          <div style={{ paddingLeft: 30 }}>
+            <Card style={{ paddingLeft: 30, backgroundColor: "black", color: "white" }}>
+              {/* <Typography component="h2"> */}
+              {detaildata[0].upload_files.Conversion_Attachment}
             </Card>
           </div>
           {/* </Typography> */}
