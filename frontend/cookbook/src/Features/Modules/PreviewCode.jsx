@@ -58,11 +58,11 @@ export default function PreviewCode(props) {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Typography gutterBottom variant="h5" component="h2">
-            Feature Name
+            Object Type
           </Typography>
           {/* <Typography component="h2"> */}
           <div style={{ paddingLeft: 30 }}>
-            {detaildata[0].Feature_Name.split("\n").map((i, key) => {
+            {detaildata[0].Object_Type.split("\n").map((i, key) => {
               return <div key={key}>{i}</div>;
             })
             }
@@ -70,13 +70,14 @@ export default function PreviewCode(props) {
           </div>
 
         </Grid>
+
         <Grid item xs={12}>
           <Typography gutterBottom variant="h5" component="h2">
-            Object Type
+            Feature Name
           </Typography>
           {/* <Typography component="h2"> */}
           <div style={{ paddingLeft: 30 }}>
-            {detaildata[0].Object_Type.split("\n").map((i, key) => {
+            {detaildata[0].Feature_Name.split("\n").map((i, key) => {
               return <div key={key}>{i}</div>;
             })
             }
@@ -172,7 +173,7 @@ export default function PreviewCode(props) {
             Conversion Description
           </Typography>
           <div style={{ paddingLeft: 30 }}>
-          {/* <Card style={{ paddingLeft: 30, backgroundColor: "black", color: "white" }}> */}
+            {/* <Card style={{ paddingLeft: 30, backgroundColor: "black", color: "white" }}> */}
             {detaildata[0].Conversion_Description.split("\n").map((i, key) => {
               return <div key={key}>{i}</div>;
             })

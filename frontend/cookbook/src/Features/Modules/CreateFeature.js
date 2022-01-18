@@ -30,73 +30,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CreateFeature() {
     const classes = useStyles();
-    // const [value, setValue] = React.useState('Controlled');
-    const [objecttype, setObjecettype] = React.useState('Procedure');
-    const [versionid, setVersionid] = useState()
-    const [migtype, setMigtype] = useState('1')
-    const [source_code, setSource_code] = useState()
-    const [source_FeatureDescription, setSource_FeatureDescription] = useState()
-    const [target_FeatureDescription, setTarget_FeatureDescription] = useState()
-    const [actualtarget_code, setActualtartget_code] = useState()
-    const [expectedtarget_code, setExpectedtartget_code] = useState()
-    const [conversion_code, setConversion_code] = useState()
-    const [conversion_code_Despcrition, setConversion_code_Despcrition] = useState()
-    const [featurename, setFeaturename] = useState()
+    
     const [formValues, setformvalues] = useState({})
     const [file, setfile] = useState([])
 
-    const handleObjecttype = (event) => {
-        setObjecettype(event.target.value);
-    };
-    const handleVersionid = (event) => {
-        setVersionid(event.target.value);
-    };
-    const handleMigtype = (event) => {
-        setMigtype(event.target.value);
-    };
-    const handleSourcecode = (event) => {
-        setSource_code(event.target.value);
-    };
-    const handleSourceDesc = (event) => {
-        setSource_FeatureDescription(event.target.value);
-    };
-    const handleTargetDesc = (event) => {
-        setTarget_FeatureDescription(event.target.value);
-    };
-    const handleActualtartget_code = (event) => {
-        setActualtartget_code(event.target.value);
-    };
-    const handleTargetExpectedcode = (event) => {
-        setExpectedtartget_code(event.target.value);
-    };
-    const handleConversion_code_Despcrition = (event) => {
-        setConversion_code_Despcrition(event.target.value);
-    };
-    const handleConversion_code = (event) => {
-        setConversion_code(event.target.value);
-    };
-
-    const handleFeaturename = (event) => {
-        setFeaturename(event.target.value);
-    };
-
-
-    const handlePreviewdata = () => {
-        let formData = {
-            Migration_TypeId: migtype,
-            Version_Id: versionid,
-            Feature_Name: featurename,
-            Object_Type: objecttype,
-            Source_FeatureDescription: source_FeatureDescription,
-            Source_Code: source_code,
-            Conversion_Description: conversion_code_Despcrition,
-            Conversion_Code: conversion_code,
-            Target_FeatureDescription: target_FeatureDescription,
-            Target_Expected_Output: expectedtarget_code,
-            Target_ActualCode: actualtarget_code
-        }
-
-    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -117,39 +54,6 @@ export default function CreateFeature() {
             })
 
     }
-
-    const ObjectTypes = [
-        {
-            value: 'Procedure',
-            label: 'PROCEDURE',
-        },
-        {
-            value: 'Function',
-            label: 'FUNCTION',
-        },
-        {
-            value: 'Package',
-            label: 'PACKAGE',
-        },
-        {
-            value: 'Trigger',
-            label: 'TRIGGER',
-        },
-    ];
-    const MigTypes = [
-        {
-            value: 1,
-            label: 'Oracle To Postgres',
-        },
-        {
-            value: 2,
-            label: 'Oracle To SQLServer',
-        },
-        {
-            value: 3,
-            label: 'Oracle To MYSQL',
-        }
-    ];
 
     const handleChange = (e) => {
         setformvalues({
@@ -260,9 +164,9 @@ export default function CreateFeature() {
                             fullWidth
                             id="grouped-demo"
                             options={[
-                                { title: "v1", code: 1 },
-                                { title: "v2", code: 2 },
-                                { title: "v3", code: 3 },
+                                { title: "Procedure", code: 'Procedure' },
+                                { title: "Function", code: 'Function' },
+                                { title: "Package", code: 'Package' },
                             ]}
                             groupBy={""}
                             getOptionLabel={(option) => option.title}
@@ -304,12 +208,12 @@ export default function CreateFeature() {
 
                         <TextField
                             id="outlined-multiline-static"
-                            label="Version ID"
+                            label="Sequence No"
                             multiline
                             fullWidth
                             onChange={(e) => handleChange(e)}
                             rows={1}
-                            name='Version_Id'
+                            name='sequencenum'
                             // defaultValue="Default Value"
 
                             variant="outlined"
@@ -317,14 +221,14 @@ export default function CreateFeature() {
                         />
 
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
 
 
                         <TextField
                             id="outlined-multiline-static"
                             label="Source Description"
                             multiline
-                            rows={10}
+                            rows={15}
                             // defaultValue="Default Value"
                             name="Source_FeatureDescription"
 
@@ -337,7 +241,7 @@ export default function CreateFeature() {
 
 
 
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
 
 
                         <TextField
@@ -347,7 +251,7 @@ export default function CreateFeature() {
                             fullWidth
                             name='Target_FeatureDescription'
                             multiline
-                            rows={10}
+                            rows={15}
                             onChange={(e) => handleChange(e)}
                             // defaultValue="Default Value"
                             variant="outlined"
@@ -358,14 +262,14 @@ export default function CreateFeature() {
 
 
 
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
 
 
                         <TextField
                             id="outlined-multiline-static"
                             label="Source Code"
                             multiline
-                            rows={10}
+                            rows={15}
                             name='Source_Code'
                             onChange={(e) => handleChange(e)}
                             // defaultValue="Default Value"
@@ -376,13 +280,13 @@ export default function CreateFeature() {
                     </Grid>
 
 
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                         <TextField
                             fullWidth
                             id="outlined-multiline-static"
                             label="Actual Target Code"
                             multiline
-                            rows={10}
+                            rows={15}
                             name='Target_ActualCode'
                             onChange={(e) => handleChange(e)}
                             // defaultValue="Default Value"
@@ -395,13 +299,13 @@ export default function CreateFeature() {
 
 
 
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                         <TextField
                             fullWidth
                             id="outlined-multiline-static"
                             label="Expected Target Code"
                             multiline
-                            rows={10}
+                            rows={15}
                             name='Target_Expected_Output'
                             onChange={(e) => handleChange(e)}
                             // defaultValue="Default Value"
@@ -410,14 +314,14 @@ export default function CreateFeature() {
                         />
                     </Grid>
 
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                         <TextField
                             fullWidth
                             id="outlined-multiline-static"
                             label="Conversion Code"
                             multiline
                             name='Conversion_Code'
-                            rows={10}
+                            rows={15}
                             onChange={(e) => handleChange(e)}
                             // defaultValue="Default Value"
                             variant="outlined"
@@ -425,7 +329,7 @@ export default function CreateFeature() {
                         />
                     </Grid>
 
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
 
                         <TextField
                             fullWidth
@@ -433,7 +337,7 @@ export default function CreateFeature() {
                             label="Conversion Code Description"
                             multiline
                             name='Conversion_Description'
-                            rows={10}
+                            rows={15}
                             onChange={(e) => handleChange(e)}
                             // defaultValue="Default Value"
                             variant="outlined"
@@ -446,7 +350,7 @@ export default function CreateFeature() {
 
 
                 <Box py={4}>
-                    <Grid container direction='row' spacing={1}>
+                    <Grid container direction='row' spacing={2}>
                         <Grid item style={{ marginTop: "6px" }}>
                             <Typography variant='body1'>   Source Attachemnts </Typography>
 
@@ -493,6 +397,29 @@ export default function CreateFeature() {
 
                             </div>
                         </Grid>
+                        <Grid item style={{ marginTop: "6px" }}>
+                            <Typography variant='body1'>   Conversion Attachemnts </Typography>
+
+                        </Grid>
+                        <Grid item>
+                            <div className={classes.rootc}>
+                                <input
+                                    accept="image/*"
+                                    className={classes.input}
+                                    id="contained-button-file"
+                                    multiple={false}
+                                    onChange={onchangefile}
+                                    type="file"
+                                />
+                                <label htmlFor="contained-button-file">
+                                    <Button variant="contained" color="primary" component="span" startIcon={<CloudUploadIcon />}>
+                                        Upload
+                                    </Button>
+                                </label>
+
+                            </div>
+                        </Grid>
+
                     </Grid>
                 </Box>
 
@@ -551,10 +478,10 @@ export default function CreateFeature() {
                                 variant="contained"
                                 color="primary"
                                 // className={classes.submit}
-                                onClick={handlePreviewdata}
+                                // onClick={handlePreviewdata}
 
                             >
-                                Preview
+                                Convert
                             </Button>
                         </Grid>
                         <Grid item>
