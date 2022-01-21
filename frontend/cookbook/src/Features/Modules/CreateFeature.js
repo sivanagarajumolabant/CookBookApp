@@ -28,11 +28,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function CreateFeature() {
+export default function CreateFeature(props) {
     const classes = useStyles();
     
-    const [formValues, setformvalues] = useState({})
+    const [formValues, setformvalues] = useState({Migration_TypeId:props.location.state?.data?.type,  Object_Type: props.location.state?.data?.Label })
     const [file, setfile] = useState([])
+     const [AttachmentList, setAttachmentList]=useState({})
 
 
     const handleSubmit = (e) => {
@@ -40,9 +41,7 @@ export default function CreateFeature() {
         let formData = {
             ...formValues,
             "upload_files": {
-                "Source_Attachment": null,
-                "Conversion_Attachment": null,
-                "Target_Attachment": null
+              ...AttachmentList
             }
 
         }
@@ -80,7 +79,8 @@ export default function CreateFeature() {
     }
     console.log(formValues)
 
-    const onchangefile = (e) => {
+    const onchangefile = (e, value) => {
+        
         const { files } = e.target;
         if (files.length > 0) {
             const filesystem = [...file];
@@ -94,6 +94,12 @@ export default function CreateFeature() {
                     type: file.type
                 });
                 setfile(filesystem);
+
+                
+                setAttachmentList({
+                    ...AttachmentList,
+                    [value]:filesystem
+                })
 
                 // setUploadingDoc(false);
 
@@ -114,12 +120,21 @@ export default function CreateFeature() {
 
     }
 
+
+
+
+
+
     const handledetale = (value) => {
         const data = file.filter((item) => item.name != value.name)
         setfile(data)
 
     }
 
+
+     console.log(props.location.state)
+
+      console.log(AttachmentList)
     return (
 
         <MenuAppBar>
@@ -147,6 +162,7 @@ export default function CreateFeature() {
                                 { title: "Oracle To MYSQL" },
                             ]}
                             groupBy={""}
+                            defaultValue={{ title: props.location.state?.data?.type }}
                             getOptionLabel={(option) => option.title}
                             name="Migration_TypeId"
                             onChange={(e, v) => handlechangedropdown(v)}
@@ -171,6 +187,7 @@ export default function CreateFeature() {
                             ]}
                             groupBy={""}
                             getOptionLabel={(option) => option.title}
+                            defaultValue={{ title: props.location.state?.data?.Label }}
                             name="Object_Type"
                             onChange={(e, v) => handlechangedropdownobj(v)}
                             renderInput={(params) => (
@@ -379,12 +396,12 @@ export default function CreateFeature() {
                                 <input
                                     accept="image/*"
                                     className={classes.input}
-                                    id="contained-button-file"
-                                    multiple={false}
-                                    onChange={onchangefile}
+                                    id="contained-button-file3"
+                                    multiple={true}
+                                    onChange={(e)=>onchangefile(e, "Source_Attachment")}
                                     type="file"
                                 />
-                                <label htmlFor="contained-button-file">
+                                <label htmlFor="contained-button-file3">
                                     <Button variant="contained" color="primary" component="span" startIcon={<CloudUploadIcon />}>
                                         Upload
                                     </Button>
@@ -402,13 +419,13 @@ export default function CreateFeature() {
                                 <input
                                     accept="image/*"
                                     className={classes.input}
-                                    id="contained-button-file"
-                                    multiple={false}
+                                    id="contained-button-file1"
+                                    multiple={true}
 
-                                    onChange={onchangefile}
+                                    onChange={(e)=>onchangefile(e, "Conversion_Attachment")}
                                     type="file"
                                 />
-                                <label htmlFor="contained-button-file">
+                                <label htmlFor="contained-button-file1">
                                     <Button variant="contained" color="primary" component="span" startIcon={<CloudUploadIcon />}>
                                         Upload
                                     </Button>
@@ -425,12 +442,13 @@ export default function CreateFeature() {
                                 <input
                                     accept="image/*"
                                     className={classes.input}
-                                    id="contained-button-file"
-                                    multiple={false}
-                                    onChange={onchangefile}
+                                    id="contained-button-file2"
+                                    multiple={true}
+                                    onChange={(e)=>onchangefile(e, "Target_Attachment")}
                                     type="file"
+                                    name='Target_Attachment'
                                 />
-                                <label htmlFor="contained-button-file">
+                                <label htmlFor="contained-button-file2">
                                     <Button variant="contained" color="primary" component="span" startIcon={<CloudUploadIcon />}>
                                         Upload
                                     </Button>

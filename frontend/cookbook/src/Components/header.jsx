@@ -89,6 +89,8 @@ export default function ClippedDrawer({ children }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openview = Boolean(anchorEl);
   const [menuList, setmenuList] = React.useState([]);
+  const [dropdown, setdropdown] = React.useState({name:'Oracle To Postgres'});
+  
   const history = useHistory()
   const handleChange = (event) => {
     setAuth(event.target.checked);
@@ -121,7 +123,14 @@ export default function ClippedDrawer({ children }) {
 
   const handleversion = (v) => {
     getmenus(v.code);
+    setdropdown(v)
   };
+
+   const deleteitem=async(data)=>{
+     
+    const res = await axios.get(`${API_BASE_URL}/delete/${data.Feature_Id}`);
+
+   }
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -253,7 +262,10 @@ export default function ClippedDrawer({ children }) {
         <Toolbar />
         <div className={classes.drawerContainer}>
           <Box py={5}>
-            <GmailTreeView menuList={menuList} />
+            <GmailTreeView menuList={menuList}
+            dropdown={dropdown}
+            deleteitem={deleteitem}
+            />
           </Box>
         </div>
       </Drawer>
