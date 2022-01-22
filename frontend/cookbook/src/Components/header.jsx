@@ -18,13 +18,15 @@ import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { Box, Grid, Menu, MenuItem, TextField } from "@material-ui/core";
+import { Box, Grid, Menu, MenuItem, styled, TextField } from "@material-ui/core";
 import GmailTreeView from "../Components/Treeview";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import { useHistory } from "react-router-dom";
 import Footer from "../Components/Footer";
 import axios from "axios";
 import API_BASE_URL from "../Config/config";
+import ActionMenu from "../../src/Redux/actions/Menuaction";
+import { useDispatch } from "react-redux";
 //   import MenuIcon from "@material-ui/icons/Menu";
 
 const drawerWidth = 240;
@@ -75,8 +77,36 @@ const useStyles = makeStyles((theme) => ({
     "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
       borderColor: "white"
     }
-  }
+  },
+  
 }));
+
+
+const StyledAutocomplete = styled(Autocomplete)({
+  "& .MuiInputLabel-outlined:not(.MuiInputLabel-shrink)": {
+    // Default transform is "translate(14px, 20px) scale(1)""
+    // This lines up the label with the initial cursor position in the input
+    // after changing its padding-left.
+    transform: "translate(34px, 20px) scale(1);"
+  },
+  "& .MuiAutocomplete-inputRoot": {
+    color: "white",
+    // This matches the specificity of the default styles at https://github.com/mui-org/material-ui/blob/v4.11.3/packages/material-ui-lab/src/Autocomplete/Autocomplete.js#L90
+    '&[class*="MuiOutlinedInput-root"] .MuiAutocomplete-input:first-child': {
+      // Default left padding is 6px
+      paddingLeft: 26
+    },
+    "& .MuiOutlinedInput-notchedOutline": {
+      borderColor: "white"
+    },
+    "&:hover .MuiOutlinedInput-notchedOutline": {
+      borderColor: "white"
+    },
+    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: "white"
+    }
+  }
+});
 
 export default function ClippedDrawer({ children }) {
   const classes = useStyles();
@@ -90,7 +120,7 @@ export default function ClippedDrawer({ children }) {
   const openview = Boolean(anchorEl);
   const [menuList, setmenuList] = React.useState([]);
   const [dropdown, setdropdown] = React.useState({name:'Oracle To Postgres'});
-  
+  const dispatch = useDispatch();
   const history = useHistory()
   const handleChange = (event) => {
     setAuth(event.target.checked);
@@ -124,11 +154,14 @@ export default function ClippedDrawer({ children }) {
   const handleversion = (v) => {
     getmenus(v.code);
     setdropdown(v)
+
+    dispatch(ActionMenu.dropdown(v));
   };
 
    const deleteitem=async(data)=>{
      
-    const res = await axios.get(`${API_BASE_URL}/delete/${data.Feature_Id}`);
+    const res = await axios.delete(`${API_BASE_URL}/delete/${data.Feature_Id}`);
+    getmenus(1);
 
    }
   return (
@@ -152,10 +185,10 @@ export default function ClippedDrawer({ children }) {
             </Grid>
 
             <Grid item style={{ paddingRight: "1rem" }}>
-              <Autocomplete
+              <StyledAutocomplete
                 size="small"
                 id="grouped-demo"
-                className={classes.inputRoot}
+                // className={classes.inputRoot}
                 options={[
                   { title: "Oracle To Postgres", code: 1 },
                   { title: "Oracle TO SQLServer", code: 2 },
@@ -166,18 +199,10 @@ export default function ClippedDrawer({ children }) {
                 getOptionLabel={(option) => option.title}
                 style={{ width: 300 }}
                 onChange={(e, v) => handleversion(v)}
-                InputProps={{
-                  classes: {
-                    notchedOutline: classes.notchedOutline,
-                  },
-                }}
+               
                 renderInput={(params) => (
                   <TextField
-                    InputProps={{
-                      classes: {
-                        notchedOutline: classes.notchedOutline,
-                      },
-                    }}
+                   
                     {...params}
                     label="MigrationTypes                     "
                     variant="outlined"
@@ -186,7 +211,7 @@ export default function ClippedDrawer({ children }) {
               />
             </Grid>
             <Grid item>
-              <Autocomplete
+              <StyledAutocomplete
                 size="small"
                 id="grouped-demo"
                 options={[
@@ -200,18 +225,10 @@ export default function ClippedDrawer({ children }) {
                 defaultValue={{ title: "v1", code: 1 }}
                 style={{ width: 300 }}
 
-                InputProps={{
-                  classes: {
-                    notchedOutline: classes.notchedOutline,
-                  },
-                }}
+                
                 renderInput={(params) => (
                   <TextField
-                    InputProps={{
-                      classes: {
-                        notchedOutline: classes.notchedOutline,
-                      },
-                    }}
+                   
                     {...params}
                     label="Migration Type  Versions"
                     variant="outlined"

@@ -3,7 +3,8 @@
 const initialState = {
   drawerOpen: false,
 
-   menuitem:''
+   menuitem:'',
+   headerValue: {title: "Oracle To Postgres"}
 };
 
 const dashboardReducer = (state = initialState, action) => {
@@ -13,6 +14,14 @@ const dashboardReducer = (state = initialState, action) => {
         ...state,
         menuitem: action.payload
       };
+      case "SELECTED_DROPDOWN":
+        return {
+          ...state,
+          headerValue: action.payload
+        };
+
+
+      
     default:
       return state;
   }

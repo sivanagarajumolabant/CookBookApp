@@ -13,4 +13,18 @@ const  ActionMenu=(value) =>{
 
 }
 
-export default {ActionMenu}
+const  dropdown=(value) =>{
+    return dispatch => {
+       
+         dispatch({
+            type: "SELECTED_DROPDOWN" , 
+            payload :value
+         })
+    }
+
+
+ 
+
+}
+
+export default {ActionMenu, dropdown}

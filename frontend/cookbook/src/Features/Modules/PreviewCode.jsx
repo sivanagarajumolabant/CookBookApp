@@ -395,6 +395,8 @@ export default function PreviewCode(props) {
 
   return (
       <>
+      {detaildata.length>0&&
+      <>
     <Box py={4}>
             <Grid container direction='row' justifyContent='center'>
                 <Grid item>
@@ -483,6 +485,8 @@ export default function PreviewCode(props) {
 </Grid>
 </Box>
     </form>
+    
+    </>}
     </>
   );
 }

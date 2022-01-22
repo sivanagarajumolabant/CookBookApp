@@ -11,6 +11,7 @@ import MenuAppBar from '../../Components/header'
 import { Box, Grid, Typography } from '@material-ui/core';
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import CloseIcon from '@material-ui/icons/Close';
+import { useSelector } from 'react-redux';
 const useStyles = makeStyles((theme) => ({
     root: {
         '& .MuiTextField-root': {
@@ -30,18 +31,20 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CreateFeature(props) {
     const classes = useStyles();
-    
-    const [formValues, setformvalues] = useState({Migration_TypeId:props.location.state?.data?.type,  Object_Type: props.location.state?.data?.Label })
-    const [file, setfile] = useState([])
-     const [AttachmentList, setAttachmentList]=useState({})
 
+    const [formValues, setformvalues] = useState({ Migration_TypeId: props.location.state?.data?.type, Object_Type: props.location.state?.data?.Label })
+    const [file, setfile] = useState([])
+    const [AttachmentList, setAttachmentList] = useState({})
+    const { headerValue } = useSelector(state => state.dashboardReducer);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         let formData = {
             ...formValues,
+            Migration_TypeId:headerValue?.title,
+            Object_Type:props.location.state?.data?.Label,
             "upload_files": {
-              ...AttachmentList
+                ...AttachmentList
             }
 
         }
@@ -80,7 +83,7 @@ export default function CreateFeature(props) {
     console.log(formValues)
 
     const onchangefile = (e, value) => {
-        
+
         const { files } = e.target;
         if (files.length > 0) {
             const filesystem = [...file];
@@ -95,10 +98,10 @@ export default function CreateFeature(props) {
                 });
                 setfile(filesystem);
 
-                
+
                 setAttachmentList({
                     ...AttachmentList,
-                    [value]:filesystem
+                    [value]: filesystem
                 })
 
                 // setUploadingDoc(false);
@@ -132,9 +135,9 @@ export default function CreateFeature(props) {
     }
 
 
-     console.log(props.location.state)
+    console.log(props.location.state)
 
-      console.log(AttachmentList)
+    console.log(AttachmentList)
     return (
 
         <MenuAppBar>
@@ -153,7 +156,7 @@ export default function CreateFeature(props) {
                 <Grid container direction='row' xs={12} spacing={4}>
 
                     <Grid item xs={6}>
-                        <Autocomplete
+                        {/* <Autocomplete
                             fullWidth
                             id="grouped-demo"
                             options={[
@@ -174,10 +177,30 @@ export default function CreateFeature(props) {
                                     variant="outlined"
                                 />
                             )}
+                        /> */}
+
+
+                        <TextField
+                            id="outlined-multiline-static"
+                            label="Migration Type"
+                            multiline
+                            rows={1}
+                            onChange={(e) => handleChange(e)}
+                            label="Migration Type"
+                            // defaultValue="Default Value"
+                            value={headerValue?.title}
+                            variant="outlined"
+                            required
+                            disabled
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            fullWidth
                         />
+
                     </Grid>
                     <Grid item xs={6}>
-                        <Autocomplete
+                        {/* <Autocomplete
                             fullWidth
                             id="grouped-demo"
                             options={[
@@ -199,6 +222,26 @@ export default function CreateFeature(props) {
                                     variant="outlined"
                                 />
                             )}
+                        /> */}
+
+                        <TextField
+                            id="outlined-multiline-static"
+                            name="Object_Type"
+                            fullWidth
+                            label="Object Type"
+                            multiline
+                            rows={1}
+                            onChange={(e) => handleChange(e)}
+
+                            // defaultValue="Default Value"
+                            value={props.location.state?.data?.Label}
+                            variant="outlined"
+                            required
+                            disabled
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            fullWidth
                         />
 
                     </Grid>
@@ -398,7 +441,7 @@ export default function CreateFeature(props) {
                                     className={classes.input}
                                     id="contained-button-file3"
                                     multiple={true}
-                                    onChange={(e)=>onchangefile(e, "Source_Attachment")}
+                                    onChange={(e) => onchangefile(e, "Source_Attachment")}
                                     type="file"
                                 />
                                 <label htmlFor="contained-button-file3">
@@ -422,7 +465,7 @@ export default function CreateFeature(props) {
                                     id="contained-button-file1"
                                     multiple={true}
 
-                                    onChange={(e)=>onchangefile(e, "Conversion_Attachment")}
+                                    onChange={(e) => onchangefile(e, "Conversion_Attachment")}
                                     type="file"
                                 />
                                 <label htmlFor="contained-button-file1">
@@ -444,7 +487,7 @@ export default function CreateFeature(props) {
                                     className={classes.input}
                                     id="contained-button-file2"
                                     multiple={true}
-                                    onChange={(e)=>onchangefile(e, "Target_Attachment")}
+                                    onChange={(e) => onchangefile(e, "Target_Attachment")}
                                     type="file"
                                     name='Target_Attachment'
                                 />
@@ -514,8 +557,8 @@ export default function CreateFeature(props) {
                                 fullWidth
                                 variant="contained"
                                 color="primary"
-                                // className={classes.submit}
-                                // onClick={handlePreviewdata}
+                            // className={classes.submit}
+                            // onClick={handlePreviewdata}
 
                             >
                                 Convert
