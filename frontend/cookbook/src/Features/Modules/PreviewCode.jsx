@@ -7,6 +7,10 @@ import { Box, Grid, Paper, TextField } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Container from '@material-ui/core/Container';
+import EditIcon from '@material-ui/icons/Edit';
+import Button from '@material-ui/core/Button';
+import Link from '@material-ui/core/Link';
+
 
 export default function PreviewCode(props) {
   const [detaildata, setDetaildata] = useState([]);
@@ -54,6 +58,25 @@ export default function PreviewCode(props) {
   var data = null;
   if (detaildata.length > 0) {
     data = <>
+    <Box py={1}>
+          <Typography gutterBottom variant="h4" component="h2" style={{textAlign:'center'}}>
+              Detail View
+          </Typography>
+
+          <Typography gutterBottom variant="h7" component="h2" style={{textAlign:'right'}}>
+          <Link
+            component="button"
+            variant="body2"
+            onClick={() => {
+              console.info("I'm a button.");
+            }}
+            style={{textDecoration:'none'}}
+          >
+           <b>Edit Feature</b>
+          </Link>
+          </Typography>
+        
+       </Box>
       <Grid container spacing={2}>
         <Grid item xs={6}>
           <Typography gutterBottom variant="h5" component="h2">
@@ -270,7 +293,17 @@ export default function PreviewCode(props) {
 
 
       </Grid>
+      <Box py={2}>
+        <div style={{textAlign:'center'}}>
+        <Button variant="outlined" color="primary" endIcon={<EditIcon/>}
+        // onClick={}
+        >
+        Edit
+      </Button>
+      </div>
+       </Box>
 
+      
 
     </>
   }
@@ -332,7 +365,9 @@ export default function PreviewCode(props) {
     //   </form>
     // </>
     <div>
+        
       {data}
+      
     </div>
 
   );
