@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     width: drawerWidth,
     background: "#3f51b5",
+    
   },
   drawerContainer: {
     overflow: "auto",
@@ -54,11 +55,13 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
-    width: '100%'
+    width: '100%',
+    
   },
   notchedOutline: {
     borderWidth: "1px",
     borderColor: "yellow !important",
+
   },
   inputRoot: {
     color: "white",
@@ -204,7 +207,7 @@ export default function ClippedDrawer({ children }) {
                   <TextField
                    
                     {...params}
-                    label="MigrationTypes                     "
+                    label="MigrationTypes"
                     variant="outlined"
                   />
                 )}

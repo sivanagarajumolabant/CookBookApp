@@ -128,7 +128,7 @@ function StyledTreeItem(props) {
           {sub && (
             <Delete
               color="inherit"
-              style={{color:'#DA2009'}}
+              style={{color:'#900C3F'}}
               className={classes.labelIcon}
 
               onClick={() => deleteitem(datavalue)}
