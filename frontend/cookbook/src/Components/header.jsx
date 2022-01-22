@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     
   },
   drawerContainer: {
-    overflow: "auto",
+    // overflow: "auto",
     background: "#3f51b5",
   },
   content: {
