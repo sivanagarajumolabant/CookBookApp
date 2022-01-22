@@ -280,8 +280,16 @@ export default function ClippedDrawer({ children }) {
         }}
       >
         <Toolbar />
+        
         <div className={classes.drawerContainer}>
-          <Box py={5}>
+        <Typography
+            variant="body2"
+            style={{ color: "white",paddingTop:10,paddingLeft:45 }}
+          >
+             Database Objects 
+          </Typography>
+          <Divider />
+          <Box py={1}>
             <GmailTreeView menuList={menuList}
             dropdown={dropdown}
             deleteitem={deleteitem}

@@ -88,6 +88,8 @@ function StyledTreeItem(props) {
   } = props;
 
   return (
+    <>
+    
     <TreeItem
       label={
         <div className={classes.labelRoot}>
@@ -128,7 +130,7 @@ function StyledTreeItem(props) {
           {sub && (
             <Delete
               color="inherit"
-              style={{color:'#900C3F'}}
+              style={{color:'#FCBFD7'}}
               className={classes.labelIcon}
 
               onClick={() => deleteitem(datavalue)}
@@ -152,6 +154,7 @@ function StyledTreeItem(props) {
       }}
       {...other}
     />
+    </>
   );
 }
 
