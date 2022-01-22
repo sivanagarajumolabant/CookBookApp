@@ -48,7 +48,12 @@ export default function CreateFeature(props) {
             }
 
         }
-        axios.post("http://127.0.0.1:8000/api/create", formData)
+        axios.post("http://127.0.0.1:8000/api/create", formData,{
+            headers: {
+                'Content-Type': 'application/json',
+                 Accept: 'application/json'
+            }
+        })
             .then(res => {
                 console.log(res.data)
             }, error => {
@@ -101,7 +106,7 @@ export default function CreateFeature(props) {
 
                 setAttachmentList({
                     ...AttachmentList,
-                    [value]: filesystem
+                    [value]: filesystem[0].name
                 })
 
                 // setUploadingDoc(false);

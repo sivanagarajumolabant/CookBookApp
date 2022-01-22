@@ -25,14 +25,14 @@ const useTreeItemStyles = makeStyles((theme) => ({
     "&:hover > $content": {
       backgroundColor: theme.palette.action.hover,
     },
-    "&:focus > $content, &$selected > $content": {
-      backgroundColor: `var(--tree-view-bg-color, ${theme.palette.grey[400]})`,
-      color: "var(--tree-view-color)",
-    },
+    // "&:focus > $content, &$selected > $content": {
+    //   backgroundColor: `var(--tree-view-bg-color, ${theme.palette.grey[400]})`,
+    //   color: "var(--tree-view-color)",
+    // },
     "&:focus > $content $label, &:hover > $content $label, &$selected > $content $label":
-      {
-        backgroundColor: "transparent",
-      },
+    {
+      backgroundColor: "transparent",
+    },
   },
   content: {
     color: theme.palette.text.secondary,
@@ -112,27 +112,30 @@ function StyledTreeItem(props) {
             <AddIcon
               color="inherit"
               className={classes.labelIcon}
+              style={{color:'#0BCD19'}}
+
               onClick={() =>
                 history.push({
                   pathname: "/CreateModule",
                   state: {
-                    data: {...data, type:props.dropdown?.name},
-                    
+                    data: { ...data, type: props.dropdown?.name },
+
                   },
                 })
               }
             />
           )}
-           {sub && (
+          {sub && (
             <Delete
               color="inherit"
+              style={{color:'#DA2009'}}
               className={classes.labelIcon}
-             
-            onClick={()=>deleteitem(datavalue)}
+
+              onClick={() => deleteitem(datavalue)}
             />
           )}
 
-          
+
         </div>
       }
       style={{
@@ -177,7 +180,7 @@ export default function GmailTreeView({ menuList, dropdown, deleteitem }) {
     history.push("/dashboard");
   };
 
-   
+
 
   return (
     <TreeView
@@ -210,7 +213,7 @@ export default function GmailTreeView({ menuList, dropdown, deleteitem }) {
                   labelIcon={ViewModuleIcon}
                   deleteitem={deleteitem}
                   datavalue={data}
-                  // data={data}
+                // data={data}
                 />
               );
             })}
