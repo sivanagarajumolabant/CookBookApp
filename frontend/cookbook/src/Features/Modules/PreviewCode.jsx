@@ -22,7 +22,7 @@ export default function PreviewCode(props) {
     if (menuitem) {
 
 
-      axios.get(`http://127.0.0.1:8000/api/detail/${menuitem || 1}`).then(
+      axios.get(`http://127.0.0.1:8000/api/detail/${menuitem || null}`).then(
         (res) => {
           console.log(res);
           setDetaildata(res.data);
@@ -34,21 +34,20 @@ export default function PreviewCode(props) {
       );
     }
   }, [menuitem]);
-  useEffect(() => {
 
 
+  // useEffect(() => {
+  //   axios.get(`http://127.0.0.1:8000/api/detail/${1}`).then(
+  //     (res) => {
+  //       console.log(res);
+  //       setDetaildata(res.data);
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //     }
+  //   );
 
-    axios.get(`http://127.0.0.1:8000/api/detail/${1}`).then(
-      (res) => {
-        console.log(res);
-        setDetaildata(res.data);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-
-  }, []);
+  // }, []);
 
 
 
