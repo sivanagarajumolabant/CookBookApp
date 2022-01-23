@@ -32,6 +32,9 @@ import { useDispatch } from "react-redux";
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
+  floatingLabelFocusStyle: {
+    color: "white"
+  },
   root: {
     display: "flex",
   },
@@ -46,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     width: drawerWidth,
     background: "#3f51b5",
-    
+
   },
   drawerContainer: {
     // overflow: "auto",
@@ -56,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
     width: '100%',
-    
+
   },
   notchedOutline: {
     borderWidth: "1px",
@@ -81,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
       borderColor: "white"
     }
   },
-  
+
 }));
 
 
@@ -122,7 +125,7 @@ export default function ClippedDrawer({ children }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openview = Boolean(anchorEl);
   const [menuList, setmenuList] = React.useState([]);
-  const [dropdown, setdropdown] = React.useState({name:'Oracle To Postgres'});
+  const [dropdown, setdropdown] = React.useState({ name: 'Oracle To Postgres' });
   const dispatch = useDispatch();
   const history = useHistory()
   const handleChange = (event) => {
@@ -161,12 +164,12 @@ export default function ClippedDrawer({ children }) {
     dispatch(ActionMenu.dropdown(v));
   };
 
-   const deleteitem=async(data)=>{
-     
+  const deleteitem = async (data) => {
+
     const res = await axios.delete(`${API_BASE_URL}/delete/${data.Feature_Id}`);
     getmenus(1);
 
-   }
+  }
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -202,13 +205,16 @@ export default function ClippedDrawer({ children }) {
                 getOptionLabel={(option) => option.title}
                 style={{ width: 300 }}
                 onChange={(e, v) => handleversion(v)}
-               
+
                 renderInput={(params) => (
                   <TextField
-                   
+
                     {...params}
                     label="MigrationTypes"
                     variant="outlined"
+                    InputLabelProps={{
+                      className: classes.floatingLabelFocusStyle,
+                    }}
                   />
                 )}
               />
@@ -228,13 +234,16 @@ export default function ClippedDrawer({ children }) {
                 defaultValue={{ title: "v1", code: 1 }}
                 style={{ width: 300 }}
 
-                
+
                 renderInput={(params) => (
                   <TextField
-                   
+
                     {...params}
                     label="Migration Type  Versions"
                     variant="outlined"
+                    InputLabelProps={{
+                      className: classes.floatingLabelFocusStyle,
+                    }}
                   />
                 )}
               />
@@ -280,19 +289,19 @@ export default function ClippedDrawer({ children }) {
         }}
       >
         <Toolbar />
-        
+
         <div className={classes.drawerContainer}>
-        <Typography
+          <Typography
             variant="body2"
-            style={{ color: "white",paddingTop:10,paddingLeft:45 }}
+            style={{ color: "white", paddingTop: 10, paddingLeft: 45 }}
           >
-             Database Objects 
+            Database Objects
           </Typography>
           <Divider />
           <Box py={1}>
             <GmailTreeView menuList={menuList}
-            dropdown={dropdown}
-            deleteitem={deleteitem}
+              dropdown={dropdown}
+              deleteitem={deleteitem}
             />
           </Box>
         </div>
