@@ -173,8 +173,11 @@ export default function CreateFeature(props) {
         setConveratt(data)
 
     }
-
-
+    const handlePreviewdata = () => {
+        //    var source_code =
+        console.log(formValues.Source_Code)
+    }
+    // console.log(formValues)
     return (
 
         <MenuAppBar>
@@ -678,16 +681,15 @@ export default function CreateFeature(props) {
                                 fullWidth
                                 variant="contained"
                                 color="primary"
-                            // className={classes.submit}
-                            // onClick={handlePreviewdata}
-
+                                // className={classes.submit}
+                                onClick={handlePreviewdata}
                             >
                                 Convert
                             </Button>
                         </Grid>
                         <Grid item>
                             <Button
-                                type="submit"
+                                type="button"
                                 fullWidth
                                 variant="contained"
                                 color="primary"
