@@ -3,36 +3,94 @@ import axios from "axios";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
-import { Box, Grid, Paper, TextField } from "@material-ui/core";
+import { Box, Grid, Paper, TextField, Button } from "@material-ui/core";
 import { useSelector } from "react-redux";
-import CardActionArea from '@material-ui/core/CardActionArea';
-import Container from '@material-ui/core/Container';
-import EditIcon from '@material-ui/icons/Edit';
-import Button from '@material-ui/core/Button';
-// import Link from '@material-ui/core/Link';
-import {Link} from 'react-router-dom';
+import CardActionArea from "@material-ui/core/CardActionArea";
+import Container from "@material-ui/core/Container";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import EditSharpIcon from "@material-ui/icons/EditSharp";
+import { useHistory, Link } from "react-router-dom";
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+  },
+
+  Object_Type: {
+    margin: "16px 0",
+    fontSize: "30px",
+    fontWeight: 400,
+    lineHeight: 1,
+    letterSpacing: "0em",
+    paddingLeft: 1
+  },
+
+  Description: {
+    margin: "0 0 40px",
+    fontSize: "1rem",
+    fontWeight: 400,
+    lineHeight: 1.334,
+    letterSpacing: "0em",
+    paddingLeft: 5,
+  },
+
+  SourceDescription: {
+    display: "block",
+    lineHeight: 1.5,
+    fontSize: "1.15rem",
+    borderRadius: "10px",
+    marginBlockStart: "1em",
+    marginBlockEnd: "1em",
+    marginInlineStart: "0px",
+    marginInlineEnd: " 0px",
+    webkitJustifyContent: "center",
+    justifyContent: "center",
+    padding: "20px",
+    backgroundColor: "#E7EBF0",
+    paddingLeft: 30,
+  },
+
+  SourceCode: {
+    margin: "24px auto",
+    padding: "24px",
+    fontSize: "1.35rem",
+    color: "#FFF",
+    overflow: "auto",
+    direction: "ltr",
+    maxHeight: "500px",
+    lineHeight: 2,
+    // maxWidth: "calc(100vw - 32px)",
+    borderRadius: " 5px",
+    backgroundColor: " #272c34",
+    webkitOverflowScrolling: "touch",
+  },
+
+  Editpart: {
+    borderRadius: "5px",
+    justifyItems: "center",
+    padding: "10px 5px 0px 5px",
+    // backgroundColor: "#E7EBF0",
+  },
+}));
 
 
 
 export default function PreviewCode(props) {
+  const classes = useStyles();
   const [detaildata, setDetaildata] = useState([]);
   const id = props.InfoId;
+  let history = useHistory();
+  const [isdata, setIsdata] = useState(false);
 
-  const [isdata, setIsdata] = useState(false)
-
-
-  const { menuitem } = useSelector(state => state.dashboardReducer);
+  const { menuitem } = useSelector((state) => state.dashboardReducer);
   console.log(menuitem);
 
   useEffect(() => {
     if (menuitem) {
-
-
       axios.get(`http://127.0.0.1:8000/api/detail/${menuitem || null}`).then(
         (res) => {
           console.log(res);
           setDetaildata(res.data);
-          setIsdata(true)
+          setIsdata(true);
         },
         (error) => {
           console.log(error);
@@ -40,9 +98,8 @@ export default function PreviewCode(props) {
       );
     }
   }, [menuitem]);
-
-
   // useEffect(() => {
+
   //   axios.get(`http://127.0.0.1:8000/api/detail/${1}`).then(
   //     (res) => {
   //       console.log(res);
@@ -59,253 +116,318 @@ export default function PreviewCode(props) {
 
   var data = null;
   if (detaildata.length > 0) {
-    data = <>
-    <Box py={1}>
-          <Typography gutterBottom variant="h4" component="h2" style={{textAlign:'center'}}>
-              Detail View
-          </Typography>
+    data = (
+      <>
+        <Grid container justify="space-between">
+          <Grid container>
+            {/* <Grid item >
+              <Typography style={{paddingLeft:370}} variant="h4">
+                  <b>Detail View</b>
+              </Typography>
+            </Grid> */}
+            <Grid item>
 
-          <Typography gutterBottom variant="h7" component="h2" style={{textAlign:'right'}}>
-          <Link
-            to={{
-              pathname: "/edit",
-              data: detaildata // your data array of objects
-            }}
-          >Edit</Link>
-          </Typography>
-        
-       </Box>
-      <Grid container spacing={2}>
-        <Grid item xs={6}>
-          <Typography gutterBottom variant="h5" component="h2">
-            Object Type
-          </Typography>
-          {/* <Typography component="h2"> */}
-          <div style={{ paddingLeft: 30 }}>
-            {detaildata[0].Object_Type.split("\n").map((i, key) => {
-              return <div key={key}>{i}</div>;
-            })
-            }
-            {/* </Typography> */}
-          </div>
+              <Link
+                style={{ textDecoration: 'none', paddingLeft: 950 }}
+                to={{
+                  pathname: `/edit/${detaildata[0].Feature_Id}`,
+                  data: detaildata // your data array of objects
+                }}
+              >Edit</Link>
+            </Grid>
+          </Grid>
 
-        </Grid>
-
-        <Grid item xs={6}>
-          <Typography gutterBottom variant="h5" component="h2">
-            Feature Name
-          </Typography>
-          {/* <Typography component="h2"> */}
-          <div style={{ paddingLeft: 30 }}>
-            {detaildata[0].Feature_Name.split("\n").map((i, key) => {
-              return <div key={key}>{i}</div>;
-            })
-            }
-            {/* </Typography> */}
-          </div>
-
-        </Grid>
-        <Grid item xs={6}>
-          <Typography gutterBottom variant="h5" component="h2">
-            Level
-          </Typography>
-          {/* <Typography component="h2"> */}
-          <div style={{ paddingLeft: 30 }}>
-            {detaildata[0].Level.split("\n").map((i, key) => {
-              return <div key={key}>{i}</div>;
-            })
-            }
-            {/* </Typography> */}
-          </div>
-
-        </Grid>
-
-        <Grid item xs={6}>
-          <Typography gutterBottom variant="h5" component="h2">
-            Seq No
-          </Typography>
-          {/* <Typography component="h2"> */}
-          <div style={{ paddingLeft: 30 }}>
-            {detaildata[0].Sequence_Number}
-          </div>
-
-        </Grid>
-
-        <Grid item xs={12}>
-          <Typography gutterBottom variant="h5" component="h2">
-            Source Feature Description
-          </Typography>
-          {/* <Typography component="h2"> */}
-          <div style={{ paddingLeft: 30 }}>
-            {detaildata[0].Source_FeatureDescription.split("\n").map((i, key) => {
-              return <div key={key}>{i}</div>;
-            })
-            }
-            {/* </Typography> */}
-          </div>
-
-        </Grid>
-
-        <Grid item xs={12}>
-          <Typography gutterBottom variant="h5" component="h2">
-            Source Code
-          </Typography>
-          <div style={{ paddingLeft: 30 }}>
-            <Card style={{ paddingLeft: 30, backgroundColor: "black", color: "white" }}>
-              {/* <Typography component="h2"> */}
-              {detaildata[0].Source_Code.split("\n").map((i, key) => {
+          <Grid item sm={6} md={6} lg={3}>
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="h2"
+              className={classes.Object_Type}
+            >
+              Object Type
+            </Typography>
+            {/* <Typography component="h2"> */}
+            <div className={classes.Description}>
+              {detaildata[0].Object_Type.split("\n").map((i, key) => {
                 return <div key={key}>{i}</div>;
-              })
-              }
-            </Card>
-          </div>
-          {/* </Typography> */}
+              })}
+              {/* </Typography> */}
+            </div>
+          </Grid>
 
-        </Grid>
+          <Grid item sm={6} md={6} lg={3}>
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="h2"
+              className={classes.Object_Type}
+            >
+              Feature Name
+            </Typography>
+            {/* <Typography component="h2"> */}
+            <div className={classes.Description}>
+              {detaildata[0].Feature_Name.split("\n").map((i, key) => {
+                return <div key={key}>{i}</div>;
+              })}
+              {/* </Typography> */}
+            </div>
+          </Grid>
+          <Grid item sm={6} md={6} lg={3}>
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="h2"
+              className={classes.Object_Type}
+            >
+              Level
+            </Typography>
+            {/* <Typography component="h2"> */}
+            <div className={classes.Description}>
+              {detaildata[0].Level.split("\n").map((i, key) => {
+                return <div key={key}>{i}</div>;
+              })}
+              {/* </Typography> */}
+            </div>
+          </Grid>
 
-        <Grid item xs={12}>
-          <Typography gutterBottom variant="h5" component="h2">
-            Target Feature Description
-          </Typography>
-          {/* <Typography component="h2"> */}
-          <div style={{ paddingLeft: 30 }}>
-            {detaildata[0].Target_FeatureDescription.split("\n").map((i, key) => {
-              return <div key={key}>{i}</div>;
-            })
-            }
+          <Grid item sm={6} md={6} lg={3}>
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="h2"
+              className={classes.Object_Type}
+            >
+              Seq No
+            </Typography>
+            {/* <Typography component="h2"> */}
+            <div className={classes.Description}>
+              {detaildata[0].Sequence_Number}
+            </div>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="h2"
+              className={classes.Object_Type}
+            >
+              Source Feature Description
+            </Typography>
+            {/* <Typography component="h2"> */}
+            <div className={classes.SourceDescription} >
+              {detaildata[0].Source_FeatureDescription.split("\n").map(
+                (i, key) => {
+                  return <div key={key}>{i}</div>;
+                }
+              )}
+              {/* </Typography> */}
+            </div>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="h2"
+              className={classes.Object_Type}
+            >
+              Source Code
+            </Typography>
+            <div>
+              <Card className={classes.SourceCode}>
+                {/* <Typography component="h2"> */}
+                {detaildata[0].Source_Code.split("\n").map((i, key) => {
+                  return <div key={key}>{i}</div>;
+                })}
+              </Card>
+            </div>
             {/* </Typography> */}
-          </div>
+          </Grid>
 
-        </Grid>
+          <Grid item xs={12}>
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="h2"
+              className={classes.Object_Type}
+            >
+              Target Feature Description
+            </Typography>
+            {/* <Typography component="h2"> */}
+            <div className={classes.SourceDescription}>
+              {detaildata[0].Target_FeatureDescription.split("\n").map(
+                (i, key) => {
+                  return <div key={key}>{i}</div>;
+                }
+              )}
+              {/* </Typography> */}
+            </div>
+          </Grid>
 
-        <Grid item xs={12}>
-          <Typography gutterBottom variant="h5" component="h2">
-            Target Actual Code
-          </Typography>
-          <div style={{ paddingLeft: 30 }}>
-            <Card style={{ paddingLeft: 30, backgroundColor: "black", color: "white" }}>
-              {/* <Typography component="h2"> */}
-              {detaildata[0].Target_ActualCode.split("\n").map((i, key) => {
-                return <div key={key}>{i}</div>;
-              })
-              }
-            </Card>
-          </div>
-          {/* </Typography> */}
+          <Grid item xs={12}>
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="h2"
+              className={classes.Object_Type}
+            >
+              Target Actual Code
+            </Typography>
+            <div>
+              <Card className={classes.SourceCode}>
+                {/* <Typography component="h2"> */}
+                {detaildata[0].Target_ActualCode.split("\n").map((i, key) => {
+                  return <div key={key}>{i}</div>;
+                })}
+              </Card>
+            </div>
+            {/* </Typography> */}
+          </Grid>
 
-        </Grid>
+          <Grid item xs={12}>
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="h2"
+              className={classes.Object_Type}
+            >
+              Target Expected Code
+            </Typography>
+            <div>
+              <Card className={classes.SourceCode}>
+                {/* <Typography component="h2"> */}
+                {detaildata[0].Target_Expected_Output.split("\n").map(
+                  (i, key) => {
+                    return <div key={key}>{i}</div>;
+                  }
+                )}
+              </Card>
+            </div>
+            {/* </Typography> */}
+          </Grid>
 
+          <Grid item xs={12}>
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="h2"
+              className={classes.Object_Type}
+            >
+              Conversion Description
+            </Typography>
+            <div className={classes.SourceDescription}>
+              {/* <Card style={{ paddingLeft: 30, backgroundColor: "black", color: "white" }}> */}
+              {detaildata[0].Conversion_Description.split("\n").map(
+                (i, key) => {
+                  return <div key={key}>{i}</div>;
+                }
+              )}
+              {/* </Card> */}
+            </div>
+            {/* </Typography> */}
+          </Grid>
 
-        <Grid item xs={12}>
-          <Typography gutterBottom variant="h5" component="h2">
-            Target Expected Code
-          </Typography>
-          <div style={{ paddingLeft: 30 }}>
-            <Card style={{ paddingLeft: 30, backgroundColor: "black", color: "white" }}>
-              {/* <Typography component="h2"> */}
-              {detaildata[0].Target_Expected_Output.split("\n").map((i, key) => {
-                return <div key={key}>{i}</div>;
-              })
-              }
-            </Card>
-          </div>
-          {/* </Typography> */}
+          <Grid item xs={12}>
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="h2"
+              className={classes.Object_Type}
+            >
+              Conversion Module
+            </Typography>
+            <div>
+              <Card className={classes.SourceCode}>
+                {/* <Typography component="h2"> */}
+                {detaildata[0].Conversion_Code.split("\n").map((i, key) => {
+                  return <div key={key}>{i}</div>;
+                })}
+              </Card>
+            </div>
+            {/* </Typography> */}
+          </Grid>
 
-        </Grid>
-
-        <Grid item xs={12}>
-          <Typography gutterBottom variant="h5" component="h2">
-            Conversion Description
-          </Typography>
-          <div style={{ paddingLeft: 30 }}>
-            {/* <Card style={{ paddingLeft: 30, backgroundColor: "black", color: "white" }}> */}
-            {detaildata[0].Conversion_Description.split("\n").map((i, key) => {
-              return <div key={key}>{i}</div>;
-            })
-            }
-            {/* </Card> */}
-
-          </div>
-          {/* </Typography> */}
-
-        </Grid>
-
-        <Grid item xs={12}>
-          <Typography gutterBottom variant="h5" component="h2">
-            Conversion Module
-          </Typography>
-          <div style={{ paddingLeft: 30 }}>
-            <Card style={{ paddingLeft: 30, backgroundColor: "black", color: "white" }}>
-              {/* <Typography component="h2"> */}
-              {detaildata[0].Conversion_Code.split("\n").map((i, key) => {
-                return <div key={key}>{i}</div>;
-              })
-              }
-            </Card>
-          </div>
-          {/* </Typography> */}
-
-        </Grid>
-
-        <Grid item xs={12}>
-          <Typography gutterBottom variant="h5" component="h2">
-            Source Attachments
-          </Typography>
-          <div style={{ paddingLeft: 30 }}>
-            <Card style={{ paddingLeft: 30, backgroundColor: "black", color: "white" }}>
+          <Grid item xs={12}>
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="h2"
+              className={classes.Object_Type}
+            >
+              Source Attachments
+            </Typography>
+            <div>
+              {/* <Card className={classes.SourceCode}> */}
               {/* <Typography component="h2"> */}
               {detaildata[0].upload_files.Source_Attachment}
-            </Card>
-          </div>
-          {/* </Typography> */}
-
-        </Grid>
-        <Grid item xs={12}>
-          <Typography gutterBottom variant="h5" component="h2">
-            Target Attachments
-          </Typography>
-          <div style={{ paddingLeft: 30 }}>
-            <Card style={{ paddingLeft: 30, backgroundColor: "black", color: "white" }}>
+              {/* </Card> */}
+            </div>
+            {/* </Typography> */}
+          </Grid>
+          <Grid item xs={12}>
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="h2"
+              className={classes.Object_Type}
+            >
+              Target Attachments
+            </Typography>
+            <div>
+              {/* <Card className={classes.SourceCode}> */}
               {/* <Typography component="h2"> */}
               {detaildata[0].upload_files.Target_Attachment}
-            </Card>
-          </div>
-          {/* </Typography> */}
-
-        </Grid>
-        <Grid item xs={12}>
-          <Typography gutterBottom variant="h5" component="h2">
-            Conversion Attachments
-          </Typography>
-          <div style={{ paddingLeft: 30 }}>
-            <Card style={{ paddingLeft: 30, backgroundColor: "black", color: "white" }}>
+              {/* </Card> */}
+            </div>
+            {/* </Typography> */}
+          </Grid>
+          <Grid item xs={12}>
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="h2"
+              className={classes.Object_Type}
+            >
+              Conversion Attachments
+            </Typography>
+            <div>
+              {/* <Card className={classes.SourceCode}> */}
               {/* <Typography component="h2"> */}
               {detaildata[0].upload_files.Conversion_Attachment}
-            </Card>
-          </div>
-          {/* </Typography> */}
-
+              {/* </Card> */}
+            </div>
+            {/* </Typography> */}
+          </Grid>
         </Grid>
 
 
+        <Grid container justifyContent="center">
+
+          <Grid item>
+            <Button
+              variant="contained"
+              color="primary"
+              component="span"
+
+              startIcon={<EditSharpIcon />}
+              onClick={() =>
+                history.push({
+                  pathname: `/edit/${detaildata[0].Feature_Id}`,
+                    data: { detaildata},
+
+                })
+              }
+            >
+              Edit
+            </Button>
+          </Grid>
+        </Grid>
 
 
-      </Grid>
-      <Box py={2}>
-        <div style={{textAlign:'center'}}>
-        <Button variant="outlined" color="primary" endIcon={<EditIcon/>}
-        // onClick={}
-        >
-        Edit
-      </Button>
-      </div>
-       </Box>
-
-      
-
-    </>
+      </>
+    );
   }
-
 
   return (
     // <>
@@ -362,12 +484,7 @@ export default function PreviewCode(props) {
     //     </Grid>
     //   </form>
     // </>
-    <div>
-        
-      {data}
-      
-    </div>
-
+    <div>{data}</div>
   );
 }
 
@@ -392,7 +509,6 @@ export default function PreviewCode(props) {
 //      if(menuitem)
 //      {
 
-     
 //     axios.get(`http://127.0.0.1:8000/api/detail/${menuitem||1}`).then(
 //       (res) => {
 //         console.log(res);
@@ -405,9 +521,7 @@ export default function PreviewCode(props) {
 //      }
 //   }, [menuitem]);
 //   useEffect(() => {
-   
 
-    
 //    axios.get(`http://127.0.0.1:8000/api/detail/${1}`).then(
 //      (res) => {
 //        console.log(res);
@@ -417,13 +531,8 @@ export default function PreviewCode(props) {
 //        console.log(error);
 //      }
 //    );
-    
+
 //  }, []);
- 
-
-
-
-  
 
 //   return (
 //       <>
@@ -449,11 +558,11 @@ export default function PreviewCode(props) {
 //                 return (
 //                   <Grid item xs={6}>
 //                     <TextField
-                    
+
 //                       label="Feature Name"
 //                       multiline
 //                       InputProps={{
-                      
+
 //                         disableUnderline: !edit, // <== added this
 //                       }}
 //                       label={list}
@@ -462,7 +571,7 @@ export default function PreviewCode(props) {
 //                         list ==="Target_ActualCode" ||
 //                         list ==="Target_Expected_Output" ||
 //                         list ==="Conversion_Code"||list==="Conversion_Description "||list==="Target_FeatureDescription"||list==="Source_FeatureDescription "
-                        
+
 //                           ? 10
 //                           : 1
 //                       }
@@ -482,7 +591,6 @@ export default function PreviewCode(props) {
 //           );
 //         })}
 //       </Grid>
-
 
 //       <Box py={5}>
 
@@ -517,7 +625,7 @@ export default function PreviewCode(props) {
 // </Grid>
 // </Box>
 //     </form>
-    
+
 //     </>}
 //     </>
 //   );

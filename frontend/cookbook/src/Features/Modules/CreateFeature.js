@@ -34,8 +34,11 @@ export default function CreateFeature(props) {
 
     const [formValues, setformvalues] = useState({ Migration_TypeId: props.location.state?.data?.type, Object_Type: props.location.state?.data?.Label })
     const [file, setfile] = useState([])
-    const [AttachmentList, setAttachmentList] = useState({})
+    // const [AttachmentList, setAttachmentList] = useState({})
     const { headerValue } = useSelector(state => state.dashboardReducer);
+    const [source_att, setSourceatt] = useState([])
+    const [target_att, setTargetatt] = useState([])
+    const [conver_att, setConveratt] = useState([])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -44,16 +47,13 @@ export default function CreateFeature(props) {
             Migration_TypeId:headerValue?.title,
             Object_Type:props.location.state?.data?.Label,
             "upload_files": {
-                ...AttachmentList
+                'Source_Attachment':source_att[0].name,
+                "Conversion_Attachment":conver_att[0].name,
+                "Target_Attachment":target_att[0].name
             }
 
         }
-        axios.post("http://127.0.0.1:8000/api/create", formData,{
-            headers: {
-                'Content-Type': 'application/json',
-                 Accept: 'application/json'
-            }
-        })
+        axios.post("http://127.0.0.1:8000/api/create", formData)
             .then(res => {
                 console.log(res.data)
             }, error => {
@@ -77,6 +77,15 @@ export default function CreateFeature(props) {
 
 
     }
+
+    const handlechangedropdownlevel = (v) => {
+        setformvalues({
+            ...formValues,
+            "Level": v.title
+        })
+
+
+    }
     const handlechangedropdownobj = (v) => {
         setformvalues({
             ...formValues,
@@ -85,9 +94,7 @@ export default function CreateFeature(props) {
 
 
     }
-    console.log(formValues)
-
-    const onchangefile = (e, value) => {
+    const onchangefile_source = (e) => {
 
         const { files } = e.target;
         if (files.length > 0) {
@@ -101,48 +108,73 @@ export default function CreateFeature(props) {
                     size: file.size,
                     type: file.type
                 });
-                setfile(filesystem);
-
-
-                setAttachmentList({
-                    ...AttachmentList,
-                    [value]: filesystem[0].name
-                })
-
-                // setUploadingDoc(false);
-
-
+                setSourceatt(filesystem);
             }
-            console.log(filesystem)
+            // console.log(filesystem)
         }
+    }
 
 
+    const onchangefile_target = (e) => {
 
-        // setformvalues({
-        //     ...formValues,
-        //  files:[
-        //      ...file,
-        //      e.target.files[0]
-        //  ]
-        // })
+        const { files } = e.target;
+        if (files.length > 0) {
+            const filesystem = [...file];
+            for (let i = 0; i < files.length; i++) {
 
+                const file = files[i];
+
+                filesystem.push({
+                    name: file.name,
+                    size: file.size,
+                    type: file.type
+                });
+                setTargetatt(filesystem);
+            }
+            // console.log(filesystem)
+        }
+    }
+    const onchangefile_conver = (e) => {
+
+        const { files } = e.target;
+        if (files.length > 0) {
+            const filesystem = [...file];
+            for (let i = 0; i < files.length; i++) {
+
+                const file = files[i];
+
+                filesystem.push({
+                    name: file.name,
+                    size: file.size,
+                    type: file.type
+                });
+                setConveratt(filesystem);
+            }
+            // console.log(filesystem)
+        }
     }
 
 
 
 
 
-
-    const handledetale = (value) => {
+    const handledetale_source = (value) => {
         const data = file.filter((item) => item.name != value.name)
-        setfile(data)
+        setSourceatt(data)
+
+    }
+    const handledetale_target = (value) => {
+        const data = file.filter((item) => item.name != value.name)
+        setTargetatt(data)
+
+    }
+    const handledetale_conv = (value) => {
+        const data = file.filter((item) => item.name != value.name)
+        setConveratt(data)
 
     }
 
 
-    console.log(props.location.state)
-
-    console.log(AttachmentList)
     return (
 
         <MenuAppBar>
@@ -272,20 +304,30 @@ export default function CreateFeature(props) {
                     </Grid>
 
                     <Grid item xs={4}>
-
-                        <TextField
-                            id="outlined-multiline-static"
-                            label="Level"
-                            multiline
+                    <Autocomplete
                             fullWidth
-                            onChange={(e) => handleChange(e)}
-                            rows={1}
-                            name='Level'
-                            // defaultValue="Default Value"
-
-                            variant="outlined"
-                            required
+                            id="grouped-demo"
+                            options={[
+                                { title: "Programlevel" },
+                                { title: "Statementlevel" },
+                               
+                            ]}
+                            groupBy={""}
+                            defaultValue={{ title: 'Programlevel' }}
+                            getOptionLabel={(option) => option.title}
+                            name="Level"
+                            onChange={(e, v) => handlechangedropdownlevel(v)}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    fullWidth
+                                    label="Level"
+                                    variant="outlined"
+                                />
+                            )}
                         />
+
+
 
                     </Grid>
                     <Grid item xs={4}>
@@ -442,11 +484,11 @@ export default function CreateFeature(props) {
                         <Grid item>
                             <div className={classes.rootc}>
                                 <input
-                                    accept="image/*"
+                                    accept="file"
                                     className={classes.input}
                                     id="contained-button-file3"
                                     multiple={true}
-                                    onChange={(e) => onchangefile(e, "Source_Attachment")}
+                                    onChange={(e) => onchangefile_source(e, "Source_Attachment")}
                                     type="file"
                                 />
                                 <label htmlFor="contained-button-file3">
@@ -465,12 +507,12 @@ export default function CreateFeature(props) {
                         <Grid item>
                             <div className={classes.rootc}>
                                 <input
-                                    accept="image/*"
+                                    accept="file"
                                     className={classes.input}
                                     id="contained-button-file1"
                                     multiple={true}
 
-                                    onChange={(e) => onchangefile(e, "Conversion_Attachment")}
+                                    onChange={(e) => onchangefile_target(e, "Conversion_Attachment")}
                                     type="file"
                                 />
                                 <label htmlFor="contained-button-file1">
@@ -488,11 +530,11 @@ export default function CreateFeature(props) {
                         <Grid item>
                             <div className={classes.rootc}>
                                 <input
-                                    accept="image/*"
+                                    accept="file"
                                     className={classes.input}
                                     id="contained-button-file2"
                                     multiple={true}
-                                    onChange={(e) => onchangefile(e, "Target_Attachment")}
+                                    onChange={(e) => onchangefile_conver(e, "Target_Attachment")}
                                     type="file"
                                     name='Target_Attachment'
                                 />
@@ -508,14 +550,11 @@ export default function CreateFeature(props) {
                     </Grid>
                 </Box>
 
-                <Box py={3}>
-                    <Grid container xs={8}>
-
-
-
+                <Grid container py={3} lg={12}>
+                    <Grid container xs={3} lg={4}>
                         <Grid item xs>
                             <Grid container direction='column'>
-                                {file.map(item => {
+                                {source_att.map(item => {
                                     return (
                                         <>
 
@@ -532,7 +571,7 @@ export default function CreateFeature(props) {
 
 
                                                     <Grid item>
-                                                        <CloseIcon onClick={() => handledetale(item)} />
+                                                        <CloseIcon onClick={() => handledetale_source(item)} />
                                                     </Grid>
                                                 </Grid>
 
@@ -550,7 +589,84 @@ export default function CreateFeature(props) {
 
 
                     </Grid>
-                </Box>
+                    
+                    <Grid container xs={3} lg={4}>
+                        <Grid item xs>
+                            <Grid container direction='column'>
+                                {target_att.map(item => {
+                                    return (
+                                        <>
+
+                                            <Grid item>
+
+                                                <Grid container direction='row' justifyContent='space-around'>
+
+                                                    <Grid item>
+                                                        <Typography variant='caption'>
+                                                            {item.name}
+                                                        </Typography>
+                                                    </Grid>
+
+
+
+                                                    <Grid item>
+                                                        <CloseIcon onClick={() => handledetale_target(item)} />
+                                                    </Grid>
+                                                </Grid>
+
+
+
+                                            </Grid>
+
+                                        </>
+                                    )
+                                })}
+
+                            </Grid>
+                        </Grid>
+
+
+
+                    </Grid>
+                    <Grid container xs={3} lg={4}>
+                        <Grid item xs>
+                            <Grid container direction='column'>
+                                {conver_att.map(item => {
+                                    return (
+                                        <>
+
+                                            <Grid item>
+
+                                                <Grid container direction='row' justifyContent='space-around'>
+
+                                                    <Grid item>
+                                                        <Typography variant='caption'>
+                                                            {item.name}
+                                                        </Typography>
+                                                    </Grid>
+
+
+
+                                                    <Grid item>
+                                                        <CloseIcon onClick={() => handledetale_conv(item)} />
+                                                    </Grid>
+                                                </Grid>
+
+
+
+                                            </Grid>
+
+                                        </>
+                                    )
+                                })}
+
+                            </Grid>
+                        </Grid>
+
+
+
+                    </Grid>
+                </Grid>
 
                 <Box py={5}>
 
