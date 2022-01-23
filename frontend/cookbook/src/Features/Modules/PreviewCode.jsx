@@ -9,7 +9,9 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import Container from '@material-ui/core/Container';
 import EditIcon from '@material-ui/icons/Edit';
 import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
+// import Link from '@material-ui/core/Link';
+import {Link} from 'react-router-dom';
+
 
 
 export default function PreviewCode(props) {
@@ -65,15 +67,11 @@ export default function PreviewCode(props) {
 
           <Typography gutterBottom variant="h7" component="h2" style={{textAlign:'right'}}>
           <Link
-            component="button"
-            variant="body2"
-            onClick={() => {
-              console.info("I'm a button.");
+            to={{
+              pathname: "/edit",
+              data: detaildata // your data array of objects
             }}
-            style={{textDecoration:'none'}}
-          >
-           <b>Edit Feature</b>
-          </Link>
+          >Edit</Link>
           </Typography>
         
        </Box>
