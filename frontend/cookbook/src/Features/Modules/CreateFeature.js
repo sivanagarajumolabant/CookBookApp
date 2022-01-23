@@ -44,12 +44,12 @@ export default function CreateFeature(props) {
         e.preventDefault();
         let formData = {
             ...formValues,
-            Migration_TypeId:headerValue?.title,
-            Object_Type:props.location.state?.data?.Label,
+            Migration_TypeId: headerValue?.title,
+            Object_Type: props.location.state?.data?.Label,
             "upload_files": {
-                'Source_Attachment':source_att[0].name,
-                "Conversion_Attachment":conver_att[0].name,
-                "Target_Attachment":target_att[0].name
+                'Source_Attachment': source_att[0].name,
+                "Conversion_Attachment": conver_att[0].name,
+                "Target_Attachment": target_att[0].name
             }
 
         }
@@ -304,13 +304,13 @@ export default function CreateFeature(props) {
                     </Grid>
 
                     <Grid item xs={4}>
-                    <Autocomplete
+                        <Autocomplete
                             fullWidth
                             id="grouped-demo"
                             options={[
                                 { title: "Programlevel" },
                                 { title: "Statementlevel" },
-                               
+
                             ]}
                             groupBy={""}
                             defaultValue={{ title: 'Programlevel' }}
@@ -589,7 +589,7 @@ export default function CreateFeature(props) {
 
 
                     </Grid>
-                    
+
                     <Grid container xs={3} lg={4}>
                         <Grid item xs>
                             <Grid container direction='column'>
