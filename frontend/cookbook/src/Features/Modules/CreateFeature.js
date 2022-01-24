@@ -36,9 +36,13 @@ export default function CreateFeature(props) {
     const [file, setfile] = useState([])
     // const [AttachmentList, setAttachmentList] = useState({})
     const { headerValue } = useSelector(state => state.dashboardReducer);
-    const [source_att, setSourceatt] = useState([])
-    const [target_att, setTargetatt] = useState([])
-    const [conver_att, setConveratt] = useState([])
+    const [source_att, setSourceatt] = useState()
+    const [target_att, setTargetatt] = useState()
+    const [conver_att, setConveratt] = useState()
+
+    const [isSourceFilePicked, setIsDourceFilePicked] = useState(false);
+    const [isTargetFilePicked, setIsTargetFilePicked] = useState(false);
+    const [isConverFilePicked, setIsConverFilePicked] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -46,12 +50,6 @@ export default function CreateFeature(props) {
             ...formValues,
             Migration_TypeId: headerValue?.title,
             Object_Type: props.location.state?.data?.Label,
-            "upload_files": {
-                'Source_Attachment': source_att[0].name,
-                "Conversion_Attachment": conver_att[0].name,
-                "Target_Attachment": target_att[0].name
-            }
-
         }
         axios.post("http://127.0.0.1:8000/api/create", formData)
             .then(res => {
@@ -94,89 +92,158 @@ export default function CreateFeature(props) {
 
 
     }
+    // const onchangefile_source = (e) => {
+
+    //     const { files } = e.target;
+    //     if (files.length > 0) {
+    //         const filesystem = [...file];
+    //         for (let i = 0; i < files.length; i++) {
+
+    //             const file = files[i];
+
+    //             filesystem.push({
+    //                 name: file.name,
+    //                 size: file.size,
+    //                 type: file.type
+    //             });
+    //             setSourceatt(filesystem);
+    //         }
+    //         // console.log(filesystem)
+    //     }
+    // }
+
     const onchangefile_source = (e) => {
-
-        const { files } = e.target;
-        if (files.length > 0) {
-            const filesystem = [...file];
-            for (let i = 0; i < files.length; i++) {
-
-                const file = files[i];
-
-                filesystem.push({
-                    name: file.name,
-                    size: file.size,
-                    type: file.type
-                });
-                setSourceatt(filesystem);
-            }
-            // console.log(filesystem)
-        }
+        // setSourceatt(e.target.files[0])
+        setformvalues({
+            ...formValues,
+            "Source_Attachment": e.target.files[0]
+        })
+        setIsDourceFilePicked(true)
     }
-
-
     const onchangefile_target = (e) => {
-
-        const { files } = e.target;
-        if (files.length > 0) {
-            const filesystem = [...file];
-            for (let i = 0; i < files.length; i++) {
-
-                const file = files[i];
-
-                filesystem.push({
-                    name: file.name,
-                    size: file.size,
-                    type: file.type
-                });
-                setTargetatt(filesystem);
-            }
-            // console.log(filesystem)
-        }
+        setformvalues({
+            ...formValues,
+            "Target_Attachment": e.target.files[0]
+        })
+        isTargetFilePicked(true)
     }
     const onchangefile_conver = (e) => {
-
-        const { files } = e.target;
-        if (files.length > 0) {
-            const filesystem = [...file];
-            for (let i = 0; i < files.length; i++) {
-
-                const file = files[i];
-
-                filesystem.push({
-                    name: file.name,
-                    size: file.size,
-                    type: file.type
-                });
-                setConveratt(filesystem);
-            }
-            // console.log(filesystem)
-        }
+        setformvalues({
+            ...formValues,
+            "Conversion_Attachment": e.target.files[0]
+        })
+        isConverFilePicked(true)
     }
 
+    // const onchangefile_target = (e) => {
+
+    //     const { files } = e.target;
+    //     if (files.length > 0) {
+    //         const filesystem = [...file];
+    //         for (let i = 0; i < files.length; i++) {
+
+    //             const file = files[i];
+
+    //             filesystem.push({
+    //                 name: file.name,
+    //                 size: file.size,
+    //                 type: file.type
+    //             });
+    //             setTargetatt(filesystem);
+    //         }
+    //         // console.log(filesystem)
+    //     }
+    // }
+    // const onchangefile_conver = (e) => {
+
+    //     const { files } = e.target;
+    //     if (files.length > 0) {
+    //         const filesystem = [...file];
+    //         for (let i = 0; i < files.length; i++) {
+
+    //             const file = files[i];
+
+    //             filesystem.push({
+    //                 name: file.name,
+    //                 size: file.size,
+    //                 type: file.type
+    //             });
+    //             setConveratt(filesystem);
+    //         }
+    //         // console.log(filesystem)
+    //     }
+    // }
 
 
 
 
-    const handledetale_source = (value) => {
-        const data = file.filter((item) => item.name != value.name)
-        setSourceatt(data)
 
-    }
-    const handledetale_target = (value) => {
-        const data = file.filter((item) => item.name != value.name)
-        setTargetatt(data)
+    // const handledetale_source = (value) => {
+    //     const data = file.filter((item) => item.name != value.name)
+    //     setSourceatt(data)
 
-    }
-    const handledetale_conv = (value) => {
-        const data = file.filter((item) => item.name != value.name)
-        setConveratt(data)
+    // }
+    // const handledetale_target = (value) => {
+    //     const data = file.filter((item) => item.name != value.name)
+    //     setTargetatt(data)
 
-    }
+    // }
+    // const handledetale_conv = (value) => {
+    //     const data = file.filter((item) => item.name != value.name)
+    //     setConveratt(data)
+
+    // }
+
+
     const handlePreviewdata = () => {
         //    var source_code =
         console.log(formValues.Source_Code)
     }
+
+
+    var filesdata = null;
+    if (isSourceFilePicked === true) {
+        filesdata = <>
+            <Grid container py={3} lg={12}>
+                <Grid container xs={3} lg={4}>
+                    <Grid item xs>
+                        <Grid container direction='column'>
+                            {source_att.name}
+                        </Grid>
+                    </Grid>
+
+
+
+                </Grid>
+            </Grid>
+            {/* <Grid container py={3} lg={12}>
+                <Grid container xs={3} lg={4}>
+                    <Grid item xs>
+                        <Grid container direction='column'>
+                            {target_att.name}
+                        </Grid>
+                    </Grid>
+
+
+
+                </Grid>
+            </Grid>
+            <Grid container py={3} lg={12}>
+                <Grid container xs={3} lg={4}>
+                    <Grid item xs>
+                        <Grid container direction='column'>
+                            {conver_att.name}
+                        </Grid>
+                    </Grid>
+
+
+
+                </Grid>
+            </Grid> */}
+        </>
+
+    }
+
     // console.log(formValues)
     return (
 
@@ -458,7 +525,7 @@ export default function CreateFeature(props) {
                         />
                     </Grid>
 
-                    <Grid item xs={12}>
+                    {/* <Grid item xs={12}>
 
                         <TextField
                             fullWidth
@@ -472,7 +539,7 @@ export default function CreateFeature(props) {
                             variant="outlined"
                             required
                         />
-                    </Grid>
+                    </Grid> */}
 
 
                 </Grid>
@@ -553,7 +620,7 @@ export default function CreateFeature(props) {
                     </Grid>
                 </Box>
 
-                <Grid container py={3} lg={12}>
+                {/* <Grid container py={3} lg={12}>
                     <Grid container xs={3} lg={4}>
                         <Grid item xs>
                             <Grid container direction='column'>
@@ -591,9 +658,9 @@ export default function CreateFeature(props) {
 
 
 
-                    </Grid>
+                    </Grid> */}
 
-                    <Grid container xs={3} lg={4}>
+                {/* <Grid container xs={3} lg={4}>
                         <Grid item xs>
                             <Grid container direction='column'>
                                 {target_att.map(item => {
@@ -669,7 +736,9 @@ export default function CreateFeature(props) {
 
 
                     </Grid>
-                </Grid>
+                </Grid> */}
+
+                {filesdata}
 
                 <Box py={5}>
 
