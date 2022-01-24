@@ -42,6 +42,10 @@ import { useState } from "react";
 const drawerWidth = 375;
 
 const useStyles = makeStyles((theme) => ({
+  downloadbutton:{
+    position:'fixed',
+    bottom:0
+  },
   title: {
     marginLeft: 50,
     marginTop: 10
@@ -89,6 +93,7 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerContainer: {
     overflow: "auto",
+    height:'80vh',
     background: "#3f51b5",
   },
   content: {
@@ -403,9 +408,10 @@ export default function ClippedDrawer({ children }) {
               </Box>
               <Box py={1}>
                 <Button
-                  style={{ color: 'white', marginLeft: 20 }}
+                  style={{ color: 'white', marginLeft: 40, textTransform:'unset' }}
                   startIcon={<GetAppIcon />}
                   onClick={onDownload}
+                  className={classes.downloadbutton}
                 >
                   Python Template
                 </Button>

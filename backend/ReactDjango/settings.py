@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'corsheaders'
 ]
 
+
 CORS_ORIGIN_ALLOW_ALL=True
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -137,7 +138,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 MEDIA_URL = 'media/'
 MEDIA_URL = BASE_DIR1 + MEDIA_URL
-
+MEDIA_ROOT = os.path.join(BASE_DIR)
 
 CSRF_COOKIE_SECURE = True
 

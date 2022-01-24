@@ -6,6 +6,7 @@
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/cookbook/src/Components/header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/cookbook/src/Components/header.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/cookbook/src/Features/Modules/CreateFeature.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/cookbook/src/Features/Modules/CreateFeature.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/cookbook/src/Features/Modules/PreviewCode.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/cookbook/src/Features/Modules/PreviewCode.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +28,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Oraganizations/CookBook/backend" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Oraganizations/OraclePostgres" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunManager">

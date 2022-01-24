@@ -358,6 +358,8 @@ export default function PreviewCode(props) {
               {/* <Card className={classes.SourceCode}> */}
               {/* <Typography component="h2"> */}
               {detaildata[0].Source_Attachment}
+              <Link to={detaildata[0].Source_Attachment} target="_blank" download>Download</Link>
+              
               {/* </Card> */}
             </div>
             {/* </Typography> */}

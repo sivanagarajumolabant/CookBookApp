@@ -49,11 +49,16 @@ export default function CreateFeature(props) {
             ...formValues,
             Migration_TypeId: headerValue?.title,
             Object_Type: props.location.state?.data?.Label,
-            'Source_Attachment': source_att,
-            "Conversion_Attachment": conver_att,
-            "Target_Attachment": target_att
+            'Source_Attachment': null,
+            "Conversion_Attachment": null,
+            "Target_Attachment": null
         }
-        axios.post("http://127.0.0.1:8000/api/create", formData)
+        axios.post("http://127.0.0.1:8000/api/create", formData, {
+            headers: {
+                'content-type': 'multipart/form-data'
+               
+            }
+        })
             .then(res => {
                 console.log(res.data)
             }, error => {
@@ -176,6 +181,9 @@ export default function CreateFeature(props) {
 
     const handleConvert = (e) => {
         e.preventDefault();
+        console.log(formValues.Conversion_Code)
+        console.log(formValues.Source_Code)
+
     }
 
     return (
@@ -480,11 +488,11 @@ export default function CreateFeature(props) {
 
                 <Box py={4}>
                     <Grid container direction='row' spacing={2}>
-                        <Grid item style={{ marginTop: "6px" }} xs={6} sm={2} md={2} xl={2}>
+                        <Grid item style={{ marginTop: "6px" }} >
                             <Typography variant='body1'>   Source Attachemnts </Typography>
 
                         </Grid>
-                        <Grid item xs={6} sm={2} md={2} xl={2}>
+                        <Grid item >
                             <div className={classes.rootc}>
                                 <input
                                     accept="file"
@@ -503,11 +511,11 @@ export default function CreateFeature(props) {
                             </div>
                         </Grid>
 
-                        <Grid item style={{ marginTop: "6px" }} xs={6} sm={2} md={2} xl={2}>
+                        <Grid item style={{ marginTop: "6px" }} >
                             <Typography variant='body2'> Target Attachemnts :</Typography>
 
                         </Grid>
-                        <Grid item xs={6} sm={2} md={2} xl={2}>
+                        <Grid item >
                             <div className={classes.rootc}>
                                 <input
                                     accept="file"
@@ -526,11 +534,11 @@ export default function CreateFeature(props) {
 
                             </div>
                         </Grid>
-                        <Grid item style={{ marginTop: "6px" }} xs={6} sm={2} md={2} xl={2}>
+                        <Grid item style={{ marginTop: "6px" }} >
                             <Typography variant='body1'>   Conversion Attachemnts </Typography>
 
                         </Grid>
-                        <Grid item xs={6} sm={2} md={2} xl={2}>
+                        <Grid item>
                             <div className={classes.rootc}>
                                 <input
                                     accept="file"
