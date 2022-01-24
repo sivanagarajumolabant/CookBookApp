@@ -30,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CreateFeature(props) {
+    var obj_type = props.location.state?.data?.Label
+    obj_type = obj_type.slice(0, -1);
+
     const classes = useStyles();
 
     const [formValues, setformvalues] = useState({ Migration_TypeId: props.location.state?.data?.type, Object_Type: props.location.state?.data?.Label })
@@ -46,9 +49,9 @@ export default function CreateFeature(props) {
             ...formValues,
             Migration_TypeId: headerValue?.title,
             Object_Type: props.location.state?.data?.Label,
-            'Source_Attachment': null,
-            "Conversion_Attachment": null,
-            "Target_Attachment": null
+            'Source_Attachment': source_att,
+            "Conversion_Attachment": conver_att,
+            "Target_Attachment": target_att
         }
         axios.post("http://127.0.0.1:8000/api/create", formData)
             .then(res => {
@@ -171,6 +174,9 @@ export default function CreateFeature(props) {
 
     }
 
+    const handleConvert = (e) => {
+        e.preventDefault();
+    }
 
     return (
 
@@ -268,7 +274,7 @@ export default function CreateFeature(props) {
                             onChange={(e) => handleChange(e)}
 
                             // defaultValue="Default Value"
-                            value={props.location.state?.data?.Label}
+                            value={obj_type}
                             variant="outlined"
                             required
                             disabled
@@ -675,8 +681,8 @@ export default function CreateFeature(props) {
                                 fullWidth
                                 variant="contained"
                                 color="primary"
-                            // className={classes.submit}
-                            // onClick={handlePreviewdata}
+                                // className={classes.submit}
+                                onClick={handleConvert}
 
                             >
                                 Convert
@@ -692,7 +698,21 @@ export default function CreateFeature(props) {
                                 onClick={handleSubmit}
 
                             >
-                                Submit
+                                Save
+                            </Button>
+                        </Grid>
+
+                        <Grid item>
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                            // className={classes.submit}
+                            // onClick={handleSubmit}
+
+                            >
+                                Deploy
                             </Button>
                         </Grid>
                     </Grid>

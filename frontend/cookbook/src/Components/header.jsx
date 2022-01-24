@@ -1,8 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
+import GetAppIcon from '@material-ui/icons/GetApp';
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
+import Button from '@material-ui/core/Button';
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -40,9 +42,9 @@ import { useState } from "react";
 const drawerWidth = 375;
 
 const useStyles = makeStyles((theme) => ({
-  title:{
-    marginLeft:50,
-    marginTop:10
+  title: {
+    marginLeft: 50,
+    marginTop: 10
   },
   floatingLabelFocusStyle: {
     color: "white",
@@ -86,7 +88,7 @@ const useStyles = makeStyles((theme) => ({
 
   },
   drawerContainer: {
-    // overflow: "auto",
+    overflow: "auto",
     background: "#3f51b5",
   },
   content: {
@@ -130,7 +132,7 @@ const useStyles = makeStyles((theme) => ({
 
   inputRoot: {
     color: "white",
-    marginTop:5,
+    marginTop: 5,
     // This matches the specificity of the default styles at https://github.com/mui-org/material-ui/blob/v4.11.3/packages/material-ui-lab/src/Autocomplete/Autocomplete.js#L90
     '&[class*="MuiOutlinedInput-root"] .MuiAutocomplete-input:first-child': {
       // Default left padding is 6px
@@ -229,6 +231,14 @@ export default function ClippedDrawer({ children }) {
   const deleteitem = async (data) => {
     const res = await axios.delete(`${API_BASE_URL}/delete/${data.Feature_Id}`);
     getmenus(1);
+  };
+
+
+  const onDownload = () => {
+    const link = document.createElement("a");
+    link.download = `template.py`;
+    link.href = "./Files/template.py";
+    link.click();
   };
   return (
     <div className={classes.root}>
@@ -356,7 +366,7 @@ export default function ClippedDrawer({ children }) {
       {/* Side bar */}
 
       <Grid container>
-        <Grid itam>
+        <Grid item>
           <Drawer
             open={opens} onClose={() => setOpens(false)}
             // className={classes.drawer}
@@ -370,10 +380,19 @@ export default function ClippedDrawer({ children }) {
             <div className={classes.drawerContainer}>
               <Typography
                 variant="body2"
-                style={{ color: "white", paddingTop: 10, paddingLeft: 45 }}
+                style={{ color: "white", paddingTop: 0, paddingLeft: 45 }}
               >
                 Database Objects
               </Typography>
+              <Typography
+
+                style={{ color: "white", paddingTop: 10, paddingLeft: 35 }}
+              >
+
+
+
+              </Typography>
+
               <Divider />
               <Box py={1}>
                 <GmailTreeView
@@ -382,10 +401,22 @@ export default function ClippedDrawer({ children }) {
                   deleteitem={deleteitem}
                 />
               </Box>
+              <Box py={1}>
+                <Button
+                  style={{ color: 'white', marginLeft: 20 }}
+                  startIcon={<GetAppIcon />}
+                  onClick={onDownload}
+                >
+                  Python Template
+                </Button>
+              </Box>
             </div>
+
           </Drawer>
+
         </Grid>
-        <Grid itam >
+
+        <Grid item >
           <main
             className={classes.content}
           >

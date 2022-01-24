@@ -254,6 +254,10 @@ export default function EditFeature(props) {
 
     }
 
+    const handleConvert = (e)=>{
+        e.preventDefault();
+    }
+
 
     // console.log(props.location.state)
 
@@ -743,7 +747,7 @@ export default function EditFeature(props) {
                                 variant="contained"
                                 color="primary"
                             // className={classes.submit}
-                            // onClick={handlePreviewdata}
+                            onClick={handleConvert}
 
                             >
                                 Convert
@@ -759,7 +763,7 @@ export default function EditFeature(props) {
                                 onClick={handleSubmit}
 
                             >
-                                Submit
+                                Save
                             </Button>
                         </Grid>
                     </Grid>
