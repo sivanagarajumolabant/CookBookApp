@@ -322,27 +322,7 @@ export default function PreviewCode(props) {
             {/* </Typography> */}
           </Grid>
 
-          <Grid item  xs={12} sm={12} md={12} lg={12}>
-            <Typography
-              gutterBottom
-              variant="h5"
-              component="h2"
-              className={classes.Object_Type}
-            >
-              Conversion Description
-            </Typography>
-            <div className={classes.SourceDescription}>
-              {/* <Card style={{ paddingLeft: 30, backgroundColor: "black", color: "white" }}> */}
-              {detaildata[0].Conversion_Description.split("\n").map(
-                (i, key) => {
-                  return <div key={key}>{i}</div>;
-                }
-              )}
-              {/* </Card> */}
-            </div>
-            {/* </Typography> */}
-          </Grid>
-
+          
           <Grid item  xs={12} sm={12} md={12} lg={12}>
             <Typography
               gutterBottom
@@ -375,7 +355,7 @@ export default function PreviewCode(props) {
             <div>
               {/* <Card className={classes.SourceCode}> */}
               {/* <Typography component="h2"> */}
-              {detaildata[0].upload_files.Source_Attachment}
+              {detaildata[0].Source_Attachment}
               {/* </Card> */}
             </div>
             {/* </Typography> */}
@@ -392,7 +372,7 @@ export default function PreviewCode(props) {
             <div>
               {/* <Card className={classes.SourceCode}> */}
               {/* <Typography component="h2"> */}
-              {detaildata[0].upload_files.Target_Attachment}
+              {detaildata[0].Target_Attachment}
               {/* </Card> */}
             </div>
             {/* </Typography> */}
@@ -409,7 +389,7 @@ export default function PreviewCode(props) {
             <div>
               {/* <Card className={classes.SourceCode}> */}
               {/* <Typography component="h2"> */}
-              {detaildata[0].upload_files.Conversion_Attachment}
+              {detaildata[0].Conversion_Attachment}
               {/* </Card> */}
             </div>
             {/* </Typography> */}

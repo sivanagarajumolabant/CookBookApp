@@ -40,6 +40,10 @@ import { useState } from "react";
 const drawerWidth = 375;
 
 const useStyles = makeStyles((theme) => ({
+  title:{
+    marginLeft:50,
+    marginTop:10
+  },
   floatingLabelFocusStyle: {
     color: "white",
   },
@@ -50,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.drawer + 1,
     background: "#3f51b5",
   },
-  
+
   drawer: {
     flexShrink: 0,
     background: "#3f51b5",
@@ -60,16 +64,16 @@ const useStyles = makeStyles((theme) => ({
 
   drawerPaper: {
     [theme.breakpoints.down('xs')]: {
-      marginTop:150,
-      width:drawerWidth,
+      marginTop: 150,
+      width: drawerWidth,
     },
     [theme.breakpoints.down('sm')]: {
-      marginTop:95,
-      width:drawerWidth,
-      position:"relative"
+      marginTop: 95,
+      width: drawerWidth,
+      position: "relative"
     },
     [theme.breakpoints.up('md')]: {
-      marginTop:20,
+      marginTop: 20,
       width: 240,
       background: "#3f51b5",
     },
@@ -77,9 +81,9 @@ const useStyles = makeStyles((theme) => ({
       width: 240,
       background: "#3f51b5",
     },
-    
 
-    
+
+
   },
   drawerContainer: {
     // overflow: "auto",
@@ -87,45 +91,46 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     [theme.breakpoints.down('xs')]: {
-    display:"block",
-    padding:40,
-    width: drawerWidth,
-    padding: theme.spacing(1),
-    
+      display: "block",
+      padding: 40,
+      width: drawerWidth,
+      padding: theme.spacing(1),
+
     },
     [theme.breakpoints.down('sm')]: {
-      padding:40,
+      padding: 40,
       width: drawerWidth,
-      
+
       padding: theme.spacing(1),
-      
+
     },
     [theme.breakpoints.up('md')]: {
-    
+
     },
     [theme.breakpoints.up('lg')]: {
       flexGrow: 1,
-      marginLeft:260,
+      marginLeft: 260,
       padding: theme.spacing(1),
-      width: "82%",
+      width: "78%",
     },
-   
+
+
   },
   notchedOutline: {
     borderWidth: "1px",
     borderColor: "yellow !important",
   },
 
-  logoutbtn:{
-  // marginLeft:"0.5px",
+  logoutbtn: {
+    // marginLeft:"0.5px",
     // marginRight: "-1px",
-   
-    
+
+
   },
 
   inputRoot: {
     color: "white",
-
+    marginTop:5,
     // This matches the specificity of the default styles at https://github.com/mui-org/material-ui/blob/v4.11.3/packages/material-ui-lab/src/Autocomplete/Autocomplete.js#L90
     '&[class*="MuiOutlinedInput-root"] .MuiAutocomplete-input:first-child': {
       // Default left padding is 6px
@@ -171,7 +176,7 @@ const StyledAutocomplete = styled(Autocomplete)({
 
 export default function ClippedDrawer({ children }) {
   const classes = useStyles();
-  const [opens, setOpens] = useState(false); 
+  const [opens, setOpens] = useState(false);
   //   const classes = useStyles();
   const theme = useTheme();
 
@@ -233,26 +238,26 @@ export default function ClippedDrawer({ children }) {
           <Grid
             container
             // direction="row"
-            
-            spacing={2} 
-            // style={{ paddingLeft: "3rem" }}
+
+            spacing={2}
+          // style={{ paddingLeft: "3rem" }}
           >
             <Grid item
-           xm={12} sm={12}  md={3} lg={3}
-             onClick={() => history.push("/dashboard")}>
+              xm={12} sm={12} md={3} lg={3}
+              onClick={() => history.push("/dashboard")}>
               <Typography variant="h6" className={classes.title}>
                 Cookbook
               </Typography>
             </Grid>
 
-            <Grid item 
-           xm={12} sm={6} md={4} lg={4}
+            <Grid item
+              xm={12} sm={6} md={4} lg={4}
             // style={{ paddingRight: "1rem" }} 
             >
               <StyledAutocomplete
                 size="small"
                 id="grouped-demo"
-                // className={classes.inputRoot}
+                className={classes.inputRoot}
                 options={[
                   { title: "Oracle To Postgres", code: 1 },
                   { title: "Oracle TO SQLServer", code: 2 },
@@ -301,41 +306,41 @@ export default function ClippedDrawer({ children }) {
                 )}
               />
             </Grid>
-            
-         
-          {auth && (
-            <Grid item xm={6} sm={1} md={1} lg={1} className={classes.logoutbtn}>
-              <IconButton
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={openview}
-                onClose={handleClose}
-              >
-                <MenuItem 
-               
-                 onClick={handleroute}>Logout</MenuItem>
-              </Menu>
-            </Grid>
-          )}
-          {/* <Grid item xm={6} sm={6} md={6} lg={1}>
+
+
+            {auth && (
+              <Grid item xm={6} sm={1} md={1} lg={1} className={classes.logoutbtn}>
+                <IconButton
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleMenu}
+                  color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={openview}
+                  onClose={handleClose}
+                >
+                  <MenuItem
+
+                    onClick={handleroute}>Logout</MenuItem>
+                </Menu>
+              </Grid>
+            )}
+            {/* <Grid item xm={6} sm={6} md={6} lg={1}>
             <IconButton 
             color="inherit"
             onClick={() => setOpens(true)}>
@@ -343,52 +348,52 @@ export default function ClippedDrawer({ children }) {
               <DehazeSharpIcon/>
             </IconButton>
           </Grid> */}
-           </Grid>
+          </Grid>
         </Toolbar>
       </AppBar>
 
 
       {/* Side bar */}
 
-<Grid container>
-  <Grid itam>
-      <Drawer
-       open={opens} onClose={() => setOpens(false)}
-        // className={classes.drawer}
-        variant="permanent"
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <Toolbar />
-
-        <div className={classes.drawerContainer}>
-          <Typography
-            variant="body2"
-            style={{ color: "white", paddingTop: 10, paddingLeft: 45 }}
+      <Grid container>
+        <Grid itam>
+          <Drawer
+            open={opens} onClose={() => setOpens(false)}
+            // className={classes.drawer}
+            variant="permanent"
+            classes={{
+              paper: classes.drawerPaper,
+            }}
           >
-            Database Objects
-          </Typography>
-          <Divider />
-          <Box py={1}>
-            <GmailTreeView
-              menuList={menuList}
-              dropdown={dropdown}
-              deleteitem={deleteitem}
-            />
-          </Box>
-        </div>
-      </Drawer>
-      </Grid>
-      <Grid itam >
-        <main 
-        className={classes.content}
-        >
-          <Toolbar />
-          {children}
-        </main>
-      </Grid>
-      
+            <Toolbar />
+
+            <div className={classes.drawerContainer}>
+              <Typography
+                variant="body2"
+                style={{ color: "white", paddingTop: 10, paddingLeft: 45 }}
+              >
+                Database Objects
+              </Typography>
+              <Divider />
+              <Box py={1}>
+                <GmailTreeView
+                  menuList={menuList}
+                  dropdown={dropdown}
+                  deleteitem={deleteitem}
+                />
+              </Box>
+            </div>
+          </Drawer>
+        </Grid>
+        <Grid itam >
+          <main
+            className={classes.content}
+          >
+            <Toolbar />
+            {children}
+          </main>
+        </Grid>
+
       </Grid>
       {/* <Footer /> */}
     </div>
