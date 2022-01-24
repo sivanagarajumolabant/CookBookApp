@@ -12,7 +12,7 @@ import EditSharpIcon from "@material-ui/icons/EditSharp";
 import { useHistory, Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
+    // display: "flex",
   },
 
   Object_Type: {
@@ -70,7 +70,10 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px 5px 0px 5px",
     // backgroundColor: "#E7EBF0",
   },
+
+
 }));
+
 
 
 
@@ -118,26 +121,38 @@ export default function PreviewCode(props) {
   if (detaildata.length > 0) {
     data = (
       <>
-        <Grid container justify="space-between">
-          <Grid container>
-            {/* <Grid item >
-              <Typography style={{paddingLeft:370}} variant="h4">
+        <Grid container >
+          <Grid container justifyContent="flex-end" style={{paddingTop:30}}>
+            {/* <Grid item xs={6} sm={6} md={6} lg={6} >
+              <Typography
+               style={{paddingLeft:370}} variant="h4"
+               >
                   <b>Detail View</b>
               </Typography>
             </Grid> */}
-            <Grid item>
+            <Grid item >
+            
+            <Button
+              variant="contained"
+              color="primary"
+              component="span"
 
-              <Link
-                style={{ textDecoration: 'none', paddingLeft: 950 }}
-                to={{
+              startIcon={<EditSharpIcon />}
+              onClick={() =>
+                history.push({
                   pathname: `/edit/${detaildata[0].Feature_Id}`,
-                  data: detaildata // your data array of objects
-                }}
-              >Edit</Link>
+                    data: { detaildata},
+
+                })
+              }
+            >
+              Edit
+            </Button>
+            
             </Grid>
           </Grid>
 
-          <Grid item sm={6} md={6} lg={3}>
+          <Grid item xs={12} sm={6} md={6} lg={3}>
             <Typography
               gutterBottom
               variant="h5"
@@ -155,7 +170,7 @@ export default function PreviewCode(props) {
             </div>
           </Grid>
 
-          <Grid item sm={6} md={6} lg={3}>
+          <Grid item xs={12} sm={6} md={6} lg={3}>
             <Typography
               gutterBottom
               variant="h5"
@@ -172,7 +187,7 @@ export default function PreviewCode(props) {
               {/* </Typography> */}
             </div>
           </Grid>
-          <Grid item sm={6} md={6} lg={3}>
+          <Grid item xs={12} sm={6} md={6} lg={3}>
             <Typography
               gutterBottom
               variant="h5"
@@ -190,7 +205,7 @@ export default function PreviewCode(props) {
             </div>
           </Grid>
 
-          <Grid item sm={6} md={6} lg={3}>
+          <Grid item xs={12} sm={6} md={6} lg={3}>
             <Typography
               gutterBottom
               variant="h5"
@@ -205,7 +220,7 @@ export default function PreviewCode(props) {
             </div>
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={12} md={12} lg={12}>
             <Typography
               gutterBottom
               variant="h5"
@@ -225,7 +240,7 @@ export default function PreviewCode(props) {
             </div>
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid item  xs={12} sm={12} md={12} lg={12}>
             <Typography
               gutterBottom
               variant="h5"
@@ -245,7 +260,7 @@ export default function PreviewCode(props) {
             {/* </Typography> */}
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid item  xs={12}sm={12} md={12} lg={12}>
             <Typography
               gutterBottom
               variant="h5"
@@ -265,7 +280,7 @@ export default function PreviewCode(props) {
             </div>
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid item  xs={12} sm={12} md={12} lg={12}>
             <Typography
               gutterBottom
               variant="h5"
@@ -285,7 +300,7 @@ export default function PreviewCode(props) {
             {/* </Typography> */}
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid item  xs={12} sm={12} md={12} lg={12}>
             <Typography
               gutterBottom
               variant="h5"
@@ -307,7 +322,7 @@ export default function PreviewCode(props) {
             {/* </Typography> */}
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid item  xs={12} sm={12} md={12} lg={12}>
             <Typography
               gutterBottom
               variant="h5"
@@ -328,7 +343,7 @@ export default function PreviewCode(props) {
             {/* </Typography> */}
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid item  xs={12} sm={12} md={12} lg={12}>
             <Typography
               gutterBottom
               variant="h5"
@@ -348,7 +363,7 @@ export default function PreviewCode(props) {
             {/* </Typography> */}
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid item  xs={12} sm={12} md={12} lg={12}>
             <Typography
               gutterBottom
               variant="h5"
@@ -365,7 +380,7 @@ export default function PreviewCode(props) {
             </div>
             {/* </Typography> */}
           </Grid>
-          <Grid item xs={12}>
+          <Grid item  xs={12} sm={12} md={12} lg={12}>
             <Typography
               gutterBottom
               variant="h5"
@@ -382,7 +397,7 @@ export default function PreviewCode(props) {
             </div>
             {/* </Typography> */}
           </Grid>
-          <Grid item xs={12}>
+          <Grid item  xs={12} sm={12} md={12} lg={12}>
             <Typography
               gutterBottom
               variant="h5"

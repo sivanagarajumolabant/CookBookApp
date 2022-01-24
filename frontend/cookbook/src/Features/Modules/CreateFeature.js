@@ -36,13 +36,9 @@ export default function CreateFeature(props) {
     const [file, setfile] = useState([])
     // const [AttachmentList, setAttachmentList] = useState({})
     const { headerValue } = useSelector(state => state.dashboardReducer);
-    const [source_att, setSourceatt] = useState()
-    const [target_att, setTargetatt] = useState()
-    const [conver_att, setConveratt] = useState()
-
-    const [isSourceFilePicked, setIsDourceFilePicked] = useState(false);
-    const [isTargetFilePicked, setIsTargetFilePicked] = useState(false);
-    const [isConverFilePicked, setIsConverFilePicked] = useState(false);
+    const [source_att, setSourceatt] = useState([])
+    const [target_att, setTargetatt] = useState([])
+    const [conver_att, setConveratt] = useState([])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -50,6 +46,12 @@ export default function CreateFeature(props) {
             ...formValues,
             Migration_TypeId: headerValue?.title,
             Object_Type: props.location.state?.data?.Label,
+            "upload_files": {
+                'Source_Attachment': source_att[0].name,
+                "Conversion_Attachment": conver_att[0].name,
+                "Target_Attachment": target_att[0].name
+            }
+
         }
         axios.post("http://127.0.0.1:8000/api/create", formData)
             .then(res => {
@@ -92,159 +94,87 @@ export default function CreateFeature(props) {
 
 
     }
-    // const onchangefile_source = (e) => {
-
-    //     const { files } = e.target;
-    //     if (files.length > 0) {
-    //         const filesystem = [...file];
-    //         for (let i = 0; i < files.length; i++) {
-
-    //             const file = files[i];
-
-    //             filesystem.push({
-    //                 name: file.name,
-    //                 size: file.size,
-    //                 type: file.type
-    //             });
-    //             setSourceatt(filesystem);
-    //         }
-    //         // console.log(filesystem)
-    //     }
-    // }
-
     const onchangefile_source = (e) => {
-        // setSourceatt(e.target.files[0])
-        setformvalues({
-            ...formValues,
-            "Source_Attachment": e.target.files[0]
-        })
-        setIsDourceFilePicked(true)
+
+        const { files } = e.target;
+        if (files.length > 0) {
+            const filesystem = [...file];
+            for (let i = 0; i < files.length; i++) {
+
+                const file = files[i];
+
+                filesystem.push({
+                    name: file.name,
+                    size: file.size,
+                    type: file.type
+                });
+                setSourceatt(filesystem);
+            }
+            // console.log(filesystem)
+        }
     }
+
+
     const onchangefile_target = (e) => {
-        setformvalues({
-            ...formValues,
-            "Target_Attachment": e.target.files[0]
-        })
-        isTargetFilePicked(true)
+
+        const { files } = e.target;
+        if (files.length > 0) {
+            const filesystem = [...file];
+            for (let i = 0; i < files.length; i++) {
+
+                const file = files[i];
+
+                filesystem.push({
+                    name: file.name,
+                    size: file.size,
+                    type: file.type
+                });
+                setTargetatt(filesystem);
+            }
+            // console.log(filesystem)
+        }
     }
     const onchangefile_conver = (e) => {
-        setformvalues({
-            ...formValues,
-            "Conversion_Attachment": e.target.files[0]
-        })
-        isConverFilePicked(true)
-    }
 
-    // const onchangefile_target = (e) => {
+        const { files } = e.target;
+        if (files.length > 0) {
+            const filesystem = [...file];
+            for (let i = 0; i < files.length; i++) {
 
-    //     const { files } = e.target;
-    //     if (files.length > 0) {
-    //         const filesystem = [...file];
-    //         for (let i = 0; i < files.length; i++) {
+                const file = files[i];
 
-    //             const file = files[i];
-
-    //             filesystem.push({
-    //                 name: file.name,
-    //                 size: file.size,
-    //                 type: file.type
-    //             });
-    //             setTargetatt(filesystem);
-    //         }
-    //         // console.log(filesystem)
-    //     }
-    // }
-    // const onchangefile_conver = (e) => {
-
-    //     const { files } = e.target;
-    //     if (files.length > 0) {
-    //         const filesystem = [...file];
-    //         for (let i = 0; i < files.length; i++) {
-
-    //             const file = files[i];
-
-    //             filesystem.push({
-    //                 name: file.name,
-    //                 size: file.size,
-    //                 type: file.type
-    //             });
-    //             setConveratt(filesystem);
-    //         }
-    //         // console.log(filesystem)
-    //     }
-    // }
-
-
-
-
-
-    // const handledetale_source = (value) => {
-    //     const data = file.filter((item) => item.name != value.name)
-    //     setSourceatt(data)
-
-    // }
-    // const handledetale_target = (value) => {
-    //     const data = file.filter((item) => item.name != value.name)
-    //     setTargetatt(data)
-
-    // }
-    // const handledetale_conv = (value) => {
-    //     const data = file.filter((item) => item.name != value.name)
-    //     setConveratt(data)
-
-    // }
-
-
-    const handlePreviewdata = () => {
-        //    var source_code =
-        console.log(formValues.Source_Code)
+                filesystem.push({
+                    name: file.name,
+                    size: file.size,
+                    type: file.type
+                });
+                setConveratt(filesystem);
+            }
+            // console.log(filesystem)
+        }
     }
 
 
-    var filesdata = null;
-    if (isSourceFilePicked === true) {
-        filesdata = <>
-            <Grid container py={3} lg={12}>
-                <Grid container xs={3} lg={4}>
-                    <Grid item xs>
-                        <Grid container direction='column'>
-                            {source_att.name}
-                        </Grid>
-                    </Grid>
 
 
 
-                </Grid>
-            </Grid>
-            {/* <Grid container py={3} lg={12}>
-                <Grid container xs={3} lg={4}>
-                    <Grid item xs>
-                        <Grid container direction='column'>
-                            {target_att.name}
-                        </Grid>
-                    </Grid>
+    const handledetale_source = (value) => {
+        const data = file.filter((item) => item.name != value.name)
+        setSourceatt(data)
 
+    }
+    const handledetale_target = (value) => {
+        const data = file.filter((item) => item.name != value.name)
+        setTargetatt(data)
 
-
-                </Grid>
-            </Grid>
-            <Grid container py={3} lg={12}>
-                <Grid container xs={3} lg={4}>
-                    <Grid item xs>
-                        <Grid container direction='column'>
-                            {conver_att.name}
-                        </Grid>
-                    </Grid>
-
-
-
-                </Grid>
-            </Grid> */}
-        </>
+    }
+    const handledetale_conv = (value) => {
+        const data = file.filter((item) => item.name != value.name)
+        setConveratt(data)
 
     }
 
-    // console.log(formValues)
+
     return (
 
         <MenuAppBar>
@@ -260,9 +190,9 @@ export default function CreateFeature(props) {
             </Box>
 
             <form autoComplete="off">
-                <Grid container direction='row' xs={12} spacing={4}>
+                <Grid container direction='row'  spacing={4}>
 
-                    <Grid item xs={6}>
+                    <Grid item xs={12} sm={6} md={6} xl={6}>
                         {/* <Autocomplete
                             fullWidth
                             id="grouped-demo"
@@ -306,7 +236,7 @@ export default function CreateFeature(props) {
                         />
 
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12} sm={6} md={6} xl={6}>
                         {/* <Autocomplete
                             fullWidth
                             id="grouped-demo"
@@ -356,7 +286,7 @@ export default function CreateFeature(props) {
 
 
 
-                    <Grid item xs={4}>
+                    <Grid item xs={12} sm={4} md={4} xl={4}>
                         <TextField
                             id="outlined-multiline-static"
                             label="Feature Name"
@@ -373,7 +303,7 @@ export default function CreateFeature(props) {
 
                     </Grid>
 
-                    <Grid item xs={4}>
+                    <Grid item xs={12} sm={4} md={4} xl={4}>
                         <Autocomplete
                             fullWidth
                             id="grouped-demo"
@@ -400,7 +330,7 @@ export default function CreateFeature(props) {
 
 
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={12} sm={4} md={4} xl={4}>
 
                         <TextField
                             id="outlined-multiline-static"
@@ -417,7 +347,7 @@ export default function CreateFeature(props) {
                         />
 
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sm={12} md={12} xl={12}>
 
 
                         <TextField
@@ -437,7 +367,7 @@ export default function CreateFeature(props) {
 
 
 
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sm={12} md={12} xl={12}>
 
 
                         <TextField
@@ -458,7 +388,7 @@ export default function CreateFeature(props) {
 
 
 
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sm={12} md={12} xl={12}>
 
 
                         <TextField
@@ -476,7 +406,7 @@ export default function CreateFeature(props) {
                     </Grid>
 
 
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sm={12} md={12} xl={12}>
                         <TextField
                             fullWidth
                             id="outlined-multiline-static"
@@ -495,7 +425,7 @@ export default function CreateFeature(props) {
 
 
 
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sm={12} md={12} xl={12}>
                         <TextField
                             fullWidth
                             id="outlined-multiline-static"
@@ -510,7 +440,7 @@ export default function CreateFeature(props) {
                         />
                     </Grid>
 
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sm={12} md={12} xl={12}>
                         <TextField
                             fullWidth
                             id="outlined-multiline-static"
@@ -525,7 +455,7 @@ export default function CreateFeature(props) {
                         />
                     </Grid>
 
-                    {/* <Grid item xs={12}>
+                    <Grid item xs={12} sm={12} md={12} xl={12}>
 
                         <TextField
                             fullWidth
@@ -539,7 +469,7 @@ export default function CreateFeature(props) {
                             variant="outlined"
                             required
                         />
-                    </Grid> */}
+                    </Grid>
 
 
                 </Grid>
@@ -547,11 +477,11 @@ export default function CreateFeature(props) {
 
                 <Box py={4}>
                     <Grid container direction='row' spacing={2}>
-                        <Grid item style={{ marginTop: "6px" }}>
+                        <Grid item style={{ marginTop: "6px" }} xs={6} sm={2} md={2} xl={2}>
                             <Typography variant='body1'>   Source Attachemnts </Typography>
 
                         </Grid>
-                        <Grid item>
+                        <Grid item xs={6} sm={2} md={2} xl={2}>
                             <div className={classes.rootc}>
                                 <input
                                     accept="file"
@@ -570,11 +500,11 @@ export default function CreateFeature(props) {
                             </div>
                         </Grid>
 
-                        <Grid item style={{ marginTop: "6px" }}>
+                        <Grid item style={{ marginTop: "6px" }} xs={6} sm={2} md={2} xl={2}>
                             <Typography variant='body2'> Target Attachemnts :</Typography>
 
                         </Grid>
-                        <Grid item>
+                        <Grid item xs={6} sm={2} md={2} xl={2}>
                             <div className={classes.rootc}>
                                 <input
                                     accept="file"
@@ -593,11 +523,11 @@ export default function CreateFeature(props) {
 
                             </div>
                         </Grid>
-                        <Grid item style={{ marginTop: "6px" }}>
+                        <Grid item style={{ marginTop: "6px" }} xs={6} sm={2} md={2} xl={2}>
                             <Typography variant='body1'>   Conversion Attachemnts </Typography>
 
                         </Grid>
-                        <Grid item>
+                        <Grid item xs={6} sm={2} md={2} xl={2}>
                             <div className={classes.rootc}>
                                 <input
                                     accept="file"
@@ -620,9 +550,9 @@ export default function CreateFeature(props) {
                     </Grid>
                 </Box>
 
-                {/* <Grid container py={3} lg={12}>
-                    <Grid container xs={3} lg={4}>
-                        <Grid item xs>
+                <Grid container>
+                    <Grid containr xs={12} sm={4} md={4} xl={4}>
+                        <Grid item >
                             <Grid container direction='column'>
                                 {source_att.map(item => {
                                     return (
@@ -630,7 +560,7 @@ export default function CreateFeature(props) {
 
                                             <Grid item>
 
-                                                <Grid container direction='row' justifyContent='space-around'>
+                                                <Grid container direction='row'>
 
                                                     <Grid item>
                                                         <Typography variant='caption'>
@@ -658,10 +588,10 @@ export default function CreateFeature(props) {
 
 
 
-                    </Grid> */}
+                    </Grid>
 
-                {/* <Grid container xs={3} lg={4}>
-                        <Grid item xs>
+                    <Grid container xs={12} sm={4} md={4} xl={4}>
+                        <Grid item>
                             <Grid container direction='column'>
                                 {target_att.map(item => {
                                     return (
@@ -669,7 +599,7 @@ export default function CreateFeature(props) {
 
                                             <Grid item>
 
-                                                <Grid container direction='row' justifyContent='space-around'>
+                                                <Grid container direction='row' justify='space-around'>
 
                                                     <Grid item>
                                                         <Typography variant='caption'>
@@ -698,8 +628,8 @@ export default function CreateFeature(props) {
 
 
                     </Grid>
-                    <Grid container xs={3} lg={4}>
-                        <Grid item xs>
+                    <Grid container xs={12} sm={4} md={4} xl={4}>
+                        <Grid item>
                             <Grid container direction='column'>
                                 {conver_att.map(item => {
                                     return (
@@ -707,7 +637,7 @@ export default function CreateFeature(props) {
 
                                             <Grid item>
 
-                                                <Grid container direction='row' justifyContent='space-around'>
+                                                <Grid container direction='row' justify='space-around'>
 
                                                     <Grid item>
                                                         <Typography variant='caption'>
@@ -736,29 +666,28 @@ export default function CreateFeature(props) {
 
 
                     </Grid>
-                </Grid> */}
-
-                {filesdata}
+                </Grid>
 
                 <Box py={5}>
 
                     <Grid container direction='row ' justifyContent='center' spacing={2}>
 
-                        <Grid item>
+                        <Grid item >
                             <Button
                                 type="submit"
                                 fullWidth
                                 variant="contained"
                                 color="primary"
-                                // className={classes.submit}
-                                onClick={handlePreviewdata}
+                            // className={classes.submit}
+                            // onClick={handlePreviewdata}
+
                             >
                                 Convert
                             </Button>
                         </Grid>
                         <Grid item>
                             <Button
-                                type="button"
+                                type="submit"
                                 fullWidth
                                 variant="contained"
                                 color="primary"
