@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 export default function EditFeature(props) {
     console.log(props.location.data)
     const editdata = props.location.data
-
+    // console.log("editdata", editdata.detaildata[0].Migration_TypeId)
     const classes = useStyles();
 
     const [formValues, setformvalues] = useState({ Migration_TypeId: props.location.state?.data?.type, Object_Type: props.location.state?.data?.Label })
@@ -51,13 +51,12 @@ export default function EditFeature(props) {
             Migration_TypeId: migtypeid,
             Object_Type: editdata[0].Object_Type,
             Feature_Name:editdata[0].Feature_Name,
-            "upload_files": {
-                'Source_Attachment': null,
-                "Conversion_Attachment": null,
-                "Target_Attachment": null
-            }
+            'Source_Attachment': null,
+            "Conversion_Attachment": null,
+            "Target_Attachment": null
+            
         }
-        axios.put(`http://127.0.0.1:8000/api/update/${editdata[0].Feature_Id}`, formData)
+        axios.put(`http://127.0.0.1:8000/api/update/${editdata.detaildata[0].Feature_Id}`, formData)
             .then(res => {
                 console.log(res.data)
             }, error => {
@@ -233,17 +232,17 @@ export default function EditFeature(props) {
 
     }
 
-    if (editdata) {
-        if (editdata[0].Migration_TypeId === '1') {
-            editdata[0].Migration_TypeId = 'Oracle To Postgres'
+    if (editdata.detaildata[0]) {
+        if (editdata.detaildata[0].Migration_TypeId === '1') {
+            editdata.detaildata[0].Migration_TypeId = 'Oracle To Postgres'
             setMigtypeid(1)
         }
-        else if (editdata[0].Migration_TypeId === '2') {
-            editdata[0].Migration_TypeId = 'Oracle TO SQLServer'
+        else if (editdata.detaildata[0].Migration_TypeId === '2') {
+            editdata.detaildata[0].Migration_TypeId = 'Oracle TO SQLServer'
             setMigtypeid(2)
         }
-        else if (editdata[0].Migration_TypeId === '3') {
-            editdata[0].Migration_TypeId = 'Oracle To MYSQL'
+        else if (editdata.detaildata[0].Migration_TypeId === '3') {
+            editdata.detaildata[0].Migration_TypeId = 'Oracle To MYSQL'
             setMigtypeid(3)
         }
     }
@@ -286,7 +285,7 @@ export default function EditFeature(props) {
                             onChange={(e) => handleChange(e)}
                             label="Migration Type"
                             // defaultValue="Default Value"
-                            value={editdata[0].Migration_TypeId}
+                            value={editdata.detaildata[0].Migration_TypeId}
                             variant="outlined"
                             required
                             disabled
@@ -305,7 +304,7 @@ export default function EditFeature(props) {
                             multiline
                             rows={1}
                             onChange={(e) => handleChange(e)}
-                            value={editdata[0].Object_Type}
+                            value={editdata.detaildata[0].Object_Type}
                             name="Object_Type"
                             variant="outlined"
                             required
@@ -324,7 +323,7 @@ export default function EditFeature(props) {
                             multiline
                             rows={1}
                             onChange={(e) => handleChange(e)}
-                            value={editdata[0].Feature_Name}
+                            value={editdata.detaildata[0].Feature_Name}
                             name='Feature_Name'
                             // defaultValue="Default Value"
                             variant="outlined"
@@ -376,7 +375,7 @@ export default function EditFeature(props) {
                             rows={1}
                             name='Sequence_Number'
                             // defaultValue="Default Value"
-                            value = {editdata[0].Sequence_Number}
+                            value = {editdata.detaildata[0].Sequence_Number}
                             variant="outlined"
                             required
                             InputLabelProps={{
@@ -395,7 +394,7 @@ export default function EditFeature(props) {
                             rows={15}
                             // defaultValue="Default Value"
                             name="Source_FeatureDescription"
-                            value={editdata[0].Source_FeatureDescription}
+                            value={editdata.detaildata[0].Source_FeatureDescription}
                             fullWidth
                             onChange={(e) => handleChange(e)}
                             variant="outlined"
@@ -422,7 +421,7 @@ export default function EditFeature(props) {
                             onChange={(e) => handleChange(e)}
                             // defaultValue="Default Value"
                             variant="outlined"
-                            value={editdata[0].Target_FeatureDescription}
+                            value={editdata.detaildata[0].Target_FeatureDescription}
                             required
                             InputLabelProps={{
                                 shrink: true,
@@ -447,7 +446,7 @@ export default function EditFeature(props) {
                             fullWidth
                             variant="outlined"
                             required
-                            value={editdata[0].Source_Code}
+                            value={editdata.detaildata[0].Source_Code}
                             InputLabelProps={{
                                 shrink: true,
                             }}
@@ -467,7 +466,7 @@ export default function EditFeature(props) {
                             // defaultValue="Default Value"
                             variant="outlined"
                             required
-                            value={editdata[0].Target_ActualCode}
+                            value={editdata.detaildata[0].Target_ActualCode}
                             InputLabelProps={{
                                 shrink: true,
                             }}
@@ -490,7 +489,7 @@ export default function EditFeature(props) {
                             // defaultValue="Default Value"
                             variant="outlined"
                             required
-                            value={editdata[0].Target_Expected_Output}
+                            value={editdata.detaildata[0].Target_Expected_Output}
                             InputLabelProps={{
                                 shrink: true,
                             }}
@@ -509,14 +508,14 @@ export default function EditFeature(props) {
                             // defaultValue="Default Value"
                             variant="outlined"
                             required
-                            value={editdata[0].Conversion_Code}
+                            value={editdata.detaildata[0].Conversion_Code}
                             InputLabelProps={{
                                 shrink: true,
                             }}
                         />
                     </Grid>
 
-                    <Grid item xs={12}>
+                    {/* <Grid item xs={12}>
 
                         <TextField
                             fullWidth
@@ -535,7 +534,7 @@ export default function EditFeature(props) {
                             }}
                         />
                     </Grid>
-
+ */}
 
                 </Grid>
 

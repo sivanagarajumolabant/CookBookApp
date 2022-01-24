@@ -46,12 +46,9 @@ export default function CreateFeature(props) {
             ...formValues,
             Migration_TypeId: headerValue?.title,
             Object_Type: props.location.state?.data?.Label,
-            "upload_files": {
-                'Source_Attachment': source_att[0].name,
-                "Conversion_Attachment": conver_att[0].name,
-                "Target_Attachment": target_att[0].name
-            }
-
+            'Source_Attachment': null,
+            "Conversion_Attachment": null,
+            "Target_Attachment": null
         }
         axios.post("http://127.0.0.1:8000/api/create", formData)
             .then(res => {
@@ -190,7 +187,7 @@ export default function CreateFeature(props) {
             </Box>
 
             <form autoComplete="off">
-                <Grid container direction='row'  spacing={4}>
+                <Grid container direction='row' spacing={4}>
 
                     <Grid item xs={12} sm={6} md={6} xl={6}>
                         {/* <Autocomplete
@@ -455,7 +452,7 @@ export default function CreateFeature(props) {
                         />
                     </Grid>
 
-                    <Grid item xs={12} sm={12} md={12} xl={12}>
+                    {/* <Grid item xs={12} sm={12} md={12} xl={12}>
 
                         <TextField
                             fullWidth
@@ -469,7 +466,7 @@ export default function CreateFeature(props) {
                             variant="outlined"
                             required
                         />
-                    </Grid>
+                    </Grid> */}
 
 
                 </Grid>

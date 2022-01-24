@@ -101,6 +101,8 @@ export default function PreviewCode(props) {
       );
     }
   }, [menuitem]);
+
+  // console.log("data",detaildata)
   // useEffect(() => {
 
   //   axios.get(`http://127.0.0.1:8000/api/detail/${1}`).then(
