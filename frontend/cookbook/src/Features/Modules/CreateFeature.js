@@ -49,16 +49,11 @@ export default function CreateFeature(props) {
             ...formValues,
             Migration_TypeId: headerValue?.title,
             Object_Type: props.location.state?.data?.Label,
-            'Source_Attachment': null,
-            "Conversion_Attachment": null,
-            "Target_Attachment": null
+            'Source_Attachment': source_att[0],
+            "Conversion_Attachment": target_att[0],
+            "Target_Attachment": conver_att[0]
         }
-        axios.post("http://127.0.0.1:8000/api/create", formData, {
-            headers: {
-                'content-type': 'multipart/form-data'
-               
-            }
-        })
+        axios.post("http://127.0.0.1:8000/api/create", formData)
             .then(res => {
                 console.log(res.data)
             }, error => {

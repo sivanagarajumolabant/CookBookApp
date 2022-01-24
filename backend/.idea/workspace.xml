@@ -3,10 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6ea9a270-bd26-4321-8e59-c6d7bd7c4e5d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/cookbook/src/Components/header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/cookbook/src/Components/header.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/cookbook/src/Features/Modules/CreateFeature.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/cookbook/src/Features/Modules/CreateFeature.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/cookbook/src/Features/Modules/PreviewCode.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/cookbook/src/Features/Modules/PreviewCode.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
