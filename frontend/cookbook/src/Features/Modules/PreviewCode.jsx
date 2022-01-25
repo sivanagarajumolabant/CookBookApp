@@ -214,11 +214,11 @@ export default function PreviewCode(props) {
               component="h2"
               className={classes.Object_Type}
             >
-              Seq No
+              PreRun Module
             </Typography>
             {/* <Typography component="h2"> */}
             <div className={classes.Description}>
-              {detaildata[0].Sequence_Number}
+              {detaildata[0].Sequence}
             </div>
           </Grid>
 

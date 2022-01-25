@@ -8,7 +8,7 @@ from .serializers import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import generics
-# from ReactDjango.cookbook.models import *
+# from reactdjango.cookbook.models import *
 from rest_framework.decorators import api_view
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -30,6 +30,7 @@ from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from django.http import Http404
 from rest_framework import status, permissions
 import mimetypes
+# from .settings import BASE_DIR, MEDIA_ROOT
 from reactdjango.settings import BASE_DIR, MEDIA_ROOT
 from django.core.files import File
 from django.http import HttpResponse
@@ -172,11 +173,14 @@ def sequence(request, Object_Type):
     dict1 = [serializer.data]
     return Response(dict1)
 
-def download_file(request):
+def download_file(request, file_name):
     # fill these variables with real values
-    fl_path = MEDIA_ROOT + '/media'
-    filename = fl_path +'/test1.txt'
-    filename1 = 'test1.txt'
+    fl_path = MEDIA_ROOT + '/media/'
+    # fl_path = MEDIA_ROOT
+    # filename = fl_path +'/test1.txt'
+    filename = fl_path +file_name
+    # filename1 = 'test1.txt'
+    filename1 = file_name
     fl = open(filename, 'r')
     mime_type, _ = mimetypes.guess_type(fl_path)
     response = HttpResponse(fl, content_type=mime_type)
@@ -259,12 +263,18 @@ class Featuredelete(generics.RetrieveDestroyAPIView):
         # serializer_class = FeatureSerializer
         serializer_class = commonSerializer
 
-def convertapi(data, module):
-    data = io.StringIO(data)
-    process = module(data)
-    return process
+# data = ''' saple code'''
 
 
+# module = '''def main():
+#                 print('data')
+# '''
+# def convertapi(module):
+#     # data = io.StringIO(data)
+#     process = getattr(module, 'main')()
+#     return process
+#
+# print(convertapi(module))
 
 
 

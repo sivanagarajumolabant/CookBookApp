@@ -3,7 +3,7 @@
 const initialState = {
   drawerOpen: false,
 
-   menuitem:'',
+   menuitem:null,
    headerValue: {title: "Oracle To Postgres"}
 };
 

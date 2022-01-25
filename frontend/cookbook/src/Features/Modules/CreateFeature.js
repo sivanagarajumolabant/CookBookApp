@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
+import Select from '@material-ui/core/Select';
 import axios from "axios";
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import InputLabel from '@material-ui/core/InputLabel';
 // import CreatePreview from './CreatePreview';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import MenuAppBar from '../../Components/header'
@@ -13,6 +16,10 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import CloseIcon from '@material-ui/icons/Close';
 import { useSelector } from 'react-redux';
 const useStyles = makeStyles((theme) => ({
+    formControl: {
+        margin: theme.spacing(0),
+        minWidth: 300,
+      },
     root: {
         '& .MuiTextField-root': {
             margin: theme.spacing(1),
@@ -32,6 +39,22 @@ const useStyles = makeStyles((theme) => ({
 export default function CreateFeature(props) {
     var obj_type = props.location.state?.data?.Label
     obj_type = obj_type.slice(0, -1);
+    const [prerunval, setPrerunval] = useState([]);
+    // const [seq, setSeq]=useState({})
+    useEffect(() => {
+        axios.get(`http://127.0.0.1:8000/api/sequence/${obj_type}`).then(
+            (res) => {
+                //   console.log(res);
+                setPrerunval(res.data[0]);
+
+                //   setIsdata(true);
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+    }, []);
+
 
     const classes = useStyles();
 
@@ -42,13 +65,30 @@ export default function CreateFeature(props) {
     const [source_att, setSourceatt] = useState([])
     const [target_att, setTargetatt] = useState([])
     const [conver_att, setConveratt] = useState([])
+    // const [migtypeid, setMigtypeid] = useState()
+
 
     const handleSubmit = (e) => {
+        let val = 0
         e.preventDefault();
+        if (headerValue) {
+            if (headerValue.title === 'Oracle To Postgres') {
+                val = 1
+            }
+            else if (headerValue.title === 'Oracle TO SQLServer') {
+
+                val = 2
+            }
+            else if (headerValue.title === 'Oracle To MYSQL') {
+
+                val = 3
+            }
+        }
+
         let formData = {
             ...formValues,
-            Migration_TypeId: headerValue?.title,
-            Object_Type: props.location.state?.data?.Label,
+            Migration_TypeId: val,
+            Object_Type: obj_type,
             'Source_Attachment': source_att[0],
             "Conversion_Attachment": target_att[0],
             "Target_Attachment": conver_att[0]
@@ -65,9 +105,13 @@ export default function CreateFeature(props) {
                 console.log(error);
             })
 
+
     }
 
+
+
     const handleChange = (e) => {
+        console.log(e)
         setformvalues({
             ...formValues,
             [e.target.name]: e.target.value
@@ -91,6 +135,10 @@ export default function CreateFeature(props) {
 
 
     }
+
+    
+
+    
     const handlechangedropdownobj = (v) => {
         setformvalues({
             ...formValues,
@@ -174,6 +222,7 @@ export default function CreateFeature(props) {
 
     }
 
+    // console.log(prerunval,'pre')
     return (
 
         <MenuAppBar>
@@ -331,7 +380,7 @@ export default function CreateFeature(props) {
                     </Grid>
                     <Grid item xs={12} sm={4} md={4} xl={4}>
 
-                        <TextField
+                        {/* <TextField
                             id="outlined-multiline-static"
                             label="Sequence No"
                             multiline
@@ -343,7 +392,25 @@ export default function CreateFeature(props) {
 
                             variant="outlined"
                             required
-                        />
+                        /> */}
+                        <FormControl variant="outlined" className={classes.formControl}>
+                        <InputLabel >Precision</InputLabel>
+                        <Select
+                            native
+                            // value={state.age}
+                            onChange={handleChange}
+                            label="Precision"
+                            name='Sequence'
+                            
+                        >
+                            <option value="No Precision">No Precision</option>
+                            {prerunval.map((item,ind)=>{
+                                return <option value={ind}>{item.Feature_Name}</option>
+                            })}
+                        </Select>
+                        </FormControl>
+
+
 
                     </Grid>
                     <Grid item xs={12} sm={12} md={12} xl={12}>
@@ -443,7 +510,7 @@ export default function CreateFeature(props) {
                         <TextField
                             fullWidth
                             id="outlined-multiline-static"
-                            label="Conversion Code"
+                            label="Conversion Module"
                             multiline
                             name='Conversion_Code'
                             rows={15}
@@ -717,6 +784,6 @@ export default function CreateFeature(props) {
 
 
 
-        </MenuAppBar>
+        </MenuAppBar >
     );
 }

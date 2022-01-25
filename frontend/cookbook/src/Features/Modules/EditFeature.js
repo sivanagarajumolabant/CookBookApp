@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+
+import FormControl from '@material-ui/core/FormControl';
+
+import Select from '@material-ui/core/Select';
+
+import InputLabel from '@material-ui/core/InputLabel';
+
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import axios from "axios";
@@ -13,6 +20,10 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import CloseIcon from '@material-ui/icons/Close';
 import { useSelector } from 'react-redux';
 const useStyles = makeStyles((theme) => ({
+    formControl: {
+        margin: theme.spacing(0),
+        minWidth: 290,
+      },
     root: {
         '& .MuiTextField-root': {
             margin: theme.spacing(1),
@@ -30,8 +41,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function EditFeature(props) {
-    console.log(props.location.data)
+    // console.log(props.location.data)
     const editdata = props.location.data
+    var obj_type = props.location.data.detaildata[0].Object_Type
     // console.log("editdata", editdata.detaildata[0].Migration_TypeId)
     const classes = useStyles();
 
@@ -43,6 +55,22 @@ export default function EditFeature(props) {
     const [target_att, setTargetatt] = useState([])
     const [conver_att, setConveratt] = useState([])
     const [migtypeid, setMigtypeid] = useState()
+
+    const [prerunval, setPrerunval] = useState([]);
+    // const [seq, setSeq]=useState({})
+    useEffect(() => {
+        axios.get(`http://127.0.0.1:8000/api/sequence/${obj_type}`).then(
+            (res) => {
+                //   console.log(res);
+                setPrerunval(res.data[0]);
+                //   setIsdata(true);
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+    }, []);
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -132,6 +160,15 @@ export default function EditFeature(props) {
             }
             // console.log(filesystem)
         }
+    }
+
+    const handlechangedropdownsequence = (v) => {
+        setformvalues({
+            ...formValues,
+            "Sequence": v.title
+        })
+
+
     }
     const onchangefile_conver = (e) => {
 
@@ -361,23 +398,22 @@ export default function EditFeature(props) {
                     </Grid>
                     <Grid item xs={4}>
 
-                        <TextField
-                            id="outlined-multiline-static"
-                            label="Sequence No"
-                            multiline
-                            fullWidth
-                            onChange={(e) => handleChange(e)}
-                            rows={1}
-                            name='Sequence_Number'
-                            // defaultValue="Default Value"
-                            value={editdata.detaildata[0].Sequence_Number}
-                            variant="outlined"
-                            required
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                        />
+                        <FormControl variant="outlined" className={classes.formControl}>
+                            <InputLabel >Precision</InputLabel>
+                            <Select
+                                native
+                                // value={state.age}
+                                onChange={handleChange}
+                                label="Precision"
+                                name='Sequence'
 
+                            >
+                                <option value="No Precision">No Precision</option>
+                                {prerunval.map((item, ind) => {
+                                    return <option value={item.Feature_Name}>{item.Feature_Name}</option>
+                                })}
+                            </Select>
+                        </FormControl>
                     </Grid>
                     <Grid item xs={12}>
 
@@ -566,7 +602,7 @@ export default function EditFeature(props) {
                         <Grid item>
                             <div className={classes.rootc}>
                                 <input
-                                    accept="image/*"
+                                    accept="file"
                                     className={classes.input}
                                     id="contained-button-file1"
                                     multiple={true}
@@ -589,7 +625,7 @@ export default function EditFeature(props) {
                         <Grid item>
                             <div className={classes.rootc}>
                                 <input
-                                    accept="image/*"
+                                    accept="file"
                                     className={classes.input}
                                     id="contained-button-file2"
                                     multiple={true}
