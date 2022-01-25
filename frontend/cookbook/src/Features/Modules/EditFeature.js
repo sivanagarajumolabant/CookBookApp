@@ -42,15 +42,51 @@ export default function EditFeature(props) {
     const [source_att, setSourceatt] = useState([])
     const [target_att, setTargetatt] = useState([])
     const [conver_att, setConveratt] = useState([])
-    const [migtypeid,setMigtypeid] = useState()
+    // const [migtypeid,setMigtypeid] = useState()
+    const [Source_FeatureDescription , setSource_FeatureDescription] = useState("");
+    const [Target_FeatureDescription , setTarget_FeatureDescription] = useState("");
+    const [Source_Code , setSource_Code] = useState("");
+    const [Target_ActualCode , setTarget_ActualCode] = useState("");
+    const [Target_Expected_Output , setTarget_Expected_Output] = useState("");
+    const [Conversion_Code , setConversion_Code] = useState("");
+    
+    
+    
+    useEffect((e)=> {
+        setSource_FeatureDescription(  editdata.detaildata[0].Source_FeatureDescription )
+        setTarget_FeatureDescription(  editdata.detaildata[0].Target_FeatureDescription )
+        setSource_Code(  editdata.detaildata[0].Source_Code )
+        setTarget_ActualCode(  editdata.detaildata[0].Target_ActualCode )
+        setTarget_Expected_Output(  editdata.detaildata[0].Target_Expected_Output )
+        setConversion_Code(  editdata.detaildata[0].Conversion_Code )
+
+    }, [editdata]);
+
+    // useEffect(() => {
+    //     if (editdata) {
+    //         axios.put(`http://127.0.0.1:8000/api/update/${editdata.detaildata[0].Feature_Id}`, formData)
+    //         .then(res => {
+    //             setDetaildata(res.data
+    //                 );
+    //             console.log(res.data)
+    //         }, error => {
+    //             console.log(error);
+    //         })
+       
+    //     }
+    //   }, [editdata]);
+
+
+   
 
     const handleSubmit = (e) => {
         e.preventDefault();
         let formData = {
             ...formValues,
-            Migration_TypeId: migtypeid,
+            Migration_TypeId: editdata[0].Migration_TypeId,
             Object_Type: editdata[0].Object_Type,
             Feature_Name:editdata[0].Feature_Name,
+            Source_FeatureDescription,Target_FeatureDescription,
             'Source_Attachment': null,
             "Conversion_Attachment": null,
             "Target_Attachment": null
@@ -67,11 +103,20 @@ export default function EditFeature(props) {
 
     const handleChange = (e) => {
         setformvalues({
-            ...formValues,
-            [e.target.name]: e.target.value
+            ...editdata,
+            [e.target.name]: [e.target.value],
         })
     }
 
+
+    // const handlechangedropdownlevel = (v) => {
+    //     setformvalues({
+    //         ...formValues,
+    //         "Level": v.title
+    //     })
+
+
+    // }
     // const handlechangedropdown = (v) => {
     //     setformvalues({
     //         ...formValues,
@@ -228,22 +273,20 @@ export default function EditFeature(props) {
             ...formValues,
             "Level": v.title
         })
-
-
     }
 
     if (editdata.detaildata[0]) {
         if (editdata.detaildata[0].Migration_TypeId === '1') {
             editdata.detaildata[0].Migration_TypeId = 'Oracle To Postgres'
-            setMigtypeid(1)
+            // setMigtypeid(1)
         }
         else if (editdata.detaildata[0].Migration_TypeId === '2') {
             editdata.detaildata[0].Migration_TypeId = 'Oracle TO SQLServer'
-            setMigtypeid(2)
+            // setMigtypeid(2)
         }
         else if (editdata.detaildata[0].Migration_TypeId === '3') {
             editdata.detaildata[0].Migration_TypeId = 'Oracle To MYSQL'
-            setMigtypeid(3)
+            // setMigtypeid(3)
         }
     }
 
@@ -375,6 +418,7 @@ export default function EditFeature(props) {
                             label="Sequence No"
                             multiline
                             fullWidth
+                            // onChange={(e, v) => handleChange(v)}
                             onChange={(e) => handleChange(e)}
                             rows={1}
                             name='Sequence_Number'
@@ -398,9 +442,11 @@ export default function EditFeature(props) {
                             rows={15}
                             // defaultValue="Default Value"
                             name="Source_FeatureDescription"
-                            value={editdata.detaildata[0].Source_FeatureDescription}
+                            // value={editdata.detaildata[0].Source_FeatureDescription}
+                            value={Source_FeatureDescription}
                             fullWidth
-                            onChange={(e) => handleChange(e)}
+                            // onChange={(e, v) => handleChange(v)}
+                            onChange={(e) => setSource_FeatureDescription(e.target.value)}
                             variant="outlined"
                             required
                             InputLabelProps={{
@@ -422,10 +468,10 @@ export default function EditFeature(props) {
                             name='Target_FeatureDescription'
                             multiline
                             rows={15}
-                            onChange={(e) => handleChange(e)}
+                            onChange={(e) => setTarget_FeatureDescription(e.target.value)}
                             // defaultValue="Default Value"
                             variant="outlined"
-                            value={editdata.detaildata[0].Target_FeatureDescription}
+                            value={Target_FeatureDescription}
                             required
                             InputLabelProps={{
                                 shrink: true,
@@ -445,12 +491,12 @@ export default function EditFeature(props) {
                             multiline
                             rows={15}
                             name='Source_Code'
-                            onChange={(e) => handleChange(e)}
+                            onChange={(e) => setSource_Code(e.target.value)}
                             // defaultValue="Default Value"
                             fullWidth
                             variant="outlined"
                             required
-                            value={editdata.detaildata[0].Source_Code}
+                            value={Source_Code}
                             InputLabelProps={{
                                 shrink: true,
                             }}
@@ -466,11 +512,11 @@ export default function EditFeature(props) {
                             multiline
                             rows={15}
                             name='Target_ActualCode'
-                            onChange={(e) => handleChange(e)}
+                            onChange={(e) => setTarget_ActualCode(e.target.value)}
                             // defaultValue="Default Value"
                             variant="outlined"
                             required
-                            value={editdata.detaildata[0].Target_ActualCode}
+                            value={Target_ActualCode}
                             InputLabelProps={{
                                 shrink: true,
                             }}
@@ -489,11 +535,11 @@ export default function EditFeature(props) {
                             multiline
                             rows={15}
                             name='Target_Expected_Output'
-                            onChange={(e) => handleChange(e)}
+                            onChange={(e) => setTarget_Expected_Output(e.target.value)}
                             // defaultValue="Default Value"
                             variant="outlined"
                             required
-                            value={editdata.detaildata[0].Target_Expected_Output}
+                            value={Target_Expected_Output}
                             InputLabelProps={{
                                 shrink: true,
                             }}
@@ -508,11 +554,11 @@ export default function EditFeature(props) {
                             multiline
                             name='Conversion_Code'
                             rows={15}
-                            onChange={(e) => handleChange(e)}
+                            onChange={(e) => setConversion_Code(e.target.value)}
                             // defaultValue="Default Value"
                             variant="outlined"
                             required
-                            value={editdata.detaildata[0].Conversion_Code}
+                            value={Conversion_Code}
                             InputLabelProps={{
                                 shrink: true,
                             }}
@@ -575,7 +621,7 @@ export default function EditFeature(props) {
                         <Grid item>
                             <div className={classes.rootc}>
                                 <input
-                                    accept="image/*"
+                                    // accept="image/*"
                                     className={classes.input}
                                     id="contained-button-file1"
                                     multiple={true}
@@ -598,7 +644,7 @@ export default function EditFeature(props) {
                         <Grid item>
                             <div className={classes.rootc}>
                                 <input
-                                    accept="image/*"
+                                    // accept="image/*"
                                     className={classes.input}
                                     id="contained-button-file2"
                                     multiple={true}

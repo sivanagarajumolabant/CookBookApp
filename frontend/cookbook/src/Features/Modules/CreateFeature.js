@@ -43,11 +43,13 @@ export default function CreateFeature(props) {
     const [target_att, setTargetatt] = useState([])
     const [conver_att, setConveratt] = useState([])
 
+ 
+
     const handleSubmit = (e) => {
         e.preventDefault();
         let formData = {
             ...formValues,
-            Migration_TypeId: headerValue?.title,
+            Migration_TypeId: props.location.state?.data?.type,
             Object_Type: props.location.state?.data?.Label,
             'Source_Attachment': source_att[0],
             "Conversion_Attachment": target_att[0],
