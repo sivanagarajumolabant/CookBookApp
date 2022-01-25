@@ -98,16 +98,8 @@ export default function EditFeature(props) {
 
                 const file = files[i];
 
-                filesystem.push({
-                    name: file.name,
-                    size: file.size,
-                    type: file.type
-                });
-                if (filesystem.length>0){
-                    setSourceatt(filesystem[0].name);
-                }else{
-                    setSourceatt()
-                }
+                filesystem.push(file);
+                
                 
             }
             // console.log(filesystem)
@@ -124,16 +116,7 @@ export default function EditFeature(props) {
 
                 const file = files[i];
 
-                filesystem.push({
-                    name: file.name,
-                    size: file.size,
-                    type: file.type
-                });
-                if (filesystem.length>0){
-                    setTargetatt(filesystem[0].name);
-                }else{
-                    setSourceatt()
-                }
+                filesystem.push(file)
             }
             // console.log(filesystem)
         }
@@ -147,16 +130,7 @@ export default function EditFeature(props) {
 
                 const file = files[i];
 
-                filesystem.push({
-                    name: file.name,
-                    size: file.size,
-                    type: file.type
-                });
-                if (filesystem.length>0){
-                    setConveratt(filesystem[0].name);
-                }else{
-                    setSourceatt(null)
-                }
+                filesystem.push(file)
             }
             // console.log(filesystem)
         }
