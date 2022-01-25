@@ -53,7 +53,12 @@ export default function CreateFeature(props) {
             "Conversion_Attachment": target_att[0],
             "Target_Attachment": conver_att[0]
         }
-        axios.post("http://127.0.0.1:8000/api/create", formData)
+        const form = new FormData();
+        Object.keys(formData).forEach((key) => {
+            form.append(key, formData[key]);
+        });
+
+        axios.post("http://127.0.0.1:8000/api/create", form)
             .then(res => {
                 console.log(res.data)
             }, error => {
@@ -103,11 +108,7 @@ export default function CreateFeature(props) {
 
                 const file = files[i];
 
-                filesystem.push({
-                    name: file.name,
-                    size: file.size,
-                    type: file.type
-                });
+                filesystem.push(file);
                 setSourceatt(filesystem);
             }
             // console.log(filesystem)
@@ -124,11 +125,7 @@ export default function CreateFeature(props) {
 
                 const file = files[i];
 
-                filesystem.push({
-                    name: file.name,
-                    size: file.size,
-                    type: file.type
-                });
+                filesystem.push(file);
                 setTargetatt(filesystem);
             }
             // console.log(filesystem)
@@ -143,11 +140,7 @@ export default function CreateFeature(props) {
 
                 const file = files[i];
 
-                filesystem.push({
-                    name: file.name,
-                    size: file.size,
-                    type: file.type
-                });
+                filesystem.push(file);
                 setConveratt(filesystem);
             }
             // console.log(filesystem)
