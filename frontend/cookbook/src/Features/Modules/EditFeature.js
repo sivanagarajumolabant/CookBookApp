@@ -42,21 +42,24 @@ export default function EditFeature(props) {
     const [source_att, setSourceatt] = useState([])
     const [target_att, setTargetatt] = useState([])
     const [conver_att, setConveratt] = useState([])
-    const [migtypeid,setMigtypeid] = useState()
+    const [migtypeid, setMigtypeid] = useState()
 
     const handleSubmit = (e) => {
         e.preventDefault();
         let formData = {
             ...formValues,
             Migration_TypeId: migtypeid,
-            Object_Type: editdata[0].Object_Type,
-            Feature_Name:editdata[0].Feature_Name,
-            'Source_Attachment': null,
-            "Conversion_Attachment": null,
-            "Target_Attachment": null
-            
+            Object_Type: editdata.detaildata[0].Object_Type,
+            Feature_Name: editdata.detaildata[0].Feature_Name,
+            'Source_Attachment': source_att[0],
+            "Conversion_Attachment": target_att[0],
+            "Target_Attachment": conver_att[0]
         }
-        axios.put(`http://127.0.0.1:8000/api/update/${editdata.detaildata[0].Feature_Id}`, formData)
+        const form = new FormData();
+        Object.keys(formData).forEach((key) => {
+            form.append(key, formData[key]);
+        });
+        axios.put(`http://127.0.0.1:8000/api/update/${editdata.detaildata[0].Feature_Id}`, form)
             .then(res => {
                 console.log(res.data)
             }, error => {
@@ -99,8 +102,12 @@ export default function EditFeature(props) {
                 const file = files[i];
 
                 filesystem.push(file);
-                
-                
+                if (filesystem.length > 0) {
+                    source_att(filesystem)
+                } else {
+                    source_att(null)
+                }
+
             }
             // console.log(filesystem)
         }
@@ -117,6 +124,11 @@ export default function EditFeature(props) {
                 const file = files[i];
 
                 filesystem.push(file)
+                if (filesystem.length > 0) {
+                    target_att(filesystem)
+                } else {
+                    target_att(null)
+                }
             }
             // console.log(filesystem)
         }
@@ -131,6 +143,11 @@ export default function EditFeature(props) {
                 const file = files[i];
 
                 filesystem.push(file)
+                if (filesystem.length > 0) {
+                    conver_att(filesystem)
+                } else {
+                    conver_att(null)
+                }
             }
             // console.log(filesystem)
         }
@@ -228,7 +245,7 @@ export default function EditFeature(props) {
 
     }
 
-    const handleConvert = (e)=>{
+    const handleConvert = (e) => {
         e.preventDefault();
     }
 
@@ -276,7 +293,7 @@ export default function EditFeature(props) {
                     </Grid>
                     <Grid item xs={6}>
 
-                    <TextField
+                        <TextField
                             id="outlined-multiline-static"
                             label="Object Type"
                             multiline
@@ -353,7 +370,7 @@ export default function EditFeature(props) {
                             rows={1}
                             name='Sequence_Number'
                             // defaultValue="Default Value"
-                            value = {editdata.detaildata[0].Sequence_Number}
+                            value={editdata.detaildata[0].Sequence_Number}
                             variant="outlined"
                             required
                             InputLabelProps={{
@@ -720,8 +737,8 @@ export default function EditFeature(props) {
                                 fullWidth
                                 variant="contained"
                                 color="primary"
-                            // className={classes.submit}
-                            onClick={handleConvert}
+                                // className={classes.submit}
+                                onClick={handleConvert}
 
                             >
                                 Convert

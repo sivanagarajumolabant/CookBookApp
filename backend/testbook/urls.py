@@ -6,8 +6,7 @@ from .views import *
 from .views import MyObtainTokenPairView, RegisterView
 from rest_framework_simplejwt.views import TokenRefreshView
 
-from django.conf import settings
-from django.conf.urls.static import static
+
 
 urlpatterns = [
 path('', featureslist.as_view(), name='featureslist'),
@@ -27,8 +26,10 @@ path('create1/<int:pk>', Files_APIView_Detail.as_view(), name='create1'),
 # path('create2', VehiclesListView.as_view(), name='create2'),
 # path('detail/<int:pk>', Featuredetail.as_view(), name='create'),
 path('detail/<int:id>', Featuredetail, name='detail'),
+path('sequence/<str:Object_Type>', sequence, name='sequence'),
 path('delete/<int:pk>', Featuredelete.as_view(), name='delete'),
 path('update/<int:pk>', Featureupdate.as_view(), name='update'),
+path('downloads/', download_file,name='downloads'),
 # path('FU/<int:id>', views.FU, name='FU'),
 # path('migrationlevelobjects', migrationlevelobjects1.as_view(), name='migrationlevelobjects'),
 # path('featuresobjectlevel', views.featuresobjectlevel, name='featuresobjectlevel'),
@@ -44,6 +45,9 @@ path('migrationtypes', migrationtypes,name='migrationtypes'),
 # path('upload', upload_files.as_view(),name='upload'),
 # path('multiplemodels', views.multiplemodels,name='multiplemodels'),
 ]
+# if settings.DEBUG:
+#     urlpatterns += static(settings.MEDIA_URL,
+#                           document_root=settings.MEDIA_ROOT)
 
 # if settings.DEBUG:
 #     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + \

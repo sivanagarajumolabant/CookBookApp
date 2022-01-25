@@ -12,6 +12,11 @@ class FileSerializer(serializers.ModelSerializer):
         model = Feature
         fields = '__all__'
 
+class SequenceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Feature
+        fields = ('Feature_Name',)
+
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
     @classmethod
@@ -84,7 +89,7 @@ class FeatureSerializer(serializers.ModelSerializer):
     class Meta:
         model = Feature
         fields = ['Migration_TypeId', 'Object_Type',
-                                         'Feature_Id', 'Feature_Name', 'Level', 'Sequence_Number', 'Source_FeatureDescription',
+                                         'Feature_Id', 'Feature_Name', 'Level', 'Sequence', 'Source_FeatureDescription',
                                          'Source_Code', 'Conversion_Code',
                                          'Target_FeatureDescription', 'Target_Expected_Output',
                                          'Target_ActualCode', 'Source_Attachment', 'Conversion_Attachment', 'Target_Attachment']
@@ -110,7 +115,7 @@ class commonSerializer(serializers.ModelSerializer):
         model = Feature
         # fields = '__all__'
         fields = ['Migration_TypeId', 'Object_Type',
-                                         'Feature_Id', 'Feature_Name', 'Level', 'Sequence_Number', 'Source_FeatureDescription',
+                                         'Feature_Id', 'Feature_Name', 'Level', 'Sequence', 'Source_FeatureDescription',
                                          'Source_Code', 'Conversion_Code',
                                          'Target_FeatureDescription', 'Target_Expected_Output',
                                          'Target_ActualCode', 'Source_Attachment', 'Conversion_Attachment', 'Target_Attachment']
@@ -139,6 +144,8 @@ class commonSerializer(serializers.ModelSerializer):
         instance.Migration_TypeId = validated_data.get('Migration_TypeId', instance.Migration_TypeId)
         instance.Object_Type = validated_data.get('Object_Type', instance.Object_Type)
         instance.Feature_Name = validated_data.get('Feature_Name', instance.Feature_Name)
+        instance.Level = validated_data.get('Level', instance.Level)
+        instance.Sequence = validated_data.get('Sequence', instance.Sequence)
         instance.Source_FeatureDescription = validated_data.get('Source_FeatureDescription', instance.Source_FeatureDescription)
         instance.Source_Code = validated_data.get('Source_Code', instance.Source_Code)
         # instance.Conversion_Description = validated_data.get('Conversion_Description', instance.Conversion_Description)

@@ -13,7 +13,7 @@ class Feature(models.Model):
     Object_Type = models.CharField(max_length=50)
     Feature_Id = models.BigAutoField(primary_key=True)
     Feature_Name = models.CharField(max_length=100)
-    Sequence_Number = models.SmallIntegerField(null=True, blank=True)
+    Sequence = models.CharField(max_length=50)
     Source_FeatureDescription = models.TextField()
     Source_Code = models.TextField()
     Source_Attachment = models.FileField(upload_to='media/', blank=True, null=True)
