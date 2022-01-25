@@ -94,6 +94,7 @@ export default function PreviewCode(props) {
           console.log(res);
           setDetaildata(res.data);
           setIsdata(true);
+
         },
         (error) => {
           console.log(error);
