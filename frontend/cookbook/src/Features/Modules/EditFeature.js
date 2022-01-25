@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     formControl: {
         margin: theme.spacing(0),
         minWidth: 290,
-      },
+    },
     root: {
         '& .MuiTextField-root': {
             margin: theme.spacing(1),
@@ -130,11 +130,9 @@ export default function EditFeature(props) {
                 const file = files[i];
 
                 filesystem.push(file);
-                if (filesystem.length > 0) {
-                    source_att(filesystem)
-                } else {
-                    source_att(null)
-                }
+
+                source_att(filesystem)
+
 
             }
             // console.log(filesystem)
@@ -152,11 +150,9 @@ export default function EditFeature(props) {
                 const file = files[i];
 
                 filesystem.push(file)
-                if (filesystem.length > 0) {
-                    target_att(filesystem)
-                } else {
-                    target_att(null)
-                }
+
+                target_att(filesystem)
+
             }
             // console.log(filesystem)
         }
@@ -180,11 +176,9 @@ export default function EditFeature(props) {
                 const file = files[i];
 
                 filesystem.push(file)
-                if (filesystem.length > 0) {
-                    conver_att(filesystem)
-                } else {
-                    conver_att(null)
-                }
+
+                conver_att(filesystem)
+
             }
             // console.log(filesystem)
         }
@@ -379,7 +373,7 @@ export default function EditFeature(props) {
 
                             ]}
                             groupBy={""}
-                            defaultValue={{ title: 'Programlevel' }}
+                            // defaultValue={{ title: 'Programlevel' }}
                             getOptionLabel={(option) => option.title}
                             name="Level"
                             onChange={(e, v) => handlechangedropdownlevel(v)}
@@ -399,16 +393,19 @@ export default function EditFeature(props) {
                     <Grid item xs={4}>
 
                         <FormControl variant="outlined" className={classes.formControl}>
-                            <InputLabel >Precision</InputLabel>
+                            {/* <InputLabel >Precision</InputLabel> */}
                             <Select
                                 native
                                 // value={state.age}
                                 onChange={handleChange}
                                 label="Precision"
                                 name='Sequence'
+                            // defaultValue={"No Precision"}
 
                             >
+                                <option value="Select Precision" selected>Select Precision</option>
                                 <option value="No Precision">No Precision</option>
+
                                 {prerunval.map((item, ind) => {
                                     return <option value={item.Feature_Name}>{item.Feature_Name}</option>
                                 })}

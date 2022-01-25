@@ -89,9 +89,9 @@ export default function CreateFeature(props) {
             ...formValues,
             Migration_TypeId: val,
             Object_Type: obj_type,
-            'Source_Attachment': source_att[0],
-            "Conversion_Attachment": target_att[0],
-            "Target_Attachment": conver_att[0]
+            'Source_Attachment': source_att,
+            "Conversion_Attachment": target_att,
+            "Target_Attachment": conver_att
         }
         const form = new FormData();
         Object.keys(formData).forEach((key) => {
@@ -111,7 +111,8 @@ export default function CreateFeature(props) {
 
 
     const handleChange = (e) => {
-        console.log(e)
+        console.log(e.target.name)
+        console.log(e.target.value)
         setformvalues({
             ...formValues,
             [e.target.name]: e.target.value
@@ -157,7 +158,7 @@ export default function CreateFeature(props) {
                 const file = files[i];
 
                 filesystem.push(file);
-                setSourceatt(filesystem);
+                setSourceatt(filesystem[0]);
             }
             // console.log(filesystem)
         }
@@ -174,7 +175,7 @@ export default function CreateFeature(props) {
                 const file = files[i];
 
                 filesystem.push(file);
-                setTargetatt(filesystem);
+                setTargetatt(filesystem[0]);
             }
             // console.log(filesystem)
         }
@@ -189,7 +190,7 @@ export default function CreateFeature(props) {
                 const file = files[i];
 
                 filesystem.push(file);
-                setConveratt(filesystem);
+                setConveratt(filesystem[0]);
             }
             // console.log(filesystem)
         }
@@ -361,7 +362,7 @@ export default function CreateFeature(props) {
 
                             ]}
                             groupBy={""}
-                            defaultValue={{ title: 'Programlevel' }}
+                            // defaultValue={{ title: 'Programlevel' }}
                             getOptionLabel={(option) => option.title}
                             name="Level"
                             onChange={(e, v) => handlechangedropdownlevel(v)}
@@ -401,11 +402,11 @@ export default function CreateFeature(props) {
                             onChange={handleChange}
                             label="Precision"
                             name='Sequence'
-                            
-                        >
-                            <option value="No Precision">No Precision</option>
+                           
+                        >   <option value="Select Precision" selected>Select Precision</option>
+                            <option value="No Precision" >No Precision</option>
                             {prerunval.map((item,ind)=>{
-                                return <option value={ind}>{item.Feature_Name}</option>
+                                return <option value={item.Feature_Name}>{item.Feature_Name}</option>
                             })}
                         </Select>
                         </FormControl>

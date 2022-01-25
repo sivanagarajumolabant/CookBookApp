@@ -367,7 +367,7 @@ export default function PreviewCode(props) {
             <div>
               {/* <Card className={classes.SourceCode}> */}
               {/* <Typography component="h2"> */}
-              {detaildata[0].Source_Attachment.split('/').pop()}
+              {`http://localhost:8000${detaildata[0].Source_Attachment}`}
               <Link onClick={handleDownload(detaildata[0].Source_Attachment)} style={{textDecoration:'none'}}>Download</Link>
 
               {/* </Card> */}
