@@ -102,6 +102,8 @@ export default function PreviewCode(props) {
     }
   }, [menuitem]);
 
+  
+
   // console.log("data",detaildata)
   // useEffect(() => {
 
@@ -118,13 +120,24 @@ export default function PreviewCode(props) {
   // }, []);
 
 
+  const handleDownload=(dfile)=>{
+    console.log(dfile);
+    let dnfile = dfile.split('/').pop()
+    axios.get(`http://127.0.0.1:8000/api/downloads/${dnfile}`)
+    .then(res => {
+        console.log(res.data)
+    }, error => {
+        console.log(error);
+    })
+
+  }
 
   var data = null;
   if (detaildata.length > 0) {
     data = (
       <>
         <Grid container >
-          <Grid container justifyContent="flex-end" style={{paddingTop:30}}>
+          <Grid container justifyContent="flex-end" style={{ paddingTop: 30 }}>
             {/* <Grid item xs={6} sm={6} md={6} lg={6} >
               <Typography
                style={{paddingLeft:370}} variant="h4"
@@ -133,24 +146,24 @@ export default function PreviewCode(props) {
               </Typography>
             </Grid> */}
             <Grid item >
-            
-            <Button
-              variant="contained"
-              color="primary"
-              component="span"
 
-              startIcon={<EditSharpIcon />}
-              onClick={() =>
-                history.push({
-                  pathname: `/edit/${detaildata[0].Feature_Id}`,
-                    data: { detaildata},
+              <Button
+                variant="contained"
+                color="primary"
+                component="span"
 
-                })
-              }
-            >
-              Edit
-            </Button>
-            
+                startIcon={<EditSharpIcon />}
+                onClick={() =>
+                  history.push({
+                    pathname: `/edit/${detaildata[0].Feature_Id}`,
+                    data: { detaildata },
+
+                  })
+                }
+              >
+                Edit
+              </Button>
+
             </Grid>
           </Grid>
 
@@ -200,10 +213,7 @@ export default function PreviewCode(props) {
             </Typography>
             {/* <Typography component="h2"> */}
             <div className={classes.Description}>
-              {detaildata[0].Level.split("\n").map((i, key) => {
-                return <div key={key}>{i}</div>;
-              })}
-              {/* </Typography> */}
+              {detaildata[0].Level}
             </div>
           </Grid>
 
@@ -242,7 +252,7 @@ export default function PreviewCode(props) {
             </div>
           </Grid>
 
-          <Grid item  xs={12} sm={12} md={12} lg={12}>
+          <Grid item xs={12} sm={12} md={12} lg={12}>
             <Typography
               gutterBottom
               variant="h5"
@@ -262,7 +272,7 @@ export default function PreviewCode(props) {
             {/* </Typography> */}
           </Grid>
 
-          <Grid item  xs={12}sm={12} md={12} lg={12}>
+          <Grid item xs={12} sm={12} md={12} lg={12}>
             <Typography
               gutterBottom
               variant="h5"
@@ -282,7 +292,7 @@ export default function PreviewCode(props) {
             </div>
           </Grid>
 
-          <Grid item  xs={12} sm={12} md={12} lg={12}>
+          <Grid item xs={12} sm={12} md={12} lg={12}>
             <Typography
               gutterBottom
               variant="h5"
@@ -302,7 +312,7 @@ export default function PreviewCode(props) {
             {/* </Typography> */}
           </Grid>
 
-          <Grid item  xs={12} sm={12} md={12} lg={12}>
+          <Grid item xs={12} sm={12} md={12} lg={12}>
             <Typography
               gutterBottom
               variant="h5"
@@ -324,8 +334,8 @@ export default function PreviewCode(props) {
             {/* </Typography> */}
           </Grid>
 
-          
-          <Grid item  xs={12} sm={12} md={12} lg={12}>
+
+          <Grid item xs={12} sm={12} md={12} lg={12}>
             <Typography
               gutterBottom
               variant="h5"
@@ -345,7 +355,7 @@ export default function PreviewCode(props) {
             {/* </Typography> */}
           </Grid>
 
-          <Grid item  xs={12} sm={12} md={12} lg={12}>
+          <Grid item xs={12} sm={12} md={12} lg={12}>
             <Typography
               gutterBottom
               variant="h5"
@@ -357,14 +367,14 @@ export default function PreviewCode(props) {
             <div>
               {/* <Card className={classes.SourceCode}> */}
               {/* <Typography component="h2"> */}
-              {detaildata[0].Source_Attachment}
-              <Link to={detaildata[0].Source_Attachment} target="_blank" download>Download</Link>
-              
+              {detaildata[0].Source_Attachment.split('/').pop()}
+              <Link onClick={handleDownload(detaildata[0].Source_Attachment)} style={{textDecoration:'none'}}>Download</Link>
+
               {/* </Card> */}
             </div>
             {/* </Typography> */}
           </Grid>
-          <Grid item  xs={12} sm={12} md={12} lg={12}>
+          <Grid item xs={12} sm={12} md={12} lg={12}>
             <Typography
               gutterBottom
               variant="h5"
@@ -381,7 +391,7 @@ export default function PreviewCode(props) {
             </div>
             {/* </Typography> */}
           </Grid>
-          <Grid item  xs={12} sm={12} md={12} lg={12}>
+          <Grid item xs={12} sm={12} md={12} lg={12}>
             <Typography
               gutterBottom
               variant="h5"
@@ -413,7 +423,7 @@ export default function PreviewCode(props) {
               onClick={() =>
                 history.push({
                   pathname: `/edit/${detaildata[0].Feature_Id}`,
-                    data: { detaildata},
+                  data: { detaildata },
 
                 })
               }
