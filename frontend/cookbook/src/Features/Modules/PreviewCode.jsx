@@ -121,17 +121,17 @@ export default function PreviewCode(props) {
   // }, []);
 
 
-  const handleDownload=(dfile)=>{
-    console.log(dfile);
-    let dnfile = dfile.split('/').pop()
-    axios.get(`http://127.0.0.1:8000/api/downloads/${dnfile}`)
-    .then(res => {
-        console.log(res.data)
-    }, error => {
-        console.log(error);
-    })
+  // const handleDownload=(dfile)=>{
+  //   console.log(dfile);
+  //   let dnfile = dfile.split('/').pop()
+  //   axios.get(`http://127.0.0.1:8000/api/downloads/${dnfile}`)
+  //   .then(res => {
+  //       console.log(res.data)
+  //   }, error => {
+  //       console.log(error);
+  //   })
 
-  }
+  // }
 
   var data = null;
   if (detaildata.length > 0) {
@@ -369,7 +369,7 @@ export default function PreviewCode(props) {
               {/* <Card className={classes.SourceCode}> */}
               {/* <Typography component="h2"> */}
               {`http://localhost:8000${detaildata[0].Source_Attachment}`}
-              <Link onClick={handleDownload(detaildata[0].Source_Attachment)} style={{textDecoration:'none'}}>Download</Link>
+              {/* <Link onClick={handleDownload(detaildata[0].Source_Attachment)} style={{textDecoration:'none'}}>Download</Link> */}
 
               {/* </Card> */}
             </div>
