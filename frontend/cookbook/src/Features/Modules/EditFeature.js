@@ -83,9 +83,24 @@ export default function EditFeature(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        
+        var val =0;
+        if (editdata.detaildata[0]) {
+            if (editdata.detaildata[0].Migration_TypeId === 'Oracle To Postgres') {
+                val = 1
+            }
+            else if (editdata.detaildata[0].Migration_TypeId === 'Oracle TO SQLServer') {
+
+                val = 2
+            }
+            else if (editdata.detaildata[0].Migration_TypeId === 'Oracle To MYSQL') {
+
+                val = 3
+            }
+        }
         let formData = {
             ...formValues,
-            Migration_TypeId: editdata.detaildata[0].Migration_TypeId,
+            Migration_TypeId: val,
             Object_Type: editdata.detaildata[0].Object_Type,
             Feature_Name:editdata.detaildata[0].Feature_Name,
             Source_FeatureDescription,Target_FeatureDescription,

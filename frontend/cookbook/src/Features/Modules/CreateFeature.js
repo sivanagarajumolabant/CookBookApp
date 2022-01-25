@@ -67,19 +67,21 @@ export default function CreateFeature(props) {
     const [conver_att, setConveratt] = useState([])
     // const [migtypeid, setMigtypeid] = useState()
 
-
+    
+    // console.log(props.location.state?.data?.type)
     const handleSubmit = (e) => {
+        let typeval = props.location.state?.data?.type
         let val = 0
         e.preventDefault();
-        if (headerValue) {
-            if (headerValue.title === 'Oracle To Postgres') {
+        if (typeval) {
+            if (typeval === 'Oracle To Postgres') {
                 val = 1
             }
-            else if (headerValue.title === 'Oracle TO SQLServer') {
+            else if (typeval === 'Oracle TO SQLServer') {
 
                 val = 2
             }
-            else if (headerValue.title === 'Oracle To MYSQL') {
+            else if (typeval === 'Oracle To MYSQL') {
 
                 val = 3
             }
@@ -111,8 +113,8 @@ export default function CreateFeature(props) {
 
 
     const handleChange = (e) => {
-        console.log(e.target.name)
-        console.log(e.target.value)
+        // console.log(e.target.name)
+        // console.log(e.target.value)
         setformvalues({
             ...formValues,
             [e.target.name]: e.target.value

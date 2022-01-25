@@ -229,7 +229,7 @@ export default function ClippedDrawer({ children }) {
   const handleversion = (v) => {
     getmenus(v.code);
     setdropdown(v);
-
+    console.log(v)
     dispatch(ActionMenu.dropdown(v));
   };
 
