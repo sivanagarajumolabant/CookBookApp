@@ -161,6 +161,8 @@ export default function CreateFeature(props) {
                 setSourceatt(filesystem[0]);
             }
             // console.log(filesystem)
+        }else{
+            setSourceatt(null);
         }
     }
 
@@ -178,6 +180,8 @@ export default function CreateFeature(props) {
                 setTargetatt(filesystem[0]);
             }
             // console.log(filesystem)
+        }else{
+            setTargetatt(null);
         }
     }
     const onchangefile_conver = (e) => {
@@ -193,6 +197,9 @@ export default function CreateFeature(props) {
                 setConveratt(filesystem[0]);
             }
             // console.log(filesystem)
+        }
+        else{
+            setConveratt(null);
         }
     }
 
@@ -621,7 +628,7 @@ export default function CreateFeature(props) {
                     <Grid containr xs={12} sm={4} md={4} xl={4}>
                         <Grid item >
                             <Grid container direction='column'>
-                                {source_att.map(item => {
+                                {/* {source_att.map(item => {
                                     return (
                                         <>
 
@@ -648,7 +655,8 @@ export default function CreateFeature(props) {
 
                                         </>
                                     )
-                                })}
+                                })} */}
+                                {source_att.name}
 
                             </Grid>
                         </Grid>
@@ -660,7 +668,7 @@ export default function CreateFeature(props) {
                     <Grid container xs={12} sm={4} md={4} xl={4}>
                         <Grid item>
                             <Grid container direction='column'>
-                                {target_att.map(item => {
+                                {/* {target_att.map(item => {
                                     return (
                                         <>
 
@@ -687,7 +695,8 @@ export default function CreateFeature(props) {
 
                                         </>
                                     )
-                                })}
+                                })} */}
+                                {target_att.name}
 
                             </Grid>
                         </Grid>
@@ -698,7 +707,7 @@ export default function CreateFeature(props) {
                     <Grid container xs={12} sm={4} md={4} xl={4}>
                         <Grid item>
                             <Grid container direction='column'>
-                                {conver_att.map(item => {
+                                {/* {conver_att.map(item => {
                                     return (
                                         <>
 
@@ -725,7 +734,8 @@ export default function CreateFeature(props) {
 
                                         </>
                                     )
-                                })}
+                                })} */}
+                                {conver_att.name}
 
                             </Grid>
                         </Grid>

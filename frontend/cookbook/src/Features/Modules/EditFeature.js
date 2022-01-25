@@ -79,9 +79,9 @@ export default function EditFeature(props) {
             Migration_TypeId: migtypeid,
             Object_Type: editdata.detaildata[0].Object_Type,
             Feature_Name: editdata.detaildata[0].Feature_Name,
-            'Source_Attachment': source_att[0],
-            "Conversion_Attachment": target_att[0],
-            "Target_Attachment": conver_att[0]
+            'Source_Attachment': source_att,
+            "Conversion_Attachment": target_att,
+            "Target_Attachment": conver_att
         }
         const form = new FormData();
         Object.keys(formData).forEach((key) => {
@@ -131,11 +131,13 @@ export default function EditFeature(props) {
 
                 filesystem.push(file);
 
-                source_att(filesystem)
+                setSourceatt(filesystem[0])
 
 
             }
             // console.log(filesystem)
+        }else{
+            setSourceatt(null)
         }
     }
 
@@ -151,10 +153,12 @@ export default function EditFeature(props) {
 
                 filesystem.push(file)
 
-                target_att(filesystem)
+                setTargetatt(filesystem[0])
 
             }
             // console.log(filesystem)
+        }else{
+            setTargetatt(null)
         }
     }
 
@@ -177,10 +181,12 @@ export default function EditFeature(props) {
 
                 filesystem.push(file)
 
-                conver_att(filesystem)
+                setConveratt(filesystem[0])
 
             }
             // console.log(filesystem)
+        }else{
+            setConveratt(null)
         }
     }
 
@@ -646,7 +652,7 @@ export default function EditFeature(props) {
                     <Grid container xs={3} lg={4}>
                         <Grid item xs>
                             <Grid container direction='column'>
-                                {source_att.map(item => {
+                                {/* {source_att.map(item => {
                                     return (
                                         <>
 
@@ -673,8 +679,8 @@ export default function EditFeature(props) {
 
                                         </>
                                     )
-                                })}
-
+                                })} */}
+                                {source_att.name}
                             </Grid>
                         </Grid>
 
@@ -685,7 +691,7 @@ export default function EditFeature(props) {
                     <Grid container xs={3} lg={4}>
                         <Grid item xs>
                             <Grid container direction='column'>
-                                {target_att.map(item => {
+                                {/* {target_att.map(item => {
                                     return (
                                         <>
 
@@ -712,7 +718,8 @@ export default function EditFeature(props) {
 
                                         </>
                                     )
-                                })}
+                                })} */}
+                                {target_att.name}
 
                             </Grid>
                         </Grid>
@@ -723,7 +730,7 @@ export default function EditFeature(props) {
                     <Grid container xs={3} lg={4}>
                         <Grid item xs>
                             <Grid container direction='column'>
-                                {conver_att.map(item => {
+                                {/* {conver_att.map(item => {
                                     return (
                                         <>
 
@@ -750,7 +757,9 @@ export default function EditFeature(props) {
 
                                         </>
                                     )
-                                })}
+                                })} */}
+                                {conver_att.name}
+
 
                             </Grid>
                         </Grid>
