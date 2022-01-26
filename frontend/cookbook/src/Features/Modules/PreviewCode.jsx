@@ -122,7 +122,7 @@ export default function PreviewCode(props) {
 
 
   const handleDownload = (dfile) => {
-    console.log(dfile);
+    // console.log(dfile);
     let dnfile = dfile.split('/').pop()
     axios.get(`http://127.0.0.1:8000/api/downloads/${dnfile}`)
       .then(res => {
@@ -369,10 +369,11 @@ export default function PreviewCode(props) {
 
             <Grid container direction='row' spacing={0}>
               <Grid item spacing={3} >
-                {detaildata[0].Source_Attachment.split('/').pop()}
+                {/* {detaildata.length>?} */}
+                {detaildata[0]?.Source_Attachment?.split('/')?.pop()}
               </Grid>
               <Grid item spacing={3} style={{ paddingLeft: 20 }}>
-                <Link onClick={handleDownload(detaildata[0].Source_Attachment)} style={{ textDecoration: 'none' }}>Download</Link>
+                <Link onClick={()=>handleDownload(detaildata[0].Source_Attachment)} style={{ textDecoration: 'none' }}>Download</Link>
 
               </Grid>
             </Grid>
@@ -388,13 +389,16 @@ export default function PreviewCode(props) {
             >
               Target Attachments
             </Typography>
-            <div>
-              {/* <Card className={classes.SourceCode}> */}
-              {/* <Typography component="h2"> */}
-              {detaildata[0].Target_Attachment}
-              {/* </Card> */}
-            </div>
-            {/* </Typography> */}
+            <Grid container direction='row' spacing={0}>
+              <Grid item spacing={3} >
+                {/* {detaildata.length>?} */}
+                {detaildata[0]?.Target_Attachment?.split('/')?.pop()}
+              </Grid>
+              <Grid item spacing={3} style={{ paddingLeft: 20 }}>
+                <Link onClick={()=>handleDownload(detaildata[0].Target_Attachment)} style={{ textDecoration: 'none' }}>Download</Link>
+
+              </Grid>
+            </Grid>
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12}>
             <Typography
@@ -405,13 +409,16 @@ export default function PreviewCode(props) {
             >
               Conversion Attachments
             </Typography>
-            <div>
-              {/* <Card className={classes.SourceCode}> */}
-              {/* <Typography component="h2"> */}
-              {detaildata[0].Conversion_Attachment}
-              {/* </Card> */}
-            </div>
-            {/* </Typography> */}
+            <Grid container direction='row' spacing={0}>
+              <Grid item spacing={3} >
+                {/* {detaildata.length>?} */}
+                {detaildata[0]?.Conversion_Attachment?.split('/')?.pop()}
+              </Grid>
+              <Grid item spacing={3} style={{ paddingLeft: 20 }}>
+                <Link onClick={()=>handleDownload(detaildata[0].Conversion_Attachment)} style={{ textDecoration: 'none' }}>Download</Link>
+
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
 
