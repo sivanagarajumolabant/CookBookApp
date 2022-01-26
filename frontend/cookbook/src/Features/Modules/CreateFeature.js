@@ -4,6 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select';
+import Alert from '@material-ui/lab/Alert';
 import axios from "axios";
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
@@ -19,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     formControl: {
         margin: theme.spacing(0),
         minWidth: 300,
-      },
+    },
     root: {
         '& .MuiTextField-root': {
             margin: theme.spacing(1),
@@ -40,6 +41,12 @@ export default function CreateFeature(props) {
     var obj_type = props.location.state?.data?.Label
     obj_type = obj_type.slice(0, -1);
     const [prerunval, setPrerunval] = useState([]);
+    const [salert, setSalert] = useState(false);
+    const [falert, setFalert] = useState(false);
+
+    const [smsg, setSmsg] = useState('');
+    const [fmsg, setFmsg] = useState('');
+
     // const [seq, setSeq]=useState({})
     useEffect(() => {
         axios.get(`http://127.0.0.1:8000/api/sequence/${obj_type}`).then(
@@ -67,7 +74,7 @@ export default function CreateFeature(props) {
     const [conver_att, setConveratt] = useState([])
     // const [migtypeid, setMigtypeid] = useState()
 
-    
+
     // console.log(props.location.state?.data?.type)
     const handleSubmit = (e) => {
         let typeval = props.location.state?.data?.type
@@ -102,9 +109,14 @@ export default function CreateFeature(props) {
 
         axios.post("http://127.0.0.1:8000/api/create", form)
             .then(res => {
-                console.log(res.data)
+                // console.log(res.data)
+                setSalert(true)
+                setSmsg('Successfully Created Feature')
+
             }, error => {
-                console.log(error);
+                // console.log(error);
+                setFalert(true)
+                setFmsg('Something Went Wrong')
             })
 
 
@@ -139,9 +151,9 @@ export default function CreateFeature(props) {
 
     }
 
-    
 
-    
+
+
     const handlechangedropdownobj = (v) => {
         setformvalues({
             ...formValues,
@@ -163,7 +175,7 @@ export default function CreateFeature(props) {
                 setSourceatt(filesystem[0]);
             }
             // console.log(filesystem)
-        }else{
+        } else {
             setSourceatt(null);
         }
     }
@@ -182,7 +194,7 @@ export default function CreateFeature(props) {
                 setTargetatt(filesystem[0]);
             }
             // console.log(filesystem)
-        }else{
+        } else {
             setTargetatt(null);
         }
     }
@@ -200,7 +212,7 @@ export default function CreateFeature(props) {
             }
             // console.log(filesystem)
         }
-        else{
+        else {
             setConveratt(null);
         }
     }
@@ -243,6 +255,7 @@ export default function CreateFeature(props) {
                             Create Feature
                         </Typography>
                     </Grid>
+
 
                 </Grid>
             </Box>
@@ -404,20 +417,20 @@ export default function CreateFeature(props) {
                             required
                         /> */}
                         <FormControl variant="outlined" className={classes.formControl}>
-                        <InputLabel >Precision</InputLabel>
-                        <Select
-                            native
-                            // value={state.age}
-                            onChange={handleChange}
-                            label="Precision"
-                            name='Sequence'
-                           
-                        >   <option value="Select Precision" selected>Select Precision</option>
-                            <option value="No Precision" >No Precision</option>
-                            {prerunval.map((item,ind)=>{
-                                return <option value={item.Feature_Name}>{item.Feature_Name}</option>
-                            })}
-                        </Select>
+                            <InputLabel >Precision</InputLabel>
+                            <Select
+                                native
+                                // value={state.age}
+                                onChange={handleChange}
+                                label="Precision"
+                                name='Sequence'
+
+                            >   <option value="Select Precision" selected>Select Precision</option>
+                                <option value="No Precision" >No Precision</option>
+                                {prerunval.map((item, ind) => {
+                                    return <option value={item.Feature_Name}>{item.Feature_Name}</option>
+                                })}
+                            </Select>
                         </FormControl>
 
 
@@ -745,6 +758,13 @@ export default function CreateFeature(props) {
 
 
                     </Grid>
+                </Grid>
+
+                <Grid container direction='row ' justifyContent='center' className={classes.root}>
+                    {salert ?
+
+                        <Alert variant="filled" severity="success" onClose={() => { setSalert(false) }}>{smsg}</Alert> : null}
+                    {falert ? <Alert variant="filled" severity="error" onClose={() => { setFalert(false) }}>{fmsg}</Alert> : null}
                 </Grid>
 
                 <Box py={5}>

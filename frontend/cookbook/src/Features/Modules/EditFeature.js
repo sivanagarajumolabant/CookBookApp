@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Alert from '@material-ui/lab/Alert';
 import axios from "axios";
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
@@ -42,6 +43,11 @@ export default function EditFeature(props) {
     const [source_att, setSourceatt] = useState([])
     const [target_att, setTargetatt] = useState([])
     const [conver_att, setConveratt] = useState([])
+    const [salert, setSalert] = useState(false);
+    const [falert, setFalert] = useState(false);
+
+    const [smsg, setSmsg] = useState('');
+    const [fmsg, setFmsg] = useState('');
     // const [migtypeid,setMigtypeid] = useState()
     const [Source_FeatureDescription , setSource_FeatureDescription] = useState("");
     const [Sequence , setSequence] = useState("");
@@ -122,9 +128,12 @@ export default function EditFeature(props) {
         });
         axios.put(`http://127.0.0.1:8000/api/update/${editdata.detaildata[0].Feature_Id}`, form)
             .then(res => {
-                console.log(res.data)
+                // console.log(res.data)
+                setSalert(true)
+                setSmsg('Successfully Updated Feature')
             }, error => {
-                console.log(error);
+                setFalert(true)
+                setFmsg('Something Went Wrong')
             })
 
     }
@@ -796,6 +805,13 @@ export default function EditFeature(props) {
 
 
                     </Grid>
+                </Grid>
+
+                <Grid container direction='row ' justifyContent='center' className={classes.root}>
+                    {salert ?
+
+                        <Alert variant="filled" severity="success" onClose={() => { setSalert(false) }}>{smsg}</Alert> : null}
+                    {falert ? <Alert variant="filled" severity="error" onClose={() => { setFalert(false) }}>{fmsg}</Alert> : null}
                 </Grid>
 
                 <Box py={5}>
