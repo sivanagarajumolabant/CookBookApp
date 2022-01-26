@@ -189,7 +189,7 @@ export default function GmailTreeView({ menuList, dropdown, deleteitem }) {
     <TreeView
       className={classes.root}
       defaultExpanded={["3"]}
-      expanded={false}
+      // expanded={true}
       defaultCollapseIcon={<ArrowDropDownIcon />}
       defaultExpandIcon={<ArrowRightIcon />}
       defaultEndIcon={<div style={{ width: 24 }} />}
