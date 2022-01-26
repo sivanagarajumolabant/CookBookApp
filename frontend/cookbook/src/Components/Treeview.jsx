@@ -142,7 +142,7 @@ function StyledTreeItem(props) {
                   setConfirmDialog({
                     isOpen: true,
                     title: 'Are you sure to delete this record?',
-                    subTitle: "You can't undo this operation",
+                    // subTitle: "You can't undo this operation",
                     onConfirm: () => { deleteitem(datavalue) }
                   })
                 }}

@@ -22,6 +22,8 @@ import MailIcon from "@material-ui/icons/Mail";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import Notification from '../Features/Notifications/Notification'
 import ConfirmDialog from "../Features/Notifications/ConfirmDialog";
+import Menuaction from '../Redux/actions/Menuaction';
+
 
 import {
   Box,
@@ -253,7 +255,9 @@ export default function ClippedDrawer({ children }) {
       isOpen: true,
       message: 'Deleted Successfully',
       type: 'error'
-    })
+    });
+    dispatch(Menuaction.reloadAction(true))
+
   };
 
 
