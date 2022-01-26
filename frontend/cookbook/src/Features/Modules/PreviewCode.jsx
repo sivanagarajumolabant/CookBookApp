@@ -10,6 +10,7 @@ import Container from "@material-ui/core/Container";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import EditSharpIcon from "@material-ui/icons/EditSharp";
 import { useHistory, Link } from "react-router-dom";
+import fileDownload from "js-file-download";
 const useStyles = makeStyles((theme) => ({
   root: {
     // display: "flex",
@@ -122,15 +123,17 @@ export default function PreviewCode(props) {
 
 
   const handleDownload = (dfile) => {
-    // console.log(dfile);
+    console.log(dfile);
     let dnfile = dfile.split('/').pop()
-    axios.get(`http://127.0.0.1:8000/api/downloads/${dnfile}`)
-      .then(res => {
-        // console.log(res.data)
-      }, error => {
-        // console.log(error);
-      })
-
+    axios.get(`http://127.0.0.1:8000/api/downloads/${dnfile}`, {
+      responseType: 'blob',
+    }).then(res => {
+      // console.log(res)
+      fileDownload(res.data, dnfile);
+      console.log(res);
+    }).catch(err => {
+      console.log(err);
+    })
   }
 
   var data = null;
@@ -373,7 +376,7 @@ export default function PreviewCode(props) {
                 {detaildata[0]?.Source_Attachment?.split('/')?.pop()}
               </Grid>
               <Grid item spacing={3} style={{ paddingLeft: 20 }}>
-                <Link onClick={()=>handleDownload(detaildata[0].Source_Attachment)} style={{ textDecoration: 'none' }}>Download</Link>
+                <Link onClick={() => handleDownload(detaildata[0].Source_Attachment)} style={{ textDecoration: 'none' }}>Download</Link>
 
               </Grid>
             </Grid>
@@ -395,7 +398,7 @@ export default function PreviewCode(props) {
                 {detaildata[0]?.Target_Attachment?.split('/')?.pop()}
               </Grid>
               <Grid item spacing={3} style={{ paddingLeft: 20 }}>
-                <Link onClick={()=>handleDownload(detaildata[0].Target_Attachment)} style={{ textDecoration: 'none' }}>Download</Link>
+                <Link onClick={() => handleDownload(detaildata[0].Target_Attachment)} style={{ textDecoration: 'none' }}>Download</Link>
 
               </Grid>
             </Grid>
@@ -415,7 +418,7 @@ export default function PreviewCode(props) {
                 {detaildata[0]?.Conversion_Attachment?.split('/')?.pop()}
               </Grid>
               <Grid item spacing={3} style={{ paddingLeft: 20 }}>
-                <Link onClick={()=>handleDownload(detaildata[0].Conversion_Attachment)} style={{ textDecoration: 'none' }}>Download</Link>
+                <Link onClick={() => handleDownload(detaildata[0].Conversion_Attachment)} style={{ textDecoration: 'none' }}>Download</Link>
 
               </Grid>
             </Grid>
