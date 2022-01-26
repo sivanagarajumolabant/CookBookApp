@@ -103,7 +103,7 @@ export default function PreviewCode(props) {
     }
   }, [menuitem]);
 
-  
+
 
   // console.log("data",detaildata)
   // useEffect(() => {
@@ -121,17 +121,17 @@ export default function PreviewCode(props) {
   // }, []);
 
 
-  // const handleDownload=(dfile)=>{
-  //   console.log(dfile);
-  //   let dnfile = dfile.split('/').pop()
-  //   axios.get(`http://127.0.0.1:8000/api/downloads/${dnfile}`)
-  //   .then(res => {
-  //       console.log(res.data)
-  //   }, error => {
-  //       console.log(error);
-  //   })
+  const handleDownload = (dfile) => {
+    console.log(dfile);
+    let dnfile = dfile.split('/').pop()
+    axios.get(`http://127.0.0.1:8000/api/downloads/${dnfile}`)
+      .then(res => {
+        // console.log(res.data)
+      }, error => {
+        // console.log(error);
+      })
 
-  // }
+  }
 
   var data = null;
   if (detaildata.length > 0) {
@@ -355,7 +355,7 @@ export default function PreviewCode(props) {
             </div>
             {/* </Typography> */}
           </Grid>
-          
+
           <Grid item xs={12} sm={12} md={12} lg={12}>
             <Typography
               gutterBottom
@@ -365,15 +365,19 @@ export default function PreviewCode(props) {
             >
               Source Attachments
             </Typography>
-            <div>
-              {/* <Card className={classes.SourceCode}> */}
-              {/* <Typography component="h2"> */}
-              {`http://localhost:8000${detaildata[0].Source_Attachment}`}
-              {/* <Link onClick={handleDownload(detaildata[0].Source_Attachment)} style={{textDecoration:'none'}}>Download</Link> */}
 
-              {/* </Card> */}
-            </div>
-            {/* </Typography> */}
+
+            <Grid container direction='row' spacing={0}>
+              <Grid item spacing={3} >
+                {detaildata[0].Source_Attachment.split('/').pop()}
+              </Grid>
+              <Grid item spacing={3} style={{ paddingLeft: 20 }}>
+                <Link onClick={handleDownload(detaildata[0].Source_Attachment)} style={{ textDecoration: 'none' }}>Download</Link>
+
+              </Grid>
+            </Grid>
+
+
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12}>
             <Typography
