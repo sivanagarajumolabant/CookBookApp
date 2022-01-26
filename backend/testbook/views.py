@@ -27,7 +27,8 @@ def convert_python_code(request):
     # path_backend = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
     path_backend = 'C:/projects/django/CookBook/backend'
     path_executable = path_backend + '/executable_modules/'
-    sys.path.append(path_executable)
+    # sys.path.append(0,path_executable)
+    sys.path.insert(0,path_executable)
     source_code = """
     CREATE OR REPLACE PACKAGE SCHEMANAME.PACKAGENAME AS
     v1,
@@ -37,7 +38,7 @@ def convert_python_code(request):
     end;
     end;"""
 
-    python_code = """def testdjango(source_code):
+    python_code = """def main(source_code):
                             print("Executing the SOurce Code:",source_code)
                             print("Testing Part1")
                             print("Testing Part2")
@@ -45,14 +46,16 @@ def convert_python_code(request):
                             data = source_code
                             return data"""
     feature_name = "testdjango"
-
-    print('python_code is :', python_code.find("def"))
+    python_code = re.sub(r'def\s+main','def '+feature_name,python_code)
+    # substring = feature_name
+    # python_code = python_code.replace('main', feature_name)
+    # print('python_code is :', python_code)
 
     with open(path_executable+'/'+feature_name+'.py','w') as f:
         f.write(python_code)
     path_code_main = path_executable
     print('path_code_main : ',path_code_main)
-    # os.chdir(path_code_main)
+    # os.
     # print(os.path)
 
     ax = import_module(feature_name)
@@ -60,7 +63,7 @@ def convert_python_code(request):
     data = getattr(ax,feature_name)
     print('data is : ', data)
     executableoutput = data(source_code)
-    print('executableoutput is : ', executableoutput)
+    # print('executableoutput is : ', executableoutput)
     dict1 = {'data': executableoutput}
     return Response(dict1)
 
@@ -70,6 +73,8 @@ sys.path.append(path_executable)
 
 @api_view(['GET'])
 def convert_python_code1(request, source_code, python_code, feature_name):
+    sys.path.insert(0, path_executable)
+    python_code = re.sub(r'def\s+main','def '+feature_name,python_code)
     with open(path_executable+'/'+feature_name+'.py','w') as f:
         f.write(python_code)
     path_code_main = path_executable
@@ -134,7 +139,7 @@ def download_file(request, file_name):
     filename = fl_path +file_name
     # filename1 = 'test1.txt'
     filename1 = filename
-    fl = open(filename, 'r',encoding='cp850')
+    fl = open(filename, 'rb')
     mime_type, _ = mimetypes.guess_type(fl_path)
     response = HttpResponse(fl, content_type=mime_type)
     response['Content-Disposition'] = "attachment; filename=%s" % filename1
