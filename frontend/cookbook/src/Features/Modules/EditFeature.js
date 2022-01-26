@@ -11,8 +11,10 @@ import MenuAppBar from '../../Components/header'
 import { Box, Grid, Typography } from '@material-ui/core';
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import CloseIcon from '@material-ui/icons/Close';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Notification from '../Notifications/Notification';
+import Menuaction from '../../Redux/actions/Menuaction';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -46,24 +48,25 @@ export default function EditFeature(props) {
     const [conver_att, setConveratt] = useState([])
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
     // const [migtypeid,setMigtypeid] = useState()
-    const [Source_FeatureDescription , setSource_FeatureDescription] = useState("");
-    const [Sequence , setSequence] = useState("");
-    const [Target_FeatureDescription , setTarget_FeatureDescription] = useState("");
-    const [Source_Code , setSource_Code] = useState("");
-    const [Target_ActualCode , setTarget_ActualCode] = useState("");
-    const [Target_Expected_Output , setTarget_Expected_Output] = useState("");
-    const [Conversion_Code , setConversion_Code] = useState("");
-    
-    
-    
-    useEffect((e)=> {
-        setSource_FeatureDescription(  editdata.detaildata[0].Source_FeatureDescription )
-        setTarget_FeatureDescription(  editdata.detaildata[0].Target_FeatureDescription )
-        setSource_Code(  editdata.detaildata[0].Source_Code )
-        setTarget_ActualCode(  editdata.detaildata[0].Target_ActualCode )
-        setTarget_Expected_Output(  editdata.detaildata[0].Target_Expected_Output )
-        setConversion_Code(  editdata.detaildata[0].Conversion_Code )
-        setSequence( editdata.detaildata[0].Sequence )
+    const [Source_FeatureDescription, setSource_FeatureDescription] = useState("");
+    const [Sequence, setSequence] = useState("");
+    const [Target_FeatureDescription, setTarget_FeatureDescription] = useState("");
+    const [Source_Code, setSource_Code] = useState("");
+    const [Target_ActualCode, setTarget_ActualCode] = useState("");
+    const [Target_Expected_Output, setTarget_Expected_Output] = useState("");
+    const [Conversion_Code, setConversion_Code] = useState("");
+    const dispatch = useDispatch();
+
+
+
+    useEffect((e) => {
+        setSource_FeatureDescription(editdata.detaildata[0].Source_FeatureDescription)
+        setTarget_FeatureDescription(editdata.detaildata[0].Target_FeatureDescription)
+        setSource_Code(editdata.detaildata[0].Source_Code)
+        setTarget_ActualCode(editdata.detaildata[0].Target_ActualCode)
+        setTarget_Expected_Output(editdata.detaildata[0].Target_Expected_Output)
+        setConversion_Code(editdata.detaildata[0].Conversion_Code)
+        setSequence(editdata.detaildata[0].Sequence)
 
     }, [editdata]);
 
@@ -77,17 +80,17 @@ export default function EditFeature(props) {
     //         }, error => {
     //             console.log(error);
     //         })
-       
+
     //     }
     //   }, [editdata]);
 
 
-   
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
-        var val =0;
+
+        var val = 0;
         if (editdata.detaildata[0]) {
             if (editdata.detaildata[0].Migration_TypeId === 'Oracle To Postgres') {
                 val = 1
@@ -105,19 +108,19 @@ export default function EditFeature(props) {
             ...formValues,
             Migration_TypeId: val,
             Object_Type: editdata.detaildata[0].Object_Type,
-            Feature_Name:editdata.detaildata[0].Feature_Name,
-            Source_FeatureDescription,Target_FeatureDescription,
-            "Sequence" : editdata.detaildata[0].Sequence,
-            "Source_FeatureDescription":Source_FeatureDescription,
-            "Target_FeatureDescription":Target_FeatureDescription,
-            "Target_Expected_Output":Target_Expected_Output,
-            "Target_ActualCode":Target_ActualCode,
+            Feature_Name: editdata.detaildata[0].Feature_Name,
+            Source_FeatureDescription, Target_FeatureDescription,
+            "Sequence": editdata.detaildata[0].Sequence,
+            "Source_FeatureDescription": Source_FeatureDescription,
+            "Target_FeatureDescription": Target_FeatureDescription,
+            "Target_Expected_Output": Target_Expected_Output,
+            "Target_ActualCode": Target_ActualCode,
             'Source_Attachment': source_att,
             "Conversion_Attachment": target_att,
             "Target_Attachment": conver_att,
-            "Source_Code":Source_Code,
-            "Conversion_Code":Conversion_Code
-            
+            "Source_Code": Source_Code,
+            "Conversion_Code": Conversion_Code
+
         }
         const form = new FormData();
         Object.keys(formData).forEach((key) => {
@@ -139,6 +142,8 @@ export default function EditFeature(props) {
                     type: 'error'
                 })
             })
+
+        dispatch(Menuaction.reloadAction(true))
 
     }
 
@@ -186,11 +191,11 @@ export default function EditFeature(props) {
 
                 filesystem.push(file);
                 setSourceatt(filesystem[0])
-               
-                
+
+
             }
             // console.log(filesystem)
-        }else{
+        } else {
             setSourceatt(null);
         }
     }
@@ -207,10 +212,10 @@ export default function EditFeature(props) {
 
                 filesystem.push(file);
                 setTargetatt(filesystem[0])
-                
+
             }
             // console.log(filesystem)
-        }else{
+        } else {
             setTargetatt(null);
         }
     }
@@ -227,7 +232,7 @@ export default function EditFeature(props) {
                 setConveratt(filesystem[0])
             }
             // console.log(filesystem)
-        }else{
+        } else {
             setConveratt(null);
         }
     }
@@ -322,7 +327,7 @@ export default function EditFeature(props) {
 
     }
 
-    const handleConvert = (e)=>{
+    const handleConvert = (e) => {
         e.preventDefault();
     }
 
@@ -370,7 +375,7 @@ export default function EditFeature(props) {
                     </Grid>
                     <Grid item xs={6}>
 
-                    <TextField
+                        <TextField
                             id="outlined-multiline-static"
                             label="Object Type"
                             multiline
@@ -448,7 +453,7 @@ export default function EditFeature(props) {
                             rows={1}
                             name='Sequence_Number'
                             // defaultValue="Default Value"
-                            value = {Sequence}
+                            value={Sequence}
                             variant="outlined"
                             required
                             InputLabelProps={{
@@ -810,7 +815,7 @@ export default function EditFeature(props) {
 
                     </Grid>
                 </Grid>
-                
+
                 <Notification
                     notify={notify}
                     setNotify={setNotify}
@@ -825,8 +830,8 @@ export default function EditFeature(props) {
                                 fullWidth
                                 variant="contained"
                                 color="primary"
-                            // className={classes.submit}
-                            onClick={handleConvert}
+                                // className={classes.submit}
+                                onClick={handleConvert}
 
                             >
                                 Convert

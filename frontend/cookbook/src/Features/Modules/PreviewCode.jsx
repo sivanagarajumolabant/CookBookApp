@@ -81,12 +81,12 @@ const useStyles = makeStyles((theme) => ({
 export default function PreviewCode(props) {
   const classes = useStyles();
   const [detaildata, setDetaildata] = useState([]);
-  const id = props.InfoId;
+  // const id = props.InfoId;
   let history = useHistory();
   const [isdata, setIsdata] = useState(false);
 
   const { menuitem } = useSelector((state) => state.dashboardReducer);
-  console.log(menuitem);
+  // console.log(menuitem);
 
   useEffect(() => {
     if (menuitem) {
@@ -101,6 +101,8 @@ export default function PreviewCode(props) {
           console.log(error);
         }
       );
+    }else{
+      setDetaildata([]);
     }
   }, [menuitem]);
 
