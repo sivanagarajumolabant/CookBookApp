@@ -123,18 +123,19 @@ export default function PreviewCode(props) {
 
 
   const handleDownload = (dfile) => {
-    console.log(dfile);
+    // console.log(dfile);
     let dnfile = dfile.split('/').pop()
     axios.get(`http://127.0.0.1:8000/api/downloads/${dnfile}`, {
       responseType: 'blob',
     }).then(res => {
       // console.log(res)
       fileDownload(res.data, dnfile);
-      console.log(res);
+      // console.log(res);
     }).catch(err => {
-      console.log(err);
+      // console.log(err);
     })
   }
+  
 
   var data = null;
   if (detaildata.length > 0) {

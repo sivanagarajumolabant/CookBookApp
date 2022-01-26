@@ -333,15 +333,15 @@ export default function EditFeature(props) {
     return (
 
         <MenuAppBar>
-            <Box py={4}>
-                <Grid container direction='row' justifyContent='center'>
+            <Box py={2}>
+                {/* <Grid container direction='row' justifyContent='center'>
                     <Grid item>
                         <Typography variant='h6'>
                             Edit Feature
                         </Typography>
                     </Grid>
 
-                </Grid>
+                </Grid> */}
             </Box>
 
             <form autoComplete="off">
