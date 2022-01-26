@@ -27,4 +27,14 @@ const  dropdown=(value) =>{
 
 }
 
-export default {ActionMenu, dropdown}
+ const reloadAction=(value)=>{
+    return dispatch => {
+       
+        dispatch({
+           type: "REALOAD_LIST" , 
+           payload :value
+        })
+   }
+ }
+
+export default {ActionMenu, dropdown, reloadAction}

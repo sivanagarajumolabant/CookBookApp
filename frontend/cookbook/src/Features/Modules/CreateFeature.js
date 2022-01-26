@@ -14,7 +14,8 @@ import MenuAppBar from '../../Components/header'
 import { Box, Grid, Typography } from '@material-ui/core';
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import CloseIcon from '@material-ui/icons/Close';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import Menuaction from '../../Redux/actions/Menuaction';
 const useStyles = makeStyles((theme) => ({
     formControl: {
         margin: theme.spacing(0),
@@ -67,7 +68,9 @@ export default function CreateFeature(props) {
     const [conver_att, setConveratt] = useState([])
     // const [migtypeid, setMigtypeid] = useState()
 
+
     
+     const dispatach=useDispatch()
     // console.log(props.location.state?.data?.type)
     const handleSubmit = (e) => {
         let typeval = props.location.state?.data?.type
@@ -108,6 +111,8 @@ export default function CreateFeature(props) {
             })
 
 
+
+            dispatach(Menuaction.reloadAction(true))
     }
 
 

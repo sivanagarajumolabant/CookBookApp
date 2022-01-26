@@ -4,7 +4,8 @@ const initialState = {
   drawerOpen: false,
 
    menuitem:null,
-   headerValue: {title: "Oracle To Postgres"}
+   headerValue: {title: "Oracle To Postgres"},
+   updatedValue:false
 };
 
 const dashboardReducer = (state = initialState, action) => {
@@ -19,7 +20,13 @@ const dashboardReducer = (state = initialState, action) => {
           ...state,
           headerValue: action.payload
         };
+        case "REALOAD_LIST":
+          return {
+            ...state,
+            updatedValue: action.payload
+          };
 
+        
 
       
     default:

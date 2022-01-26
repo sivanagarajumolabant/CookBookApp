@@ -35,7 +35,7 @@ import Footer from "../Components/Footer";
 import axios from "axios";
 import API_BASE_URL from "../Config/config";
 import ActionMenu from "../../src/Redux/actions/Menuaction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DehazeSharpIcon from '@material-ui/icons/DehazeSharp';
 import { useState } from "react";
 
@@ -188,7 +188,7 @@ export default function ClippedDrawer({ children }) {
   const theme = useTheme();
 
   const [isOpened, setIsOpened] = React.useState(true);
-
+  const { updatedValue } = useSelector(state => state.dashboardReducer);
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openview = Boolean(anchorEl);
@@ -245,6 +245,12 @@ export default function ClippedDrawer({ children }) {
     link.href = "./Files/template.py";
     link.click();
   };
+
+   React.useEffect(()=>{
+   if(updatedValue){
+    getmenus(1);
+   }
+   },[updatedValue])
   return (
     <div className={classes.root}>
       <CssBaseline />
