@@ -136,7 +136,7 @@ export default function EditFeature(props) {
                 setNotify({
                     isOpen: true,
                     message: 'Something Went Wrong! Please try Again',
-                    type: 'success'
+                    type: 'error'
                 })
             })
 

@@ -21,6 +21,7 @@ import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import Notification from '../Features/Notifications/Notification'
+import ConfirmDialog from "../Features/Notifications/ConfirmDialog";
 
 import {
   Box,
@@ -200,6 +201,7 @@ export default function ClippedDrawer({ children }) {
   });
   // const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
   const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
+  const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
   const dispatch = useDispatch();
   const history = useHistory();
   const handleChange = (event) => {
@@ -239,8 +241,13 @@ export default function ClippedDrawer({ children }) {
 
   const deleteitem = async (data) => {
 
+    setConfirmDialog({
+      ...confirmDialog,
+      isOpen: false
+    })
     const res = await axios.delete(`${API_BASE_URL}/delete/${data.Feature_Id}`);
     getmenus(1);
+
 
     setNotify({
       isOpen: true,

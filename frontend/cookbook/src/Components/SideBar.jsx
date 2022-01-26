@@ -28,6 +28,7 @@ import axios from "axios";
 import API_BASE_URL from "../Config/config";
 import ActionMenu from "../../src/Redux/actions/Menuaction";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 //   import MenuIcon from "@material-ui/icons/Menu";
 
 const drawerWidth = 240;
@@ -174,8 +175,9 @@ export default function ClippedDrawer({ children }) {
     setNotify({
       isOpen: true,
       message: 'Deleted Successfully',
-      type: 'error'
+      type: 'success'
     })
+    // window.location.href ='/dashboard'
 
   }
   return (
