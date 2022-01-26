@@ -6,6 +6,8 @@ import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
 import Button from '@material-ui/core/Button';
 import Toolbar from "@material-ui/core/Toolbar";
+import Notification from "../Features/Notifications/Notification";
+import ConfirmDialog from '../Features/Notifications/ConfirmDialog'
 import List from "@material-ui/core/List";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
@@ -42,9 +44,9 @@ import { useState } from "react";
 const drawerWidth = 375;
 
 const useStyles = makeStyles((theme) => ({
-  downloadbutton:{
-    position:'fixed',
-    bottom:0
+  downloadbutton: {
+    position: 'fixed',
+    bottom: 0
   },
   title: {
     marginLeft: 50,
@@ -93,7 +95,7 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerContainer: {
     overflow: "auto",
-    height:'80vh',
+    height: '80vh',
     background: "#3f51b5",
   },
   content: {
@@ -196,6 +198,8 @@ export default function ClippedDrawer({ children }) {
   const [dropdown, setdropdown] = React.useState({
     name: "Oracle To Postgres",
   });
+  const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
+  const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
   const dispatch = useDispatch();
   const history = useHistory();
   const handleChange = (event) => {
@@ -234,8 +238,18 @@ export default function ClippedDrawer({ children }) {
   };
 
   const deleteitem = async (data) => {
+
     const res = await axios.delete(`${API_BASE_URL}/delete/${data.Feature_Id}`);
     getmenus(1);
+    setConfirmDialog({
+      ...confirmDialog,
+      isOpen: false
+    })
+    setNotify({
+      isOpen: true,
+      message: 'Deleted Successfully',
+      type: 'success'
+    })
   };
 
 
@@ -246,11 +260,11 @@ export default function ClippedDrawer({ children }) {
     link.click();
   };
 
-   React.useEffect(()=>{
-   if(updatedValue){
-    getmenus(1);
-   }
-   },[updatedValue])
+  React.useEffect(() => {
+    if (updatedValue) {
+      getmenus(1);
+    }
+  }, [updatedValue])
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -414,7 +428,7 @@ export default function ClippedDrawer({ children }) {
               </Box>
               <Box py={1}>
                 <Button
-                  style={{ color: 'white', marginLeft: 40, textTransform:'unset' }}
+                  style={{ color: 'white', marginLeft: 40, textTransform: 'unset' }}
                   startIcon={<GetAppIcon />}
                   onClick={onDownload}
                   className={classes.downloadbutton}
@@ -439,6 +453,14 @@ export default function ClippedDrawer({ children }) {
 
       </Grid>
       {/* <Footer /> */}
+      <Notification
+        notify={notify}
+        setNotify={setNotify}
+      />
+      <ConfirmDialog
+        confirmDialog={confirmDialog}
+        setConfirmDialog={setConfirmDialog}
+      />
     </div>
   );
 }

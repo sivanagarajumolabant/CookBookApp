@@ -1,6 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
+import Notification from "../Features/Notifications/Notification";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -127,6 +128,7 @@ export default function ClippedDrawer({ children }) {
   const [menuList, setmenuList] = React.useState([]);
   const [dropdown, setdropdown] = React.useState({ name: 'Oracle To Postgres' });
   const dispatch = useDispatch();
+  const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
   const history = useHistory()
   const handleChange = (event) => {
     setAuth(event.target.checked);
@@ -165,9 +167,15 @@ export default function ClippedDrawer({ children }) {
   };
 
   const deleteitem = async (data) => {
+    
 
     const res = await axios.delete(`${API_BASE_URL}/delete/${data.Feature_Id}`);
     getmenus(1);
+    setNotify({
+      isOpen: true,
+      message: 'Deleted Successfully',
+      type: 'error'
+    })
 
   }
   return (
@@ -313,6 +321,10 @@ export default function ClippedDrawer({ children }) {
         </main>
       </Box>
       {/* <Footer /> */}
+      <Notification
+        notify={notify}
+        setNotify={setNotify}
+      />
     </div>
   );
 }

@@ -12,6 +12,8 @@ import { Box, Grid, Typography } from '@material-ui/core';
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import CloseIcon from '@material-ui/icons/Close';
 import { useSelector } from 'react-redux';
+import Notification from '../Notifications/Notification';
+
 const useStyles = makeStyles((theme) => ({
     root: {
         '& .MuiTextField-root': {
@@ -42,6 +44,7 @@ export default function EditFeature(props) {
     const [source_att, setSourceatt] = useState([])
     const [target_att, setTargetatt] = useState([])
     const [conver_att, setConveratt] = useState([])
+    const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
     // const [migtypeid,setMigtypeid] = useState()
     const [Source_FeatureDescription , setSource_FeatureDescription] = useState("");
     const [Sequence , setSequence] = useState("");
@@ -122,9 +125,19 @@ export default function EditFeature(props) {
         });
         axios.put(`http://127.0.0.1:8000/api/update/${editdata.detaildata[0].Feature_Id}`, form)
             .then(res => {
-                console.log(res.data)
+                // console.log(res.data)
+                setNotify({
+                    isOpen: true,
+                    message: 'Feature Updated Successfully',
+                    type: 'success'
+                })
             }, error => {
-                console.log(error);
+                // console.log(error);
+                setNotify({
+                    isOpen: true,
+                    message: 'Something Went Wrong! Please try Again',
+                    type: 'success'
+                })
             })
 
     }
