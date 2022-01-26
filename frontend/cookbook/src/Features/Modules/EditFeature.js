@@ -810,7 +810,11 @@ export default function EditFeature(props) {
 
                     </Grid>
                 </Grid>
-
+                
+                <Notification
+                    notify={notify}
+                    setNotify={setNotify}
+                />
                 <Box py={5}>
 
                     <Grid container direction='row ' justifyContent='center' spacing={2}>

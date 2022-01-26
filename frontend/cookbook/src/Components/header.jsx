@@ -6,8 +6,6 @@ import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
 import Button from '@material-ui/core/Button';
 import Toolbar from "@material-ui/core/Toolbar";
-import Notification from "../Features/Notifications/Notification";
-import ConfirmDialog from '../Features/Notifications/ConfirmDialog'
 import List from "@material-ui/core/List";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
@@ -198,7 +196,7 @@ export default function ClippedDrawer({ children }) {
   const [dropdown, setdropdown] = React.useState({
     name: "Oracle To Postgres",
   });
-  const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
+  // const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
   const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
   const dispatch = useDispatch();
   const history = useHistory();
@@ -241,14 +239,11 @@ export default function ClippedDrawer({ children }) {
 
     const res = await axios.delete(`${API_BASE_URL}/delete/${data.Feature_Id}`);
     getmenus(1);
-    setConfirmDialog({
-      ...confirmDialog,
-      isOpen: false
-    })
+    
     setNotify({
       isOpen: true,
       message: 'Deleted Successfully',
-      type: 'success'
+      type: 'error'
     })
   };
 
@@ -453,14 +448,6 @@ export default function ClippedDrawer({ children }) {
 
       </Grid>
       {/* <Footer /> */}
-      <Notification
-        notify={notify}
-        setNotify={setNotify}
-      />
-      <ConfirmDialog
-        confirmDialog={confirmDialog}
-        setConfirmDialog={setConfirmDialog}
-      />
     </div>
   );
 }

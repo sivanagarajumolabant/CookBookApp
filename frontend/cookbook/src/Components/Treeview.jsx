@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import TreeView from "@material-ui/lab/TreeView";
@@ -19,9 +19,6 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import AddIcon from "@material-ui/icons/Add";
 import Delete from "@material-ui/icons/Delete";
-
-
-
 const useTreeItemStyles = makeStyles((theme) => ({
   root: {
     color: theme.palette.text.secondary,
@@ -76,7 +73,6 @@ const useTreeItemStyles = makeStyles((theme) => ({
 function StyledTreeItem(props) {
   const history = useHistory();
   const classes = useTreeItemStyles();
-  const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
   const {
     labelText,
     labelIcon: LabelIcon,
@@ -93,77 +89,71 @@ function StyledTreeItem(props) {
 
   return (
     <>
+    
+    <TreeItem
+      label={
+        <div className={classes.labelRoot}>
+          <LabelIcon color="inherit" className={classes.labelIcon} />
+          <Typography
+            variant="body2"
+            className={classes.labelText}
+            style={{ color: "white" }}
+          >
+            {labelText}
+          </Typography>
 
-      <TreeItem
-        label={
-          <div className={classes.labelRoot}>
-            <LabelIcon color="inherit" className={classes.labelIcon} />
-            <Typography
-              variant="body2"
-              className={classes.labelText}
-              style={{ color: "white" }}
-            >
-              {labelText}
-            </Typography>
+          <Typography
+            variant="caption"
+            color="inherit"
+            style={{ color: "white" }}
+          >
+            {labelInfo}
+          </Typography>
 
-            <Typography
-              variant="caption"
+          {mainheader && (
+            <AddIcon
               color="inherit"
-              style={{ color: "white" }}
-            >
-              {labelInfo}
-            </Typography>
+              className={classes.labelIcon}
+              style={{color:'#0BCD19'}}
 
-            {mainheader && (
-              <AddIcon
-                color="inherit"
-                className={classes.labelIcon}
-                style={{ color: '#0BCD19' }}
+              onClick={() =>
+                history.push({
+                  pathname: "/CreateModule",
+                  state: {
+                    data: { ...data, type: props.dropdown?.name },
 
-                onClick={() =>
-                  history.push({
-                    pathname: "/CreateModule",
-                    state: {
-                      data: { ...data, type: props.dropdown?.name },
+                  },
+                })
+              }
+            />
+          )}
+          {sub && (
+            <Delete
+              color="inherit"
+              style={{color:'#FCBFD7'}}
+              className={classes.labelIcon}
 
-                    },
-                  })
-                }
-              />
-            )}
-            {sub && (
-              <Delete
-                color="inherit"
-                style={{ color: '#FCBFD7' }}
-                className={classes.labelIcon}
-                onClick={() => {
-                  setConfirmDialog({
-                    isOpen: true,
-                    title: 'Are you sure to delete this record?',
-                    subTitle: "You can't undo this operation",
-                    onConfirm: () => { deleteitem(datavalue) }
-                  })
-                }}
-              />
-            )}
+              onClick={() => deleteitem(datavalue)}
+            />
+          )}
 
 
-          </div>
-        }
-        style={{
-          "--tree-view-color": color,
-          "--tree-view-bg-color": bgColor,
-        }}
-        classes={{
-          root: classes.root,
-          content: classes.content,
-          expanded: classes.expanded,
-          selected: classes.selected,
-          group: classes.group,
-          label: classes.label,
-        }}
-        {...other}
-      />
+        </div>
+      }
+      style={{
+        "--tree-view-color": color,
+        "--tree-view-bg-color": bgColor,
+      }}
+      classes={{
+        root: classes.root,
+        content: classes.content,
+        expanded: classes.expanded,
+        selected: classes.selected,
+        group: classes.group,
+        label: classes.label,
+      }}
+      {...other}
+    />
     </>
   );
 }
