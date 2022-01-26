@@ -20,6 +20,8 @@ import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import Notification from '../Features/Notifications/Notification'
+
 import {
   Box,
   Grid,
@@ -239,7 +241,7 @@ export default function ClippedDrawer({ children }) {
 
     const res = await axios.delete(`${API_BASE_URL}/delete/${data.Feature_Id}`);
     getmenus(1);
-    
+
     setNotify({
       isOpen: true,
       message: 'Deleted Successfully',
@@ -448,6 +450,10 @@ export default function ClippedDrawer({ children }) {
 
       </Grid>
       {/* <Footer /> */}
+      <Notification
+        notify={notify}
+        setNotify={setNotify}
+      />
     </div>
   );
 }
