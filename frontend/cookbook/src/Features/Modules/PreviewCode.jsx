@@ -101,7 +101,7 @@ export default function PreviewCode(props) {
           console.log(error);
         }
       );
-    }else{
+    } else {
       setDetaildata([]);
     }
   }, [menuitem]);
@@ -137,7 +137,7 @@ export default function PreviewCode(props) {
       // console.log(err);
     })
   }
-  
+
 
   var data = null;
   if (detaildata.length > 0) {
@@ -378,10 +378,12 @@ export default function PreviewCode(props) {
                 {/* {detaildata.length>?} */}
                 {detaildata[0]?.Source_Attachment?.split('/')?.pop()}
               </Grid>
-              <Grid item spacing={3} style={{ paddingLeft: 20 }}>
-                <Link onClick={() => handleDownload(detaildata[0].Source_Attachment)} style={{ textDecoration: 'none' }}>Download</Link>
+              {detaildata[0].Source_Attachment ?
+                <Grid item spacing={3} style={{ paddingLeft: 20 }}>
+                  <Link onClick={() => handleDownload(detaildata[0].Source_Attachment)} style={{ textDecoration: 'none' }}>Download</Link>
 
-              </Grid>
+                </Grid>
+                : null}
             </Grid>
 
 
@@ -400,10 +402,12 @@ export default function PreviewCode(props) {
                 {/* {detaildata.length>?} */}
                 {detaildata[0]?.Target_Attachment?.split('/')?.pop()}
               </Grid>
-              <Grid item spacing={3} style={{ paddingLeft: 20 }}>
-                <Link onClick={() => handleDownload(detaildata[0].Target_Attachment)} style={{ textDecoration: 'none' }}>Download</Link>
+              {detaildata[0].Target_Attachment ?
+                <Grid item spacing={3} style={{ paddingLeft: 20 }}>
+                  <Link onClick={() => handleDownload(detaildata[0].Target_Attachment)} style={{ textDecoration: 'none' }}>Download</Link>
 
-              </Grid>
+                </Grid>
+                : null}
             </Grid>
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12}>
@@ -420,10 +424,12 @@ export default function PreviewCode(props) {
                 {/* {detaildata.length>?} */}
                 {detaildata[0]?.Conversion_Attachment?.split('/')?.pop()}
               </Grid>
-              <Grid item spacing={3} style={{ paddingLeft: 20 }}>
-                <Link onClick={() => handleDownload(detaildata[0].Conversion_Attachment)} style={{ textDecoration: 'none' }}>Download</Link>
+              {detaildata[0].Conversion_Attachment?
+                <Grid item spacing={3} style={{ paddingLeft: 20 }}>
+                  <Link onClick={() => handleDownload(detaildata[0].Conversion_Attachment)} style={{ textDecoration: 'none' }}>Download</Link>
 
-              </Grid>
+                </Grid>
+              :null}
             </Grid>
           </Grid>
         </Grid>
