@@ -284,6 +284,7 @@ export default function CreateFeature(props) {
             .then(res => {
                 // console.log("res",res.data)
                 setformvalues({
+                    ...formValues,
                     "Target_ActualCode": res.data
                 })
                 setNotify({
@@ -317,7 +318,7 @@ export default function CreateFeature(props) {
                 </Grid>
             </Box>
 
-            <form autoComplete="off">
+            {/* <form autoComplete="off"> */}
                 <Grid container direction='row' spacing={4}>
 
                     <Grid item xs={12} sm={6} md={6} xl={6}>
@@ -831,7 +832,7 @@ export default function CreateFeature(props) {
 
                         <Grid item >
                             <Button
-                                type="submit"
+                                // type="submit"
                                 fullWidth
                                 variant="contained"
                                 color="primary"
@@ -844,7 +845,7 @@ export default function CreateFeature(props) {
                         </Grid>
                         <Grid item>
                             <Button
-                                type="submit"
+                                // type="submit"
                                 fullWidth
                                 variant="contained"
                                 color="primary"
@@ -858,7 +859,7 @@ export default function CreateFeature(props) {
 
                         <Grid item>
                             <Button
-                                type="submit"
+                                // type="submit"
                                 fullWidth
                                 variant="contained"
                                 color="primary"
@@ -871,7 +872,7 @@ export default function CreateFeature(props) {
                         </Grid>
                     </Grid>
                 </Box>
-            </form>
+            {/* </form> */}
 
 
 

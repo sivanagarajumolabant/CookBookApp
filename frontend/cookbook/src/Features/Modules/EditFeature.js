@@ -329,6 +329,34 @@ export default function EditFeature(props) {
 
     const handleConvert = (e) => {
         e.preventDefault();
+        // console.log(formValues.Conversion_Code)
+        // console.log(formValues.Source_Code)
+        // console.log(formValues.Feature_Name)
+
+        let body ={
+            "sourcecode":Source_Code,
+            "convcode":Conversion_Code,
+            "featurename":formValues.Feature_Name
+        }
+        axios.post(`http://127.0.0.1:8000/api/convert_python_code1`, body)
+            .then(res => {
+                // console.log("res",res.data)
+                setTarget_ActualCode(res.data)
+                
+                setNotify({
+                    isOpen: true,
+                    message: 'Conversion Completed Please Check The Output',
+                    type: 'success'
+                })
+            }, error => {
+                console.log(error);
+                setNotify({
+                    isOpen: true,
+                    message: 'Something Went Wrong! Please try Again',
+                    type: 'error'
+                })
+            })
+
     }
 
 
@@ -349,7 +377,7 @@ export default function EditFeature(props) {
                 </Grid> */}
             </Box>
 
-            <form autoComplete="off">
+            {/* <form autoComplete="off"> */}
                 <Grid container direction='row' xs={12} spacing={4}>
 
                     <Grid item xs={6}>
@@ -829,7 +857,7 @@ export default function EditFeature(props) {
 
                         <Grid item>
                             <Button
-                                type="submit"
+                                // type="submit"
                                 fullWidth
                                 variant="contained"
                                 color="primary"
@@ -842,7 +870,7 @@ export default function EditFeature(props) {
                         </Grid>
                         <Grid item>
                             <Button
-                                type="submit"
+                                // type="submit"
                                 fullWidth
                                 variant="contained"
                                 color="primary"
@@ -855,7 +883,7 @@ export default function EditFeature(props) {
                         </Grid>
                     </Grid>
                 </Box>
-            </form>
+            {/* </form> */}
 
 
 
