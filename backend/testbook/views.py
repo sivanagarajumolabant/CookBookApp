@@ -1,4 +1,4 @@
-
+import json
 from .serializers import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -71,11 +71,18 @@ path_backend = 'C:/projects/django/CookBook/backend'
 path_executable = path_backend + '/executable_modules/'
 sys.path.append(path_executable)
 
-@api_view(['GET'])
-def convert_python_code1(request, source_code, python_code, feature_name):
+@api_view(['POST'])
+def convert_python_code1(request):
+    # print(request.body)
+    body_unicode = request.body.decode('utf-8')
+    body_data = json.loads(body_unicode)
+    feature_name = body_data['featurename']
+    python_code = body_data['convcode']
+    source_code = body_data['sourcecode']
     sys.path.insert(0, path_executable)
     python_code = re.sub(r'def\s+main','def '+feature_name,python_code)
-    with open(path_executable+'/'+feature_name+'.py','w') as f:
+    file_path =path_executable+feature_name+'.py'
+    with open(file_path,'w') as f:
         f.write(python_code)
     path_code_main = path_executable
     print('path_code_main : ',path_code_main)
@@ -89,8 +96,8 @@ def convert_python_code1(request, source_code, python_code, feature_name):
     executableoutput = data(source_code)
     dict1 = {'data': executableoutput}
     # print('executableoutput is : ', executableoutput)
-    # return Response(executableoutput)
-    return Response(dict1)
+    return Response(executableoutput)
+
 
 
 class RegisterView(generics.CreateAPIView):

@@ -248,9 +248,15 @@ export default function CreateFeature(props) {
         console.log(formValues.Conversion_Code)
         console.log(formValues.Source_Code)
         console.log(formValues.Feature_Name)
-        axios.get(`http://127.0.0.1:8000/api/convert_python_code1/${formValues.Source_Code}/${formValues.Conversion_Code}/${formValues.Feature_Name}`)
+
+        let body ={
+            "sourcecode":formValues.Source_Code,
+            "convcode":formValues.Conversion_Code,
+            "featurename":formValues.Feature_Name
+        }
+        axios.post(`http://127.0.0.1:8000/api/convert_python_code1`, body)
             .then(res => {
-                console.log(res)
+                console.log(res.data)
                 setNotify({
                     isOpen: true,
                     message: 'Conversion Completed Please Check The Output',
