@@ -67,9 +67,9 @@ def convert_python_code(request):
     dict1 = {'data': executableoutput}
     return Response(dict1)
 
-path_backend = 'C:/projects/django/CookBook/backend'
-path_executable = path_backend + '/executable_modules/'
-sys.path.append(path_executable)
+# path_backend = 'C:/projects/django/CookBook/backend'
+# path_executable = path_backend + '/executable_modules/'
+# sys.path.append(path_executable)
 
 @api_view(['POST'])
 def convert_python_code1(request):
@@ -79,14 +79,19 @@ def convert_python_code1(request):
     feature_name = body_data['featurename']
     python_code = body_data['convcode']
     source_code = body_data['sourcecode']
-    sys.path.insert(0, path_executable)
+    # sys.path.insert(0, path_executable)
+    path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+    module_folder_name = "Modules"
+    module_path = path+'/'+module_folder_name
+    sys.path.append(module_path)
+    if not os.path.exists(module_path):
+        os.makedirs(module_path)
     python_code = re.sub(r'def\s+main','def '+feature_name,python_code)
-    file_path =path_executable+feature_name+'.py'
-    if not os.path.exists(path_executable):
-        os.makedirs(path_executable)
+    file_path =module_path+'/'+feature_name+'.py'
+    sys.path.insert(0,file_path)
     with open(file_path,'w') as f:
         f.write(python_code)
-    path_code_main = path_executable
+    path_code_main = file_path
     print('path_code_main : ',path_code_main)
     # os.chdir(path_code_main)
     # print(os.path)
@@ -95,9 +100,12 @@ def convert_python_code1(request):
     # print('attribute is : ', attribute)
     data = getattr(ax,feature_name)
     # print('data is : ', data)
+    # print(source_code)
     executableoutput = data(source_code)
+    # print(executableoutput)
     dict1 = {'data': executableoutput}
     # print('executableoutput is : ', executableoutput)
+    print(executableoutput)
     return Response(executableoutput)
 
 
@@ -125,16 +133,46 @@ def fol(request,id):
     serializer2 = migrationlevelfeatures(features1,many=True)
     features1 = Feature.objects.filter(Object_Type='Package', Migration_TypeId=id)
     serializer3 = migrationlevelfeatures(features1,many=True)
+    features1 = Feature.objects.filter(Object_Type='Indexes', Migration_TypeId=id)
+    serializer4 = migrationlevelfeatures(features1,many=True)
+    features1 = Feature.objects.filter(Object_Type='Materialized views', Migration_TypeId=id)
+    serializer5 = migrationlevelfeatures(features1,many=True)
+    features1 = Feature.objects.filter(Object_Type='Sequences', Migration_TypeId=id)
+    serializer6 = migrationlevelfeatures(features1,many=True)
+    features1 = Feature.objects.filter(Object_Type='Synonyms', Migration_TypeId=id)
+    serializer7 = migrationlevelfeatures(features1,many=True)
+    features1 = Feature.objects.filter(Object_Type='Tabels', Migration_TypeId=id)
+    serializer8 = migrationlevelfeatures(features1,many=True)
+    features1 = Feature.objects.filter(Object_Type='Triggers', Migration_TypeId=id)
+    serializer9 = migrationlevelfeatures(features1,many=True)
+    features1 = Feature.objects.filter(Object_Type='Types', Migration_TypeId=id)
+    serializer10 = migrationlevelfeatures(features1,many=True)
+    features1 = Feature.objects.filter(Object_Type='Views', Migration_TypeId=id)
+    serializer11 = migrationlevelfeatures(features1,many=True)
+
     # return Response({'procedures':serializer1.data,'functions':serializer2.data,'Packages':serializer3.data})
     dict1 = {1: {'Label': 'Procedures', 'subMenu': serializer1.data},
              2: {'Label': 'Functions', 'subMenu': serializer2.data},
-             3: {'Label': 'Packages', 'subMenu': serializer3.data}}
+             3: {'Label': 'Packages', 'subMenu': serializer3.data},
+             4: {'Label': 'Indexes', 'subMenu': serializer4.data},
+             5: {'Label': 'Materialized views', 'subMenu': serializer5.data},
+             6: {'Label': 'Sequences', 'subMenu': serializer6.data},
+             7: {'Label': 'Synonyms', 'subMenu': serializer7.data},
+             8: {'Label': 'Tabels', 'subMenu': serializer8.data},
+             9: {'Label': 'Triggers', 'subMenu': serializer9.data},
+             10: {'Label': 'Types', 'subMenu': serializer10.data},
+             11: {'Label': 'Views', 'subMenu': serializer11.data}}
     return Response(dict1.values())
 
-@api_view(['GET'])
-def sequence(request, Object_Type):
-# class sequence(generics.ListAPIView, Object_Type):
-    features1 = Feature.objects.filter(Object_Type=Object_Type)
+@api_view(['POST'])
+# def sequence(request, Object_Type, Migration_TypeId):
+def sequence(request):
+    body_unicode = request.body.decode('utf-8')
+    body_data = json.loads(body_unicode)
+    print(body_data)
+    Object_Type = body_data['Object_Type']
+    Migration_TypeId = body_data['Migration_TypeId']
+    features1 = Feature.objects.filter(Object_Type=Object_Type, Migration_TypeId=Migration_TypeId)
     serializer = SequenceSerializer(features1,many=True)
     dict1 = [serializer.data]
     return Response(dict1)

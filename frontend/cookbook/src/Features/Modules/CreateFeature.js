@@ -43,22 +43,6 @@ export default function CreateFeature(props) {
     var obj_type = props.location.state?.data?.Label
     obj_type = obj_type.slice(0, -1);
     const [prerunval, setPrerunval] = useState([]);
-    // const [seq, setSeq]=useState({})
-    useEffect(() => {
-        axios.get(`http://127.0.0.1:8000/api/sequence/${obj_type}`).then(
-            (res) => {
-                //   console.log(res);
-                setPrerunval(res.data[0]);
-
-                //   setIsdata(true);
-            },
-            (error) => {
-                console.log(error);
-            }
-        );
-    }, []);
-
-
     const classes = useStyles();
 
     const [formValues, setformvalues] = useState({ Migration_TypeId: props.location.state?.data?.type, Object_Type: props.location.state?.data?.Label })
@@ -71,6 +55,43 @@ export default function CreateFeature(props) {
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
     // const [migtypeid, setMigtypeid] = useState()
 
+    // const [seq, setSeq]=useState({})
+    let sval=0;
+    if (headerValue) {
+        if (headerValue.title === 'Oracle To Postgres') {
+            sval = 1
+        }
+        else if (headerValue.title === 'Oracle TO SQLServer') {
+
+            sval = 2
+        }
+        else if (headerValue.title === 'Oracle To MYSQL') {
+
+            sval = 3
+        }
+    }
+
+    let body = {
+        "Object_Type" :obj_type,
+        "Migration_TypeId":sval
+    } 
+
+    useEffect(() => {
+        axios.post(`http://127.0.0.1:8000/api/sequence`,body).then(
+            (res) => {
+                //   console.log(res);
+                setPrerunval(res.data[0]);
+
+                //   setIsdata(true);
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+    }, [obj_type]);
+
+
+    
 
 
     const dispatach = useDispatch()
@@ -245,9 +266,9 @@ export default function CreateFeature(props) {
 
     const handleConvert = (e) => {
         e.preventDefault();
-        console.log(formValues.Conversion_Code)
-        console.log(formValues.Source_Code)
-        console.log(formValues.Feature_Name)
+        // console.log(formValues.Conversion_Code)
+        // console.log(formValues.Source_Code)
+        // console.log(formValues.Feature_Name)
 
         let body ={
             "sourcecode":formValues.Source_Code,
@@ -256,7 +277,8 @@ export default function CreateFeature(props) {
         }
         axios.post(`http://127.0.0.1:8000/api/convert_python_code1`, body)
             .then(res => {
-                console.log("res",res.data)
+                // console.log("res",res.data)
+               
                 setNotify({
                     isOpen: true,
                     message: 'Conversion Completed Please Check The Output',
@@ -535,6 +557,7 @@ export default function CreateFeature(props) {
                             // defaultValue="Default Value"
                             variant="outlined"
                             required
+                            disabled
                         />
                     </Grid>
 
