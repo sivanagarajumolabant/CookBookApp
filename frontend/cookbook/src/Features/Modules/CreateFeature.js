@@ -88,7 +88,12 @@ export default function CreateFeature(props) {
                 console.log(error);
             }
         );
-    }, [obj_type]);
+    }, [obj_type, headerValue.title]);
+
+    useEffect(() => {
+        
+    }, [formValues]);
+
 
 
     
@@ -278,7 +283,9 @@ export default function CreateFeature(props) {
         axios.post(`http://127.0.0.1:8000/api/convert_python_code1`, body)
             .then(res => {
                 // console.log("res",res.data)
-               
+                setformvalues({
+                    "Target_ActualCode": res.data
+                })
                 setNotify({
                     isOpen: true,
                     message: 'Conversion Completed Please Check The Output',
@@ -501,6 +508,7 @@ export default function CreateFeature(props) {
                             onChange={(e) => handleChange(e)}
                             variant="outlined"
                             required
+                            
                         />
                     </Grid>
 
@@ -541,6 +549,7 @@ export default function CreateFeature(props) {
                             fullWidth
                             variant="outlined"
                             required
+                            
                         />
                     </Grid>
 
@@ -557,6 +566,7 @@ export default function CreateFeature(props) {
                             // defaultValue="Default Value"
                             variant="outlined"
                             required
+                            value={formValues.Target_ActualCode}
                             // disabled
                         />
                     </Grid>

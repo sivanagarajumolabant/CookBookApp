@@ -531,6 +531,9 @@ export default function EditFeature(props) {
                             InputLabelProps={{
                                 shrink: true,
                             }}
+                            
+                            // error={Source_Code === ""}
+                            // helperText={Source_Code === "" ? "Empty!" : " "}
                         />
                     </Grid>
 
