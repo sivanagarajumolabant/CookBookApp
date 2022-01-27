@@ -82,6 +82,8 @@ def convert_python_code1(request):
     sys.path.insert(0, path_executable)
     python_code = re.sub(r'def\s+main','def '+feature_name,python_code)
     file_path =path_executable+feature_name+'.py'
+    if not os.path.exists(path_executable):
+        os.makedirs(path_executable)
     with open(file_path,'w') as f:
         f.write(python_code)
     path_code_main = path_executable

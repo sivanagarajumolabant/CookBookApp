@@ -256,7 +256,7 @@ export default function CreateFeature(props) {
         }
         axios.post(`http://127.0.0.1:8000/api/convert_python_code1`, body)
             .then(res => {
-                console.log(res.data)
+                console.log("res",res.data)
                 setNotify({
                     isOpen: true,
                     message: 'Conversion Completed Please Check The Output',
