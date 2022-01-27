@@ -228,6 +228,7 @@ export default function ClippedDrawer({ children }) {
   const getmenus = async (value) => {
     const res = await axios.get(`${API_BASE_URL}/fol/${value}`);
     setmenuList(res.data);
+    dispatch(Menuaction.reloadAction(false))
   };
 
   React.useEffect(() => {
