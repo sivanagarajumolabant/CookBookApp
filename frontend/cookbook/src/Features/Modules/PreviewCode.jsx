@@ -11,6 +11,7 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import EditSharpIcon from "@material-ui/icons/EditSharp";
 import { useHistory, Link } from "react-router-dom";
 import fileDownload from "js-file-download";
+import API_BASE_URL from "../../Config/config";
 const useStyles = makeStyles((theme) => ({
   root: {
     // display: "flex",
@@ -90,7 +91,7 @@ export default function PreviewCode(props) {
 
   useEffect(() => {
     if (menuitem) {
-      axios.get(`http://127.0.0.1:8000/api/detail/${menuitem || null}`).then(
+      axios.get(`${API_BASE_URL}/detail/${menuitem || null}`).then(
         (res) => {
           console.log(res);
           setDetaildata(res.data);
@@ -127,7 +128,7 @@ export default function PreviewCode(props) {
   const handleDownload = (dfile) => {
     // console.log(dfile);
     let dnfile = dfile.split('/').pop()
-    axios.get(`http://127.0.0.1:8000/api/downloads/${dnfile}`, {
+    axios.get(`${API_BASE_URL}/downloads/${dnfile}`, {
       responseType: 'blob',
     }).then(res => {
       // console.log(res)

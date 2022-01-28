@@ -17,6 +17,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { useDispatch, useSelector } from 'react-redux';
 import Menuaction from '../../Redux/actions/Menuaction';
 import Notification from '../Notifications/Notification';
+import API_BASE_URL from '../../Config/config';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -77,7 +78,7 @@ export default function CreateFeature(props) {
     } 
 
     useEffect(() => {
-        axios.post(`http://127.0.0.1:8000/api/sequence`,body).then(
+        axios.post(`${API_BASE_URL}/sequence`,body).then(
             (res) => {
                 //   console.log(res);
                 setPrerunval(res.data[0]);
@@ -132,7 +133,7 @@ export default function CreateFeature(props) {
             form.append(key, formData[key]);
         });
 
-        axios.post("http://127.0.0.1:8000/api/create", form)
+        axios.post(`${API_BASE_URL}/create`, form)
             .then(res => {
                 // console.log(res.data)
                 setNotify({
@@ -280,7 +281,7 @@ export default function CreateFeature(props) {
             "convcode":formValues.Conversion_Code,
             "featurename":formValues.Feature_Name
         }
-        axios.post(`http://127.0.0.1:8000/api/convert_python_code1`, body)
+        axios.post(`${API_BASE_URL}/convert_python_code1`, body)
             .then(res => {
                 // console.log("res",res.data)
                 setformvalues({

@@ -66,7 +66,7 @@ export default function SignUp(props) {
       [evt.target.name]: value
     });
   }
-  let regurl = API_BASE_URL + 'register/'
+  let regurl = API_BASE_URL + '/register/'
   function handleSubmit(e) {
     e.preventDefault();
     let userinfo = {

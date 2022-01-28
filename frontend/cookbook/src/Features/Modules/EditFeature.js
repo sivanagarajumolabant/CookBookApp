@@ -14,6 +14,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { useSelector, useDispatch } from 'react-redux';
 import Notification from '../Notifications/Notification';
 import Menuaction from '../../Redux/actions/Menuaction';
+import API_BASE_URL from '../../Config/config';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -127,7 +128,7 @@ export default function EditFeature(props) {
         Object.keys(formData).forEach((key) => {
             form.append(key, formData[key]);
         });
-        axios.put(`http://127.0.0.1:8000/api/update/${editdata.detaildata[0].Feature_Id}`, form)
+        axios.put(`${API_BASE_URL}/update/${editdata.detaildata[0].Feature_Id}`, form)
             .then(res => {
                 // console.log(res.data)
                 setNotify({
@@ -339,7 +340,7 @@ export default function EditFeature(props) {
             "convcode":Conversion_Code,
             "featurename":editdata.detaildata[0].Feature_Name
         }
-        axios.post(`http://127.0.0.1:8000/api/convert_python_code1`, body)
+        axios.post(`${API_BASE_URL}/convert_python_code1`, body)
             .then(res => {
                 // console.log("res",res.data)
                 setTarget_ActualCode(res.data)
