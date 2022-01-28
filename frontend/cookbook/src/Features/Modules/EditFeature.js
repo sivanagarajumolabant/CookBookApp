@@ -36,8 +36,9 @@ const useStyles = makeStyles((theme) => ({
 export default function EditFeature(props) {
     console.log(props.location.data)
     const editdata = props.location.data
-    // console.log("editdata", editdata.detaildata[0].Migration_TypeId)
+    // console.log("editdata", editdata.detaildata[0])
     const classes = useStyles();
+    var handle_featurename = editdata.detaildata[0].Feature_Name.substr(5)
 
     const [formValues, setformvalues] = useState({ Migration_TypeId: props.location.state?.data?.type, Object_Type: props.location.state?.data?.Label })
     const [file, setfile] = useState([])
@@ -108,7 +109,7 @@ export default function EditFeature(props) {
             ...formValues,
             Migration_TypeId: val,
             Object_Type: editdata.detaildata[0].Object_Type,
-            Feature_Name: editdata.detaildata[0].Feature_Name,
+            Feature_Name: editdata.detaildata[0].Feature_Name.substr(5),
             Source_FeatureDescription, Target_FeatureDescription,
             "Sequence": editdata.detaildata[0].Sequence,
             "Source_FeatureDescription": Source_FeatureDescription,
@@ -336,7 +337,7 @@ export default function EditFeature(props) {
         let body ={
             "sourcecode":Source_Code,
             "convcode":Conversion_Code,
-            "featurename":formValues.Feature_Name
+            "featurename":editdata.detaildata[0].Feature_Name
         }
         axios.post(`http://127.0.0.1:8000/api/convert_python_code1`, body)
             .then(res => {
@@ -358,8 +359,13 @@ export default function EditFeature(props) {
             })
 
     }
-
-
+    var seq =null;
+    if(Sequence!=='No Precision'){
+        seq = String(Sequence).substr(5)
+        
+      }else{
+        seq = Sequence
+      }
     // console.log(props.location.state)
 
     // console.log(AttachmentList)
@@ -428,7 +434,7 @@ export default function EditFeature(props) {
                             multiline
                             rows={1}
                             onChange={(e) => handleChange(e)}
-                            value={editdata.detaildata[0].Feature_Name}
+                            value={handle_featurename}
                             name='Feature_Name'
                             // defaultValue="Default Value"
                             variant="outlined"
@@ -477,11 +483,11 @@ export default function EditFeature(props) {
                             multiline
                             fullWidth
                             // onChange={(e, v) => handleChange(v)}
-                            onChange={(e) => setSequence(e.target.value)}
+                            // onChange={(e) => setSequence(e.target.value)}
                             rows={1}
                             name='Sequence_Number'
                             // defaultValue="Default Value"
-                            value={Sequence}
+                            value={seq}
                             variant="outlined"
                             required
                             InputLabelProps={{

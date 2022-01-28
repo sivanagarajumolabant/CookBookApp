@@ -12,7 +12,7 @@ class Feature(models.Model):
     Feature_Version = models.SmallIntegerField(default=0)
     Object_Type = models.CharField(max_length=50)
     Feature_Id = models.BigAutoField(primary_key=True)
-    Feature_Name = models.CharField(max_length=100)
+    Feature_Name = models.CharField(max_length=100, unique=True)
     Sequence = models.CharField(max_length=50)
     Source_FeatureDescription = models.TextField()
     Source_Code = models.TextField()
@@ -25,7 +25,14 @@ class Feature(models.Model):
     Target_ActualCode = models.TextField()
     Target_Attachment = models.FileField(upload_to='media/', blank=True, null=True)
 
+    # def save(self, *args, **kwargs):
+    #     self.Version_Id = self.Version_Id + 1
+    #     self.Feature_Version = self.Feature_Version + 1
+    #     super().save(*args, **kwargs)
     def save(self, *args, **kwargs):
+        # if self.Object_Type == 'Procedure':
+        object_dict = {'Procedure': 'Proc', 'Function': 'Func', 'Package': 'Pack', 'Indexes': 'Inde', 'Materialized views':'Mate', 'Sequences': 'Sequ', 'Synonyms':'Syno', 'Tabels': 'Tabe', 'Triggers': 'Trig', 'Types': 'Type', 'Views': 'view'}
+        self.Feature_Name = object_dict[self.Object_Type] + '_' + self.Feature_Name
         self.Version_Id = self.Version_Id + 1
         self.Feature_Version = self.Feature_Version + 1
         super().save(*args, **kwargs)

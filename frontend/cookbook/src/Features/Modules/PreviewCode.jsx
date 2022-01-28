@@ -138,9 +138,15 @@ export default function PreviewCode(props) {
     })
   }
 
-
   var data = null;
+  let seq =null
   if (detaildata.length > 0) {
+    if(detaildata[0].Sequence!=='No Precision'){
+      seq = detaildata[0].Sequence.substr(5)
+      
+    }else{
+      seq = detaildata[0].Sequence
+    }
     data = (
       <>
         <Grid container >
@@ -185,9 +191,10 @@ export default function PreviewCode(props) {
             </Typography>
             {/* <Typography component="h2"> */}
             <div className={classes.Description}>
-              {detaildata[0].Object_Type.split("\n").map((i, key) => {
+              {/* {detaildata[0].Object_Type.split("\n").map((i, key) => {
                 return <div key={key}>{i}</div>;
-              })}
+              })} */}
+              {detaildata[0].Object_Type}
               {/* </Typography> */}
             </div>
           </Grid>
@@ -203,9 +210,10 @@ export default function PreviewCode(props) {
             </Typography>
             {/* <Typography component="h2"> */}
             <div className={classes.Description}>
-              {detaildata[0].Feature_Name.split("\n").map((i, key) => {
+              {/* {detaildata[0].Feature_Name.split("\n").map((i, key) => {
                 return <div key={key}>{i}</div>;
-              })}
+              })} */}
+              {detaildata[0].Feature_Name.substr(5)}
               {/* </Typography> */}
             </div>
           </Grid>
@@ -235,7 +243,7 @@ export default function PreviewCode(props) {
             </Typography>
             {/* <Typography component="h2"> */}
             <div className={classes.Description}>
-              {detaildata[0].Sequence}
+              {seq}
             </div>
           </Grid>
 

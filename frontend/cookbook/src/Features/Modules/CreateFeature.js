@@ -486,7 +486,7 @@ export default function CreateFeature(props) {
                             >   <option value="Select Precision" selected>Select Precision</option>
                                 <option value="No Precision" >No Precision</option>
                                 {prerunval.map((item, ind) => {
-                                    return <option value={item.Feature_Name}>{item.Feature_Name}</option>
+                                    return <option value={item.Feature_Name}>{item.Feature_Name.substr(5)}</option>
                                 })}
                             </Select>
                         </FormControl>

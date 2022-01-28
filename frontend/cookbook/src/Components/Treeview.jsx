@@ -229,7 +229,7 @@ export default function GmailTreeView({ menuList, dropdown, deleteitem }) {
                   sub={true}
                   onClick={() => MenuSelected(data.Feature_Id)}
                   nodeId={"S" + Index + index}
-                  labelText={data.Feature_Name}
+                  labelText={data.Feature_Name.substr(5)}
                   labelIcon={ViewModuleIcon}
                   deleteitem={deleteitem}
                   datavalue={data}
