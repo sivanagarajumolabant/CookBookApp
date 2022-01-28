@@ -146,10 +146,10 @@ export default function CreateFeature(props) {
                     type: 'success'
                 })
             }, error => {
-                console.log(error);
+                // console.log(error);
                 setNotify({
                     isOpen: true,
-                    message: 'Feature Name Already Existed !',
+                    message: 'Something Went Wrong Please Try Again!',
                     type: 'error'
                 })
             })
@@ -431,7 +431,7 @@ export default function CreateFeature(props) {
                             // defaultValue="Default Value"
 
                             variant="outlined"
-                           
+                            required
 
                             fullWidth
                             
