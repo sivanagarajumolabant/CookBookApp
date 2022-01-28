@@ -38,7 +38,7 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import { useHistory } from "react-router-dom";
 import Footer from "../Components/Footer";
 import axios from "axios";
-// import API_BASE_URL from "../Config/config";
+import API_BASE_URL from "../Config/config";
 import ActionMenu from "../../src/Redux/actions/Menuaction";
 import { useDispatch, useSelector } from "react-redux";
 import DehazeSharpIcon from '@material-ui/icons/DehazeSharp';
@@ -226,7 +226,7 @@ export default function ClippedDrawer({ children }) {
     history.push("/");
   };
   const getmenus = async (value) => {
-    const res = await axios.get(`/api/fol/${value}`);
+    const res = await axios.get(`${API_BASE_URL}/fol/${value}`);
     setmenuList(res.data);
     dispatch(Menuaction.reloadAction(false))
   };
@@ -248,7 +248,7 @@ export default function ClippedDrawer({ children }) {
       ...confirmDialog,
       isOpen: false
     })
-    const res = await axios.delete(`api/delete/${data.Feature_Id}`);
+    const res = await axios.delete(`${API_BASE_URL}/delete/${data.Feature_Id}`);
     getmenus(1);
 
 
