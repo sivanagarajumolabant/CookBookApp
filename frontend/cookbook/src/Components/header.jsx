@@ -245,7 +245,7 @@ export default function ClippedDrawer({ children }) {
   const deleteitem = async (data) => {
 
     setConfirmDialog({
-      ...confirmDialog,
+      confirmDialog,
       isOpen: false
     })
     const res = await axios.delete(`${API_BASE_URL}/delete/${data.Feature_Id}`);

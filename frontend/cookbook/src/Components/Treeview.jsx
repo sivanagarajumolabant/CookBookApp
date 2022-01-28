@@ -145,6 +145,9 @@ function StyledTreeItem(props) {
                     // subTitle: "You can't undo this operation",
                     onConfirm: () => { deleteitem(datavalue) }
                   })
+                  // {setConfirmDialog({
+                  //   isOpen: false})
+                  // }
                 }}
               />
             )}

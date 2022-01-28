@@ -334,11 +334,12 @@ export default function EditFeature(props) {
         // console.log(formValues.Conversion_Code)
         // console.log(formValues.Source_Code)
         // console.log(formValues.Feature_Name)
+        let wout_prefix = (editdata.detaildata[0].Feature_Name).substr(5)
 
         let body ={
             "sourcecode":Source_Code,
             "convcode":Conversion_Code,
-            "featurename":editdata.detaildata[0].Feature_Name
+            "featurename":wout_prefix
         }
         axios.post(`${API_BASE_URL}/convert_python_code1`, body)
             .then(res => {
@@ -584,7 +585,7 @@ export default function EditFeature(props) {
                             onChange={(e) => setTarget_ActualCode(e.target.value)}
                             // defaultValue="Default Value"
                             variant="outlined"
-                            required
+                            // required
                             value={Target_ActualCode}
                             InputLabelProps={{
                                 shrink: true,

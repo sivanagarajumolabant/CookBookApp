@@ -18,11 +18,11 @@ class Feature(models.Model):
     Source_Code = models.TextField()
     Source_Attachment = models.FileField(upload_to='media/', blank=True, null=True)
     # Conversion_Description = models.TextField()
-    Conversion_Code = models.TextField()
+    Conversion_Code = models.TextField(blank=True, null=True)
     Conversion_Attachment = models.FileField(upload_to='media/', blank=True, null=True)
-    Target_FeatureDescription = models.TextField()
-    Target_Expected_Output = models.TextField()
-    Target_ActualCode = models.TextField()
+    Target_FeatureDescription = models.TextField(blank=True, null=True)
+    Target_Expected_Output = models.TextField(blank=True, null=True)
+    Target_ActualCode = models.TextField(blank=True, null=True)
     Target_Attachment = models.FileField(upload_to='media/', blank=True, null=True)
 
     # def save(self, *args, **kwargs):

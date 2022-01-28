@@ -61,6 +61,8 @@ export default function ConfirmDialog(props) {
                     text="Yes"
                     color="secondary"
                     onClick={confirmDialog.onConfirm} />
+                    
+                    
             </DialogActions>
         </Dialog>
     )

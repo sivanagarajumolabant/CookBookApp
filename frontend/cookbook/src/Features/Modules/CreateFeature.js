@@ -149,7 +149,7 @@ export default function CreateFeature(props) {
                 console.log(error);
                 setNotify({
                     isOpen: true,
-                    message: 'Something Went Wrong! Please try Again',
+                    message: 'Feature Name Already Existed !',
                     type: 'error'
                 })
             })
@@ -431,8 +431,10 @@ export default function CreateFeature(props) {
                             // defaultValue="Default Value"
 
                             variant="outlined"
-                            required
+                           
+
                             fullWidth
+                            
                         />
 
                     </Grid>
@@ -571,10 +573,15 @@ export default function CreateFeature(props) {
                             onChange={(e) => handleChange(e)}
                             // defaultValue="Default Value"
                             variant="outlined"
-                            required
+                            // required
                             value={formValues.Target_ActualCode}
                             // disabled
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
                         />
+
+                        
                     </Grid>
 
 

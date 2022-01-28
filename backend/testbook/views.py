@@ -93,6 +93,8 @@ def convert_python_code1(request):
         f.write(python_code)
     path_code_main = file_path
     print('path_code_main : ',path_code_main)
+    print("input ",source_code)
+    print("python code ", python_code )
     # os.chdir(path_code_main)
     # print(os.path)
 
@@ -100,7 +102,7 @@ def convert_python_code1(request):
     # print('attribute is : ', attribute)
     data = getattr(ax,feature_name)
     # print('data is : ', data)
-    # print(source_code)
+
     executableoutput = data(source_code)
     # print(executableoutput)
     dict1 = {'data': executableoutput}
