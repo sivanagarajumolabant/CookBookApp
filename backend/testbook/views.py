@@ -133,7 +133,7 @@ def fol(request,id):
     serializer2 = migrationlevelfeatures(features1,many=True)
     features1 = Feature.objects.filter(Object_Type='Package', Migration_TypeId=id)
     serializer3 = migrationlevelfeatures(features1,many=True)
-    features1 = Feature.objects.filter(Object_Type='Indexe', Migration_TypeId=id)
+    features1 = Feature.objects.filter(Object_Type='Index', Migration_TypeId=id)
     serializer4 = migrationlevelfeatures(features1,many=True)
     features1 = Feature.objects.filter(Object_Type='Materialized view', Migration_TypeId=id)
     serializer5 = migrationlevelfeatures(features1,many=True)

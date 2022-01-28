@@ -42,7 +42,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CreateFeature(props) {
     var obj_type = props.location.state?.data?.Label
-    obj_type = obj_type.slice(0, -1);
+    if (obj_type==='Indexes'){
+        obj_type = obj_type.slice(0, -2);
+    }else{
+        obj_type = obj_type.slice(0, -1);
+    }
     const [prerunval, setPrerunval] = useState([]);
     const classes = useStyles();
 
