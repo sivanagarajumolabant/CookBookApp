@@ -113,10 +113,10 @@ export default function EditFeature(props) {
             Migration_TypeId: val,
             Object_Type: editdata.detaildata[0].Object_Type,
             Feature_Name: editdata.detaildata[0].Feature_Name.substr(5),
-            Source_FeatureDescription, Target_FeatureDescription,
+            // Source_FeatureDescription, Target_FeatureDescription,
             "Sequence": editdata.detaildata[0].Sequence,
-            "Source_FeatureDescription": Source_FeatureDescription,
-            "Target_FeatureDescription": Target_FeatureDescription,
+            // "Source_FeatureDescription": Source_FeatureDescription,
+            // "Target_FeatureDescription": Target_FeatureDescription,
             "Target_Expected_Output": Target_Expected_Output,
             "Target_ActualCode": Target_ActualCode,
             'Source_Attachment': source_att,
@@ -545,7 +545,8 @@ export default function EditFeature(props) {
                         <h2>{'Source Description'}</h2>
                         <CKEditor
                             editor={ClassicEditor}
-                            data={Source_FeatureDescription}
+                            data={editdata.detaildata[0].Source_FeatureDescription}
+                            // value ={detaildata[0].Source_FeatureDescription}
                             onReady={editor => {
                                 // You can store the "editor" and use when it is needed.
                                 console.log('Editor is ready to use!', editor);
@@ -555,7 +556,6 @@ export default function EditFeature(props) {
                                 handledes(data)
                                 // console.log( { event, editor, data } );
                             }}
-                            // onChange={(e) => setSource_FeatureDescription(e.target.value)}
 
 
                             onBlur={(event, editor) => {
@@ -564,6 +564,7 @@ export default function EditFeature(props) {
                             onFocus={(event, editor) => {
                                 console.log('Focus.', editor);
                             }}
+                            
                         />
                     </div>
 
@@ -596,14 +597,14 @@ export default function EditFeature(props) {
                         <p>{'Target Description'}</p>
                         <CKEditor
                             editor={ClassicEditor}
-                            data={Target_FeatureDescription}
+                            data={editdata.detaildata[0].Target_FeatureDescription}
                             onReady={editor => {
                                 // You can store the "editor" and use when it is needed.
                                 console.log('Editor is ready to use!', editor);
                             }}
                             onChange={(event, editor) => {
                                 const data = editor.getData();
-                                handledes(data)
+                                handletarget(data)
                                 // console.log( { event, editor, data } );
                             }}
                             // onChange={(e) => setTarget_FeatureDescription(e.target.value)}

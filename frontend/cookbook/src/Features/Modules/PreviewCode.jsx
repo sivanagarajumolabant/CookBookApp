@@ -273,6 +273,7 @@ export default function PreviewCode(props) {
                 <CKEditor
                   editor={ClassicEditor}
                   data={detaildata[0].Source_FeatureDescription}
+                  // value ={detaildata[0].Source_FeatureDescription}
                   onReady={editor => {
                     // You can store the "editor" and use when it is needed.
                     console.log('Editor is ready to use!', editor);
@@ -335,7 +336,7 @@ export default function PreviewCode(props) {
               )} */}
               <CKEditor
                 editor={ClassicEditor}
-                data={detaildata[0].Target_ActualCode}
+                data={detaildata[0].Target_FeatureDescription}
                 onReady={editor => {
                   // You can store the "editor" and use when it is needed.
                   console.log('Editor is ready to use!', editor);
