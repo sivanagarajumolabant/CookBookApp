@@ -15,6 +15,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import Notification from '../Notifications/Notification';
 import Menuaction from '../../Redux/actions/Menuaction';
 import API_BASE_URL from '../../Config/config';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -307,6 +309,24 @@ export default function EditFeature(props) {
         })
     }
 
+    const handledes = (data) => {
+        setformvalues({
+            ...formValues,
+            "Source_FeatureDescription": data
+        })
+
+
+    }
+    const handletarget = (data) => {
+        setformvalues({
+            ...formValues,
+            "Target_FeatureDescription": data
+        })
+
+
+    }
+
+
     if (editdata.detaildata[0]) {
         if (editdata.detaildata[0].Migration_TypeId === '1') {
             editdata.detaildata[0].Migration_TypeId = 'Oracle To Postgres'
@@ -336,16 +356,16 @@ export default function EditFeature(props) {
         // console.log(formValues.Feature_Name)
         let wout_prefix = (editdata.detaildata[0].Feature_Name).substr(5)
 
-        let body ={
-            "sourcecode":Source_Code,
-            "convcode":Conversion_Code,
-            "featurename":wout_prefix
+        let body = {
+            "sourcecode": Source_Code,
+            "convcode": Conversion_Code,
+            "featurename": wout_prefix
         }
         axios.post(`${API_BASE_URL}/convert_python_code1`, body)
             .then(res => {
                 // console.log("res",res.data)
                 setTarget_ActualCode(res.data)
-                
+
                 setNotify({
                     isOpen: true,
                     message: 'Conversion Completed Please Check The Output',
@@ -361,13 +381,13 @@ export default function EditFeature(props) {
             })
 
     }
-    var seq =null;
-    if(Sequence!=='No Precision'){
+    var seq = null;
+    if (Sequence !== 'No Precision') {
         seq = String(Sequence).substr(5)
-        
-      }else{
+
+    } else {
         seq = Sequence
-      }
+    }
     // console.log(props.location.state)
 
     // console.log(AttachmentList)
@@ -386,123 +406,123 @@ export default function EditFeature(props) {
             </Box>
 
             {/* <form autoComplete="off"> */}
-                <Grid container direction='row' xs={12} spacing={4}>
+            <Grid container direction='row' xs={12} spacing={4}>
 
-                    <Grid item xs={6}>
+                <Grid item xs={6}>
 
-                        <TextField
-                            id="outlined-multiline-static"
-                            label="Migration Type"
-                            multiline
-                            rows={1}
-                            onChange={(e) => handleChange(e)}
-                            label="Migration Type"
-                            // defaultValue="Default Value"
-                            value={editdata.detaildata[0].Migration_TypeId}
-                            variant="outlined"
-                            required
-                            disabled
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            fullWidth
-                        />
+                    <TextField
+                        id="outlined-multiline-static"
+                        label="Migration Type"
+                        multiline
+                        rows={1}
+                        onChange={(e) => handleChange(e)}
+                        label="Migration Type"
+                        // defaultValue="Default Value"
+                        value={editdata.detaildata[0].Migration_TypeId}
+                        variant="outlined"
+                        required
+                        disabled
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        fullWidth
+                    />
 
-                    </Grid>
-                    <Grid item xs={6}>
+                </Grid>
+                <Grid item xs={6}>
 
-                        <TextField
-                            id="outlined-multiline-static"
-                            label="Object Type"
-                            multiline
-                            rows={1}
-                            onChange={(e) => handleChange(e)}
-                            value={editdata.detaildata[0].Object_Type}
-                            name="Object_Type"
-                            variant="outlined"
-                            required
-                            disabled
-                            fullWidth
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                        />
+                    <TextField
+                        id="outlined-multiline-static"
+                        label="Object Type"
+                        multiline
+                        rows={1}
+                        onChange={(e) => handleChange(e)}
+                        value={editdata.detaildata[0].Object_Type}
+                        name="Object_Type"
+                        variant="outlined"
+                        required
+                        disabled
+                        fullWidth
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                    />
 
-                    </Grid>
-                    <Grid item xs={4}>
-                        <TextField
-                            id="outlined-multiline-static"
-                            label="Feature Name"
-                            multiline
-                            rows={1}
-                            onChange={(e) => handleChange(e)}
-                            value={handle_featurename}
-                            name='Feature_Name'
-                            // defaultValue="Default Value"
-                            variant="outlined"
-                            required
-                            disabled
-                            fullWidth
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                        />
+                </Grid>
+                <Grid item xs={4}>
+                    <TextField
+                        id="outlined-multiline-static"
+                        label="Feature Name"
+                        multiline
+                        rows={1}
+                        onChange={(e) => handleChange(e)}
+                        value={handle_featurename}
+                        name='Feature_Name'
+                        // defaultValue="Default Value"
+                        variant="outlined"
+                        required
+                        disabled
+                        fullWidth
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                    />
 
-                    </Grid>
+                </Grid>
 
-                    <Grid item xs={4}>
-                        <Autocomplete
-                            fullWidth
-                            id="outlined-multiline-static"
-                            options={[
-                                { title: "Programlevel" },
-                                { title: "Statementlevel" },
+                <Grid item xs={4}>
+                    <Autocomplete
+                        fullWidth
+                        id="outlined-multiline-static"
+                        options={[
+                            { title: "Programlevel" },
+                            { title: "Statementlevel" },
 
-                            ]}
-                            groupBy={""}
-                            // defaultValue={{ title: 'Programlevel' }}
-                            getOptionLabel={(option) => option.title}
-                            name="Level"
-                            onChange={(e, v) => handlechangedropdownlevel(v)}
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    fullWidth
-                                    label="Level"
-                                    variant="outlined"
-                                />
-                            )}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                        />
-                    </Grid>
-                    <Grid item xs={4}>
+                        ]}
+                        groupBy={""}
+                        // defaultValue={{ title: 'Programlevel' }}
+                        getOptionLabel={(option) => option.title}
+                        name="Level"
+                        onChange={(e, v) => handlechangedropdownlevel(v)}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                fullWidth
+                                label="Level"
+                                variant="outlined"
+                            />
+                        )}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                    />
+                </Grid>
+                <Grid item xs={4}>
 
-                        <TextField
-                            id="outlined-multiline-static"
-                            label="Sequence No"
-                            multiline
-                            fullWidth
-                            // onChange={(e, v) => handleChange(v)}
-                            // onChange={(e) => setSequence(e.target.value)}
-                            rows={1}
-                            name='Sequence_Number'
-                            // defaultValue="Default Value"
-                            value={seq}
-                            variant="outlined"
-                            required
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            disabled
-                        />
+                    <TextField
+                        id="outlined-multiline-static"
+                        label="Sequence No"
+                        multiline
+                        fullWidth
+                        // onChange={(e, v) => handleChange(v)}
+                        // onChange={(e) => setSequence(e.target.value)}
+                        rows={1}
+                        name='Sequence_Number'
+                        // defaultValue="Default Value"
+                        value={seq}
+                        variant="outlined"
+                        required
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        disabled
+                    />
 
-                    </Grid>
-                    <Grid item xs={12}>
+                </Grid>
+                <Grid item xs={12}>
 
 
-                        <TextField
+                    {/* <TextField
                             id="outlined-multiline-static"
                             label="Source Description"
                             multiline
@@ -519,123 +539,177 @@ export default function EditFeature(props) {
                             InputLabelProps={{
                                 shrink: true,
                             }}
-                        />
-                    </Grid>
+                        /> */}
+
+                    <div className="App">
+                        <h2>{'Source Description'}</h2>
+                        <CKEditor
+                            editor={ClassicEditor}
+                            data={Source_FeatureDescription}
+                            onReady={editor => {
+                                // You can store the "editor" and use when it is needed.
+                                console.log('Editor is ready to use!', editor);
+                            }}
+                            onChange={(event, editor) => {
+                                const data = editor.getData();
+                                handledes(data)
+                                // console.log( { event, editor, data } );
+                            }}
+                            // onChange={(e) => setSource_FeatureDescription(e.target.value)}
 
 
-
-                    <Grid item xs={12}>
-
-
-                        <TextField
-                            id="outlined-multiline-static"
-                            label="Target Description"
-
-                            fullWidth
-                            name='Target_FeatureDescription'
-                            multiline
-                            rows={15}
-                            onChange={(e) => setTarget_FeatureDescription(e.target.value)}
-                            // defaultValue="Default Value"
-                            variant="outlined"
-                            value={Target_FeatureDescription}
-                            required
-                            InputLabelProps={{
-                                shrink: true,
+                            onBlur={(event, editor) => {
+                                console.log('Blur.', editor);
+                            }}
+                            onFocus={(event, editor) => {
+                                console.log('Focus.', editor);
                             }}
                         />
-                    </Grid>
+                    </div>
+
+                </Grid>
 
 
 
+                <Grid item xs={12}>
 
-                    <Grid item xs={12}>
 
+                    {/* <TextField
+                        id="outlined-multiline-static"
+                        label="Target Description"
 
-                        <TextField
-                            id="outlined-multiline-static"
-                            label="Source Code"
-                            multiline
-                            rows={15}
-                            name='Source_Code'
-                            onChange={(e) => setSource_Code(e.target.value)}
-                            // defaultValue="Default Value"
-                            fullWidth
-                            variant="outlined"
-                            required
-                            value={Source_Code}
-                            InputLabelProps={{
-                                shrink: true,
+                        fullWidth
+                        name='Target_FeatureDescription'
+                        multiline
+                        rows={15}
+                        onChange={(e) => setTarget_FeatureDescription(e.target.value)}
+                        // defaultValue="Default Value"
+                        variant="outlined"
+                        value={Target_FeatureDescription}
+                        required
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                    /> */}
+
+                    <div className="App">
+                        <p>{'Target Description'}</p>
+                        <CKEditor
+                            editor={ClassicEditor}
+                            data={Target_FeatureDescription}
+                            onReady={editor => {
+                                // You can store the "editor" and use when it is needed.
+                                console.log('Editor is ready to use!', editor);
                             }}
-                            
-                            // error={Source_Code === ""}
-                            // helperText={Source_Code === "" ? "Empty!" : " "}
-                        />
-                    </Grid>
-
-
-                    <Grid item xs={12}>
-                        <TextField
-                            fullWidth
-                            id="outlined-multiline-static"
-                            label="Actual Target Code"
-                            multiline
-                            rows={15}
-                            name='Target_ActualCode'
-                            onChange={(e) => setTarget_ActualCode(e.target.value)}
-                            // defaultValue="Default Value"
-                            variant="outlined"
-                            // required
-                            value={Target_ActualCode}
-                            InputLabelProps={{
-                                shrink: true,
+                            onChange={(event, editor) => {
+                                const data = editor.getData();
+                                handledes(data)
+                                // console.log( { event, editor, data } );
                             }}
-                        />
-                    </Grid>
+                            // onChange={(e) => setTarget_FeatureDescription(e.target.value)}
 
 
-
-
-
-                    <Grid item xs={12}>
-                        <TextField
-                            fullWidth
-                            id="outlined-multiline-static"
-                            label="Expected Target Code"
-                            multiline
-                            rows={15}
-                            name='Target_Expected_Output'
-                            onChange={(e) => setTarget_Expected_Output(e.target.value)}
-                            // defaultValue="Default Value"
-                            variant="outlined"
-                            required
-                            value={Target_Expected_Output}
-                            InputLabelProps={{
-                                shrink: true,
+                            onBlur={(event, editor) => {
+                                console.log('Blur.', editor);
+                            }}
+                            onFocus={(event, editor) => {
+                                console.log('Focus.', editor);
                             }}
                         />
-                    </Grid>
+                    </div>
 
-                    <Grid item xs={12}>
-                        <TextField
-                            fullWidth
-                            id="outlined-multiline-static"
-                            label="Conversion Code"
-                            multiline
-                            name='Conversion_Code'
-                            rows={15}
-                            onChange={(e) => setConversion_Code(e.target.value)}
-                            // defaultValue="Default Value"
-                            variant="outlined"
-                            required
-                            value={Conversion_Code}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                        />
-                    </Grid>
+                </Grid>
 
-                    {/* <Grid item xs={12}>
+
+
+
+                <Grid item xs={12}>
+
+
+                    <TextField
+                        id="outlined-multiline-static"
+                        label="Source Code"
+                        multiline
+                        rows={15}
+                        name='Source_Code'
+                        onChange={(e) => setSource_Code(e.target.value)}
+                        // defaultValue="Default Value"
+                        fullWidth
+                        variant="outlined"
+                        required
+                        value={Source_Code}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+
+                    // error={Source_Code === ""}
+                    // helperText={Source_Code === "" ? "Empty!" : " "}
+                    />
+                </Grid>
+
+
+                <Grid item xs={12}>
+                    <TextField
+                        fullWidth
+                        id="outlined-multiline-static"
+                        label="Actual Target Code"
+                        multiline
+                        rows={15}
+                        name='Target_ActualCode'
+                        onChange={(e) => setTarget_ActualCode(e.target.value)}
+                        // defaultValue="Default Value"
+                        variant="outlined"
+                        // required
+                        value={Target_ActualCode}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                    />
+                </Grid>
+
+
+
+
+
+                <Grid item xs={12}>
+                    <TextField
+                        fullWidth
+                        id="outlined-multiline-static"
+                        label="Expected Target Code"
+                        multiline
+                        rows={15}
+                        name='Target_Expected_Output'
+                        onChange={(e) => setTarget_Expected_Output(e.target.value)}
+                        // defaultValue="Default Value"
+                        variant="outlined"
+                        required
+                        value={Target_Expected_Output}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                    />
+                </Grid>
+
+                <Grid item xs={12}>
+                    <TextField
+                        fullWidth
+                        id="outlined-multiline-static"
+                        label="Conversion Code"
+                        multiline
+                        name='Conversion_Code'
+                        rows={15}
+                        onChange={(e) => setConversion_Code(e.target.value)}
+                        // defaultValue="Default Value"
+                        variant="outlined"
+                        required
+                        value={Conversion_Code}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                    />
+                </Grid>
+
+                {/* <Grid item xs={12}>
 
                         <TextField
                             fullWidth
@@ -656,89 +730,89 @@ export default function EditFeature(props) {
                     </Grid>
  */}
 
-                </Grid>
+            </Grid>
 
 
-                <Box py={4}>
-                    <Grid container direction='row' spacing={2}>
-                        <Grid item style={{ marginTop: "6px" }}>
-                            <Typography variant='body1'>   Source Attachemnts </Typography>
-
-                        </Grid>
-                        <Grid item>
-                            <div className={classes.rootc}>
-                                <input
-                                    accept="file"
-                                    className={classes.input}
-                                    id="contained-button-file3"
-                                    multiple={true}
-                                    onChange={(e) => onchangefile_source(e, "Source_Attachment")}
-                                    type="file"
-                                />
-                                <label htmlFor="contained-button-file3">
-                                    <Button variant="contained" color="primary" component="span" startIcon={<CloudUploadIcon />}>
-                                        Upload
-                                    </Button>
-                                </label>
-
-                            </div>
-                        </Grid>
-
-                        <Grid item style={{ marginTop: "6px" }}>
-                            <Typography variant='body2'> Target Attachemnts :</Typography>
-
-                        </Grid>
-                        <Grid item>
-                            <div className={classes.rootc}>
-                                <input
-                                    // accept="image/*"
-                                    className={classes.input}
-                                    id="contained-button-file1"
-                                    multiple={true}
-
-                                    onChange={(e) => onchangefile_target(e, "Conversion_Attachment")}
-                                    type="file"
-                                />
-                                <label htmlFor="contained-button-file1">
-                                    <Button variant="contained" color="primary" component="span" startIcon={<CloudUploadIcon />}>
-                                        Upload
-                                    </Button>
-                                </label>
-
-                            </div>
-                        </Grid>
-                        <Grid item style={{ marginTop: "6px" }}>
-                            <Typography variant='body1'>   Conversion Attachemnts </Typography>
-
-                        </Grid>
-                        <Grid item>
-                            <div className={classes.rootc}>
-                                <input
-                                    // accept="image/*"
-                                    className={classes.input}
-                                    id="contained-button-file2"
-                                    multiple={true}
-                                    onChange={(e) => onchangefile_conver(e, "Target_Attachment")}
-                                    type="file"
-                                    name='Target_Attachment'
-                                />
-                                <label htmlFor="contained-button-file2">
-                                    <Button variant="contained" color="primary" component="span" startIcon={<CloudUploadIcon />}>
-                                        Upload
-                                    </Button>
-                                </label>
-
-                            </div>
-                        </Grid>
+            <Box py={4}>
+                <Grid container direction='row' spacing={2}>
+                    <Grid item style={{ marginTop: "6px" }}>
+                        <Typography variant='body1'>   Source Attachemnts </Typography>
 
                     </Grid>
-                </Box>
+                    <Grid item>
+                        <div className={classes.rootc}>
+                            <input
+                                accept="file"
+                                className={classes.input}
+                                id="contained-button-file3"
+                                multiple={true}
+                                onChange={(e) => onchangefile_source(e, "Source_Attachment")}
+                                type="file"
+                            />
+                            <label htmlFor="contained-button-file3">
+                                <Button variant="contained" color="primary" component="span" startIcon={<CloudUploadIcon />}>
+                                    Upload
+                                </Button>
+                            </label>
 
-                <Grid container py={3} lg={12}>
-                    <Grid container xs={3} lg={4}>
-                        <Grid item xs>
-                            <Grid container direction='column'>
-                                {/* {source_att.map(item => {
+                        </div>
+                    </Grid>
+
+                    <Grid item style={{ marginTop: "6px" }}>
+                        <Typography variant='body2'> Target Attachemnts :</Typography>
+
+                    </Grid>
+                    <Grid item>
+                        <div className={classes.rootc}>
+                            <input
+                                // accept="image/*"
+                                className={classes.input}
+                                id="contained-button-file1"
+                                multiple={true}
+
+                                onChange={(e) => onchangefile_target(e, "Conversion_Attachment")}
+                                type="file"
+                            />
+                            <label htmlFor="contained-button-file1">
+                                <Button variant="contained" color="primary" component="span" startIcon={<CloudUploadIcon />}>
+                                    Upload
+                                </Button>
+                            </label>
+
+                        </div>
+                    </Grid>
+                    <Grid item style={{ marginTop: "6px" }}>
+                        <Typography variant='body1'>   Conversion Attachemnts </Typography>
+
+                    </Grid>
+                    <Grid item>
+                        <div className={classes.rootc}>
+                            <input
+                                // accept="image/*"
+                                className={classes.input}
+                                id="contained-button-file2"
+                                multiple={true}
+                                onChange={(e) => onchangefile_conver(e, "Target_Attachment")}
+                                type="file"
+                                name='Target_Attachment'
+                            />
+                            <label htmlFor="contained-button-file2">
+                                <Button variant="contained" color="primary" component="span" startIcon={<CloudUploadIcon />}>
+                                    Upload
+                                </Button>
+                            </label>
+
+                        </div>
+                    </Grid>
+
+                </Grid>
+            </Box>
+
+            <Grid container py={3} lg={12}>
+                <Grid container xs={3} lg={4}>
+                    <Grid item xs>
+                        <Grid container direction='column'>
+                            {/* {source_att.map(item => {
                                     return (
                                         <>
 
@@ -766,19 +840,19 @@ export default function EditFeature(props) {
                                         </>
                                     )
                                 })} */}
-                                {source_att.name}
+                            {source_att.name}
 
-                            </Grid>
                         </Grid>
-
-
-
                     </Grid>
 
-                    <Grid container xs={3} lg={4}>
-                        <Grid item xs>
-                            <Grid container direction='column'>
-                                {/* {target_att.map(item => {
+
+
+                </Grid>
+
+                <Grid container xs={3} lg={4}>
+                    <Grid item xs>
+                        <Grid container direction='column'>
+                            {/* {target_att.map(item => {
                                     return (
                                         <>
 
@@ -806,18 +880,18 @@ export default function EditFeature(props) {
                                         </>
                                     )
                                 })} */}
-                                {target_att.name}
+                            {target_att.name}
 
-                            </Grid>
                         </Grid>
-
-
-
                     </Grid>
-                    <Grid container xs={3} lg={4}>
-                        <Grid item xs>
-                            <Grid container direction='column'>
-                                {/* {conver_att.map(item => {
+
+
+
+                </Grid>
+                <Grid container xs={3} lg={4}>
+                    <Grid item xs>
+                        <Grid container direction='column'>
+                            {/* {conver_att.map(item => {
                                     return (
                                         <>
 
@@ -845,52 +919,52 @@ export default function EditFeature(props) {
                                         </>
                                     )
                                 })} */}
-                                {conver_att.name}
+                            {conver_att.name}
 
-                            </Grid>
                         </Grid>
+                    </Grid>
 
 
 
+                </Grid>
+            </Grid>
+
+            <Notification
+                notify={notify}
+                setNotify={setNotify}
+            />
+            <Box py={5}>
+
+                <Grid container direction='row ' justifyContent='center' spacing={2}>
+
+                    <Grid item>
+                        <Button
+                            // type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            // className={classes.submit}
+                            onClick={handleConvert}
+
+                        >
+                            Convert
+                        </Button>
+                    </Grid>
+                    <Grid item>
+                        <Button
+                            // type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            // className={classes.submit}
+                            onClick={handleSubmit}
+
+                        >
+                            Save
+                        </Button>
                     </Grid>
                 </Grid>
-
-                <Notification
-                    notify={notify}
-                    setNotify={setNotify}
-                />
-                <Box py={5}>
-
-                    <Grid container direction='row ' justifyContent='center' spacing={2}>
-
-                        <Grid item>
-                            <Button
-                                // type="submit"
-                                fullWidth
-                                variant="contained"
-                                color="primary"
-                                // className={classes.submit}
-                                onClick={handleConvert}
-
-                            >
-                                Convert
-                            </Button>
-                        </Grid>
-                        <Grid item>
-                            <Button
-                                // type="submit"
-                                fullWidth
-                                variant="contained"
-                                color="primary"
-                                // className={classes.submit}
-                                onClick={handleSubmit}
-
-                            >
-                                Save
-                            </Button>
-                        </Grid>
-                    </Grid>
-                </Box>
+            </Box>
             {/* </form> */}
 
 
