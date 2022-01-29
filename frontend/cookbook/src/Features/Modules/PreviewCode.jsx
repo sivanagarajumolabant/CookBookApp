@@ -12,6 +12,10 @@ import EditSharpIcon from "@material-ui/icons/EditSharp";
 import { useHistory, Link } from "react-router-dom";
 import fileDownload from "js-file-download";
 import API_BASE_URL from "../../Config/config";
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+
+
 const useStyles = makeStyles((theme) => ({
   root: {
     // display: "flex",
@@ -140,12 +144,12 @@ export default function PreviewCode(props) {
   }
 
   var data = null;
-  let seq =null
+  let seq = null
   if (detaildata.length > 0) {
-    if(detaildata[0].Sequence!=='No Precision'){
+    if (detaildata[0].Sequence !== 'No Precision') {
       seq = detaildata[0].Sequence.substr(5)
-      
-    }else{
+
+    } else {
       seq = detaildata[0].Sequence
     }
     data = (
@@ -259,11 +263,37 @@ export default function PreviewCode(props) {
             </Typography>
             {/* <Typography component="h2"> */}
             <div className={classes.SourceDescription} >
-              {detaildata[0].Source_FeatureDescription.split("\n").map(
+              {/* {detaildata[0].Source_FeatureDescription.split("\n").map(
                 (i, key) => {
                   return <div key={key}>{i}</div>;
                 }
-              )}
+              )} */}
+              <div className="App">
+                {/* <h2>{'Source Description'}</h2> */}
+                <CKEditor
+                  editor={ClassicEditor}
+                  data={detaildata[0].Source_FeatureDescription}
+                  // value ={detaildata[0].Source_FeatureDescription}
+                  onReady={editor => {
+                    // You can store the "editor" and use when it is needed.
+                    console.log('Editor is ready to use!', editor);
+                  }}
+                  // onChange={(event, editor) => {
+                  //     const data = editor.getData();
+                  //     handledes(data)
+                  //     // console.log( { event, editor, data } );
+                  // }}
+
+
+                  onBlur={(event, editor) => {
+                    console.log('Blur.', editor);
+                  }}
+                  onFocus={(event, editor) => {
+                    console.log('Focus.', editor);
+                  }}
+                  disabled='true'
+                />
+              </div>
               {/* </Typography> */}
             </div>
           </Grid>
@@ -299,11 +329,33 @@ export default function PreviewCode(props) {
             </Typography>
             {/* <Typography component="h2"> */}
             <div className={classes.SourceDescription}>
-              {detaildata[0].Target_FeatureDescription.split("\n").map(
+              {/* {detaildata[0].Target_FeatureDescription.split("\n").map(
                 (i, key) => {
                   return <div key={key}>{i}</div>;
                 }
-              )}
+              )} */}
+              <CKEditor
+                editor={ClassicEditor}
+                data={detaildata[0].Target_FeatureDescription}
+                onReady={editor => {
+                  // You can store the "editor" and use when it is needed.
+                  console.log('Editor is ready to use!', editor);
+                }}
+                // onChange={(event, editor) => {
+                //     const data = editor.getData();
+                //     handledes(data)
+                //     // console.log( { event, editor, data } );
+                // }}
+
+
+                onBlur={(event, editor) => {
+                  console.log('Blur.', editor);
+                }}
+                onFocus={(event, editor) => {
+                  console.log('Focus.', editor);
+                }}
+                disabled='true'
+              />
               {/* </Typography> */}
             </div>
           </Grid>
@@ -433,12 +485,12 @@ export default function PreviewCode(props) {
                 {/* {detaildata.length>?} */}
                 {detaildata[0]?.Conversion_Attachment?.split('/')?.pop()}
               </Grid>
-              {detaildata[0].Conversion_Attachment?
+              {detaildata[0].Conversion_Attachment ?
                 <Grid item spacing={3} style={{ paddingLeft: 20 }}>
                   <Link onClick={() => handleDownload(detaildata[0].Conversion_Attachment)} style={{ textDecoration: 'none' }}>Download</Link>
 
                 </Grid>
-              :null}
+                : null}
             </Grid>
           </Grid>
         </Grid>
