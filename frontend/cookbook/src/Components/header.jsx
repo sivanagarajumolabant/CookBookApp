@@ -434,6 +434,8 @@ export default function ClippedDrawer({ children }) {
                   menuList={menuList}
                   dropdown={dropdown}
                   deleteitem={deleteitem}
+                  confirmDialog ={confirmDialog}
+                  setConfirmDialog={setConfirmDialog}
                 />
               </Box>
               <Box py={1}>
@@ -466,6 +468,10 @@ export default function ClippedDrawer({ children }) {
       <Notification
         notify={notify}
         setNotify={setNotify}
+      />
+      <ConfirmDialog
+        confirmDialog={confirmDialog}
+        setConfirmDialog={setConfirmDialog}
       />
     </div>
   );

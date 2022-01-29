@@ -71,8 +71,9 @@ export default function EditFeature(props) {
         setTarget_Expected_Output(editdata.detaildata[0].Target_Expected_Output)
         setConversion_Code(editdata.detaildata[0].Conversion_Code)
         setSequence(editdata.detaildata[0].Sequence)
-
+        
     }, [editdata]);
+
 
     // useEffect(() => {
     //     if (editdata) {
