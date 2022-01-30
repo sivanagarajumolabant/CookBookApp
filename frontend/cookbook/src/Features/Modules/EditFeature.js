@@ -17,6 +17,7 @@ import Menuaction from '../../Redux/actions/Menuaction';
 import API_BASE_URL from '../../Config/config';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import { useHistory } from "react-router-dom";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -37,11 +38,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function EditFeature(props) {
-    console.log(props.location.data)
+    // console.log(props.location.data)
+    const history = useHistory();
     const editdata = props.location.data
     // console.log("editdata", editdata.detaildata[0])
     const classes = useStyles();
-    var handle_featurename = editdata.detaildata[0].Feature_Name.substr(5)
+
 
     const [formValues, setformvalues] = useState({ Migration_TypeId: props.location.state?.data?.type, Object_Type: props.location.state?.data?.Label })
     const [file, setfile] = useState([])
@@ -64,17 +66,23 @@ export default function EditFeature(props) {
 
 
     useEffect((e) => {
-        setSource_FeatureDescription(editdata.detaildata[0].Source_FeatureDescription)
-        setTarget_FeatureDescription(editdata.detaildata[0].Target_FeatureDescription)
-        setSource_Code(editdata.detaildata[0].Source_Code)
-        setTarget_ActualCode(editdata.detaildata[0].Target_ActualCode)
-        setTarget_Expected_Output(editdata.detaildata[0].Target_Expected_Output)
-        setConversion_Code(editdata.detaildata[0].Conversion_Code)
-        setSequence(editdata.detaildata[0].Sequence)
-        
+        if (editdata) {
+            setSource_FeatureDescription(editdata.detaildata[0].Source_FeatureDescription)
+            setTarget_FeatureDescription(editdata.detaildata[0].Target_FeatureDescription)
+            setSource_Code(editdata.detaildata[0].Source_Code)
+            setTarget_ActualCode(editdata.detaildata[0].Target_ActualCode)
+            setTarget_Expected_Output(editdata.detaildata[0].Target_Expected_Output)
+            setConversion_Code(editdata.detaildata[0].Conversion_Code)
+            setSequence(editdata.detaildata[0].Sequence)
+        } else {
+            history.push({
+                pathname: "/dashboard",
+            })
+        }
+
     }, [editdata]);
 
-
+    var handle_featurename = editdata.detaildata[0].Feature_Name.substr(5)
     // useEffect(() => {
     //     if (editdata) {
     //         axios.put(`http://127.0.0.1:8000/api/update/${editdata.detaildata[0].Feature_Id}`, formData)
@@ -565,7 +573,7 @@ export default function EditFeature(props) {
                             onFocus={(event, editor) => {
                                 console.log('Focus.', editor);
                             }}
-                            
+
                         />
                     </div>
 

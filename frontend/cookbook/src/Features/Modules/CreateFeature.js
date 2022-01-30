@@ -20,6 +20,8 @@ import Notification from '../Notifications/Notification';
 import API_BASE_URL from '../../Config/config';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+// import Font from '@ckeditor/ckeditor5-font/src/font';
+
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
