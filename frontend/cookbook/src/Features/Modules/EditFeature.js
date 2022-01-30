@@ -82,7 +82,7 @@ export default function EditFeature(props) {
 
     }, [editdata]);
 
-    var handle_featurename = editdata.detaildata[0].Feature_Name.substr(5)
+    var handle_featurename = editdata?.detaildata[0].Feature_Name.substr(5)
     // useEffect(() => {
     //     if (editdata) {
     //         axios.put(`http://127.0.0.1:8000/api/update/${editdata.detaildata[0].Feature_Id}`, formData)
@@ -336,7 +336,7 @@ export default function EditFeature(props) {
     }
 
 
-    if (editdata.detaildata[0]) {
+    if (editdata?.detaildata[0]) {
         if (editdata.detaildata[0].Migration_TypeId === '1') {
             editdata.detaildata[0].Migration_TypeId = 'Oracle To Postgres'
             // setMigtypeid(1)
@@ -427,7 +427,7 @@ export default function EditFeature(props) {
                         onChange={(e) => handleChange(e)}
                         label="Migration Type"
                         // defaultValue="Default Value"
-                        value={editdata.detaildata[0].Migration_TypeId}
+                        value={editdata?.detaildata[0].Migration_TypeId}
                         variant="outlined"
                         required
                         disabled
@@ -446,7 +446,7 @@ export default function EditFeature(props) {
                         multiline
                         rows={1}
                         onChange={(e) => handleChange(e)}
-                        value={editdata.detaildata[0].Object_Type}
+                        value={editdata?.detaildata[0].Object_Type}
                         name="Object_Type"
                         variant="outlined"
                         required
@@ -554,7 +554,7 @@ export default function EditFeature(props) {
                         <h2>{'Source Description'}</h2>
                         <CKEditor
                             editor={ClassicEditor}
-                            data={editdata.detaildata[0].Source_FeatureDescription}
+                            data={editdata?.detaildata[0].Source_FeatureDescription}
                             // value ={detaildata[0].Source_FeatureDescription}
                             onReady={editor => {
                                 // You can store the "editor" and use when it is needed.
@@ -606,7 +606,7 @@ export default function EditFeature(props) {
                         <p>{'Target Description'}</p>
                         <CKEditor
                             editor={ClassicEditor}
-                            data={editdata.detaildata[0].Target_FeatureDescription}
+                            data={editdata?.detaildata[0].Target_FeatureDescription}
                             onReady={editor => {
                                 // You can store the "editor" and use when it is needed.
                                 console.log('Editor is ready to use!', editor);
