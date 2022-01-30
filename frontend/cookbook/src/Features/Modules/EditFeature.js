@@ -124,8 +124,8 @@ export default function EditFeature(props) {
             Feature_Name: editdata.detaildata[0].Feature_Name.substr(5),
             // Source_FeatureDescription, Target_FeatureDescription,
             "Sequence": editdata.detaildata[0].Sequence,
-            // "Source_FeatureDescription": Source_FeatureDescription,
-            // "Target_FeatureDescription": Target_FeatureDescription,
+            "Source_FeatureDescription": Source_FeatureDescription,
+            "Target_FeatureDescription": Target_FeatureDescription,
             "Target_Expected_Output": Target_Expected_Output,
             "Target_ActualCode": Target_ActualCode,
             'Source_Attachment': source_att,
@@ -141,14 +141,14 @@ export default function EditFeature(props) {
         });
         axios.put(`${API_BASE_URL}/update/${editdata.detaildata[0].Feature_Id}`, form)
             .then(res => {
-                // console.log(res.data)
+                console.log(res.data)
                 setNotify({
                     isOpen: true,
                     message: 'Feature Updated Successfully',
                     type: 'success'
                 })
             }, error => {
-                // console.log(error);
+                console.log(error);
                 setNotify({
                     isOpen: true,
                     message: 'Something Went Wrong! Please try Again',
@@ -319,19 +319,20 @@ export default function EditFeature(props) {
     }
 
     const handledes = (data) => {
-        setformvalues({
-            ...formValues,
-            "Source_FeatureDescription": data
-        })
+        // setformvalues({
+        //     ...formValues,
+        //     "Source_FeatureDescription": data
+        // })
+        setSource_FeatureDescription(data)
 
 
     }
     const handletarget = (data) => {
-        setformvalues({
-            ...formValues,
-            "Target_FeatureDescription": data
-        })
-
+        // setformvalues({
+        //     ...formValues,
+        //     "Target_FeatureDescription": data
+        // })
+        setTarget_FeatureDescription(data)
 
     }
 

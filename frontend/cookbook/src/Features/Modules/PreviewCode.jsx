@@ -372,9 +372,7 @@ export default function PreviewCode(props) {
             <div>
               <Card className={classes.SourceCode}>
                 {/* <Typography component="h2"> */}
-                {detaildata[0].Target_ActualCode.split("\n").map((i, key) => {
-                  return <div key={key}>{i}</div>;
-                })}
+                {detaildata[0].Target_ActualCode}
               </Card>
             </div>
             {/* </Typography> */}
