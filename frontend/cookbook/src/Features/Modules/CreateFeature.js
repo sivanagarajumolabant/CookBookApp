@@ -98,7 +98,7 @@ export default function CreateFeature(props) {
     // const [AttachmentList, setAttachmentList] = useState({})
     const { headerValue } = useSelector(state => state.dashboardReducer);
     const [source_att, setSourceatt] = useState([])
-    const [drop, setDrop] = useState("Source Attachemnts");
+    const [drop, setDrop] = useState("Source Attachments");
     const [target_att, setTargetatt] = useState([])
     const [conver_att, setConveratt] = useState([])
     const [isTable,setIsTable] = useState(false)
@@ -897,8 +897,8 @@ export default function CreateFeature(props) {
             </Grid>
 
             <Box py={4}>
-                <Grid container direction='row'>
-                    <Grid item xs={6} sm={4} md={4} xl={4} >
+                <Grid container direction='row' justifyContent='center'>
+                    <Grid >
                         <Autocomplete
                             style={{ width: 300, maxHeight: 10, height: '1.5rem' }}
                             fullWidth
@@ -925,7 +925,7 @@ export default function CreateFeature(props) {
 
                     </Grid>
                     
-                    <Grid item xs={6} sm={4} md={4} xl={4}>
+                    <Grid item>
                         <div className={classes.rootc}>
                             <input
                                 accept="file"
