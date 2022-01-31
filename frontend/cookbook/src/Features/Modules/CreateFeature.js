@@ -2,6 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select';
 import axios from "axios";
@@ -11,7 +17,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 // import CreatePreview from './CreatePreview';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import MenuAppBar from '../../Components/header'
-import { Box, Grid, Typography } from '@material-ui/core';
+import { Box, Grid, Typography, styled } from '@material-ui/core';
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import CloseIcon from '@material-ui/icons/Close';
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,7 +30,12 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 
 
 const useStyles = makeStyles((theme) => ({
-    formControl: {
+    table: {
+        // minWidth: 150,
+        width: '60%',
+        height: '10%',
+        border: '1px black'
+    }, formControl: {
         margin: theme.spacing(0),
         minWidth: 300,
     },
@@ -44,6 +55,34 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const StyledAutocompleteDrop = styled(Autocomplete)({
+    "& .MuiInputLabel-outlined:not(.MuiInputLabel-shrink)": {
+        // Default transform is "translate(14px, 20px) scale(1)""
+        // This lines up the label with the initial cursor position in the input
+        // after changing its padding-left.
+        transform: "translate(34px, 20px) scale(1);",
+    },
+    "& .MuiAutocomplete-inputRoot": {
+        color: "white",
+        backgroundColor: "#3f51b5",
+        // This matches the specificity of the default styles at https://github.com/mui-org/material-ui/blob/v4.11.3/packages/material-ui-lab/src/Autocomplete/Autocomplete.js#L90
+        '&[class*="MuiOutlinedInput-root"] .MuiAutocomplete-input:first-child': {
+            // Default left padding is 6px
+            paddingLeft: 26,
+        },
+        "& .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#3f51b5",
+        },
+        "&:hover .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#3f51b5",
+        },
+        "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#3f51b5",
+        },
+    },
+});
+
+
 export default function CreateFeature(props) {
     var obj_type = props.location.state?.data?.Label
     if (obj_type === 'Indexes') {
@@ -59,8 +98,10 @@ export default function CreateFeature(props) {
     // const [AttachmentList, setAttachmentList] = useState({})
     const { headerValue } = useSelector(state => state.dashboardReducer);
     const [source_att, setSourceatt] = useState([])
+    const [drop, setDrop] = useState("Source Attachemnts");
     const [target_att, setTargetatt] = useState([])
     const [conver_att, setConveratt] = useState([])
+    const [isTable,setIsTable] = useState(false)
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
     // const [migtypeid, setMigtypeid] = useState()
 
@@ -106,10 +147,66 @@ export default function CreateFeature(props) {
 
 
 
-
+    const handleChangedrop = (v) => {
+        setDrop(v.title);
+        // console.log(v)
+    };
 
     const dispatach = useDispatch()
     // console.log(props.location.state?.data?.type)
+    const handleSubmitdrpm = (e) => {
+        // console.log(drop);
+
+        if (drop === "Source Attachments") {
+            const { files } = e.target;
+            if (files.length > 0) {
+                const filesystem = [...file];
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+
+                    filesystem.push(file);
+                    setSourceatt(filesystem[0]);
+                    setIsTable(true)
+                }
+                // console.log(filesystem)
+            } else {
+                setSourceatt(null);
+            }
+        } else if (drop === "Conversion Attachments") {
+            const { files } = e.target;
+            if (files.length > 0) {
+                const filesystem = [...file];
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+
+                    filesystem.push(file);
+
+                    setConveratt(filesystem[0]);
+                    setIsTable(true)
+                }
+                // console.log(filesystem)
+            } else {
+                setConveratt(null);
+            }
+        } else {
+            const { files } = e.target;
+            if (files.length > 0) {
+                const filesystem = [...file];
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+
+                    filesystem.push(file);
+                    setTargetatt(filesystem[0]);
+                    setIsTable(true)
+                }
+                // console.log(filesystem)
+            } else {
+
+                setTargetatt(null);
+            }
+        }
+    };
+
     const handleSubmit = (e) => {
         let typeval = props.location.state?.data?.type
         let val = 0
@@ -325,6 +422,66 @@ export default function CreateFeature(props) {
                 })
             })
 
+    }
+
+    var tabledata = null
+    if (isTable) {
+        tabledata = <>
+            <Grid container justifyContent="center">
+                <Table className={classes.table} aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>TYPE</TableCell>
+                            <TableCell >FILE</TableCell>
+
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        <TableRow >
+                            <TableCell component="th" scope="row">
+                                Source
+                            </TableCell>
+                            <TableCell component="th" scope="row">
+                                {source_att?.name}
+                            </TableCell>
+                        </TableRow>
+
+                        <TableRow >
+                            <TableCell component="th" scope="row">
+                                Target
+                            </TableCell>
+                            <TableCell component="th" scope="row">
+                                {target_att?.name}
+                            </TableCell>
+                        </TableRow>
+                        <TableRow >
+                            <TableCell component="th" scope="row">
+                                Conversion
+                            </TableCell>
+                            <TableCell component="th" scope="row">
+                                {conver_att.name}
+                            </TableCell>
+                        </TableRow>
+
+                    </TableBody>
+                    {/* <TableBody>
+                            {rows.map((row) => (
+                                <TableRow key={row.name}>
+                                    <TableCell component="th" scope="row">
+                                        {row.name}
+                                    </TableCell>
+                                    <TableCell align="right">{row.calories}</TableCell>
+                                    <TableCell align="right">{row.fat}</TableCell>
+                                    <TableCell align="right">{row.carbs}</TableCell>
+                                    <TableCell align="right">{row.protein}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody> */}
+                </Table>
+
+
+            </Grid>
+        </>
     }
 
     // console.log(prerunval,'pre')
@@ -700,205 +857,101 @@ export default function CreateFeature(props) {
                         />
                     </Grid> */}
 
+                {/* <Grid item xs={12} sm={4} md={4} xl={4}>
+                    <Autocomplete
+                        fullWidth
+                        id="grouped-demo"
+                        options={[
+                            { title: "Source Attachment", code: 1 },
+                            { title: "Conversion Attachment", code: 2 },
+                            { title: "Target Attachment", code: 3 },
+                        ]}
+                        groupBy={""}
+                        defaultValue={{ title: "Source Attachment" }}
+                        getOptionLabel={(option) => option.title}
+                        name="Attachemnets"
+                        onChange={(e, v) => handleChangedrop(v)}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                fullWidth
+                                label="Level"
+                                variant="outlined"
+                            />
+                        )}
+                    />
+                   
+
+
+                </Grid>
+                <Button
+                        variant="contained"
+                        color="primary"
+                        size="small"
+                        component="span"
+                        startIcon={<CloudUploadIcon />}
+                    >
+                        Upload
+                    </Button> */}
 
             </Grid>
 
-
             <Box py={4}>
-                <Grid container direction='row' spacing={2}>
-                    <Grid item style={{ marginTop: "6px" }} >
-                        <Typography variant='body1'>   Source Attachemnts </Typography>
+                <Grid container direction='row'>
+                    <Grid item xs={6} sm={4} md={4} xl={4} >
+                        <Autocomplete
+                            style={{ width: 300, maxHeight: 10, height: '1.5rem' }}
+                            fullWidth
+                            id="grouped-demo"
+                            options={[
+                                { title: "Source Attachments", code: 1 },
+                                { title: "Conversion Attachments", code: 2 },
+                                { title: "Target Attachments", code: 3 },
+                            ]}
+                            groupBy={""}
+                            // defaultValue={{ title: "Source Attachments" }}
+                            getOptionLabel={(option) => option.title}
+                            name="Attachemnets"
+                            onChange={(e, v) => handleChangedrop(v)}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    fullWidth
+                                    label="Attachements"
+                                    variant="outlined"
+                                />
+                            )}
+                        />
 
                     </Grid>
-                    <Grid item >
+                    
+                    <Grid item xs={6} sm={4} md={4} xl={4}>
                         <div className={classes.rootc}>
                             <input
                                 accept="file"
                                 className={classes.input}
                                 id="contained-button-file3"
                                 multiple={true}
-                                onChange={(e) => onchangefile_source(e, "Source_Attachment")}
+                                onChange={(e) => handleSubmitdrpm(e)}
                                 type="file"
                             />
+                            
                             <label htmlFor="contained-button-file3">
-                                <Button variant="contained" color="primary" component="span" startIcon={<CloudUploadIcon />}>
+                                <Button variant="contained" color="primary" component="span" startIcon={<CloudUploadIcon />} style={{ marginTop: 8 }}>
                                     Upload
                                 </Button>
                             </label>
 
                         </div>
                     </Grid>
-
-                    <Grid item style={{ marginTop: "6px" }} >
-                        <Typography variant='body2'> Target Attachemnts :</Typography>
-
-                    </Grid>
-                    <Grid item >
-                        <div className={classes.rootc}>
-                            <input
-                                accept="file"
-                                className={classes.input}
-                                id="contained-button-file1"
-                                multiple={true}
-
-                                onChange={(e) => onchangefile_target(e, "Conversion_Attachment")}
-                                type="file"
-                            />
-                            <label htmlFor="contained-button-file1">
-                                <Button variant="contained" color="primary" component="span" startIcon={<CloudUploadIcon />}>
-                                    Upload
-                                </Button>
-                            </label>
-
-                        </div>
-                    </Grid>
-                    <Grid item style={{ marginTop: "6px" }} >
-                        <Typography variant='body1'>   Conversion Attachemnts </Typography>
-
-                    </Grid>
-                    <Grid item>
-                        <div className={classes.rootc}>
-                            <input
-                                accept="file"
-                                className={classes.input}
-                                id="contained-button-file2"
-                                multiple={true}
-                                onChange={(e) => onchangefile_conver(e, "Target_Attachment")}
-                                type="file"
-                                name='Target_Attachment'
-                            />
-                            <label htmlFor="contained-button-file2">
-                                <Button variant="contained" color="primary" component="span" startIcon={<CloudUploadIcon />}>
-                                    Upload
-                                </Button>
-                            </label>
-
-                        </div>
-                    </Grid>
-
                 </Grid>
             </Box>
-
-            <Grid container>
-                <Grid containr xs={12} sm={4} md={4} xl={4}>
-                    <Grid item >
-                        <Grid container direction='column'>
-                            {/* {source_att.map(item => {
-                                    return (
-                                        <>
-
-                                            <Grid item>
-
-                                                <Grid container direction='row'>
-
-                                                    <Grid item>
-                                                        <Typography variant='caption'>
-                                                            {item.name}
-                                                        </Typography>
-                                                    </Grid>
+            {tabledata}
 
 
 
-                                                    <Grid item>
-                                                        <CloseIcon onClick={() => handledetale_source(item)} />
-                                                    </Grid>
-                                                </Grid>
 
 
-
-                                            </Grid>
-
-                                        </>
-                                    )
-                                })} */}
-                            {source_att.name}
-
-                        </Grid>
-                    </Grid>
-
-
-
-                </Grid>
-
-                <Grid container xs={12} sm={4} md={4} xl={4}>
-                    <Grid item>
-                        <Grid container direction='column'>
-                            {/* {target_att.map(item => {
-                                    return (
-                                        <>
-
-                                            <Grid item>
-
-                                                <Grid container direction='row' justify='space-around'>
-
-                                                    <Grid item>
-                                                        <Typography variant='caption'>
-                                                            {item.name}
-                                                        </Typography>
-                                                    </Grid>
-
-
-
-                                                    <Grid item>
-                                                        <CloseIcon onClick={() => handledetale_target(item)} />
-                                                    </Grid>
-                                                </Grid>
-
-
-
-                                            </Grid>
-
-                                        </>
-                                    )
-                                })} */}
-                            {target_att.name}
-
-                        </Grid>
-                    </Grid>
-
-
-
-                </Grid>
-                <Grid container xs={12} sm={4} md={4} xl={4}>
-                    <Grid item>
-                        <Grid container direction='column'>
-                            {/* {conver_att.map(item => {
-                                    return (
-                                        <>
-
-                                            <Grid item>
-
-                                                <Grid container direction='row' justify='space-around'>
-
-                                                    <Grid item>
-                                                        <Typography variant='caption'>
-                                                            {item.name}
-                                                        </Typography>
-                                                    </Grid>
-
-
-
-                                                    <Grid item>
-                                                        <CloseIcon onClick={() => handledetale_conv(item)} />
-                                                    </Grid>
-                                                </Grid>
-
-
-
-                                            </Grid>
-
-                                        </>
-                                    )
-                                })} */}
-                            {conver_att.name}
-
-                        </Grid>
-                    </Grid>
-
-
-
-                </Grid>
-            </Grid>
 
             <Notification
                 notify={notify}
