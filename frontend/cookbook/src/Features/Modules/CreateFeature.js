@@ -265,6 +265,9 @@ export default function CreateFeature(props) {
     const handleChange = (e) => {
         // console.log(e.target.name)
         // console.log(e.target.value)
+        if(e.target.value===null){
+            e.target.value=''
+        }
         setformvalues({
             ...formValues,
             [e.target.name]: e.target.value

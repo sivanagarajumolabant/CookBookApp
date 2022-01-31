@@ -73,7 +73,7 @@ export default function EditFeature(props) {
     const [Target_ActualCode, setTarget_ActualCode] = useState("");
     const [Target_Expected_Output, setTarget_Expected_Output] = useState("");
     const [Conversion_Code, setConversion_Code] = useState("");
-    const [isTable,setIsTable] = useState(false)
+    const [isTable, setIsTable] = useState(false)
     const [drop, setDrop] = useState("Source Attachments");
     const dispatch = useDispatch();
 
@@ -147,11 +147,12 @@ export default function EditFeature(props) {
             "Target_Attachment": conver_att,
             "Source_Code": Source_Code,
             "Conversion_Code": Conversion_Code
-
         }
         const form = new FormData();
         Object.keys(formData).forEach((key) => {
+
             form.append(key, formData[key]);
+
         });
         axios.put(`${API_BASE_URL}/update/${editdata.detaildata[0].Feature_Id}`, form)
             .then(res => {
@@ -175,6 +176,9 @@ export default function EditFeature(props) {
     }
 
     const handleChange = (e) => {
+        if (e.target.value === null) {
+            e.target.value = ''
+        }
         setformvalues({
             ...editdata,
             [e.target.name]: [e.target.value],
@@ -905,7 +909,7 @@ export default function EditFeature(props) {
                         />
 
                     </Grid>
-                    
+
                     <Grid item>
                         <div className={classes.rootc}>
                             <input
@@ -916,7 +920,7 @@ export default function EditFeature(props) {
                                 onChange={(e) => handleSubmitdrpm(e)}
                                 type="file"
                             />
-                            
+
                             <label htmlFor="contained-button-file3">
                                 <Button variant="contained" color="primary" component="span" startIcon={<CloudUploadIcon />} style={{ marginTop: 8 }}>
                                     Upload
