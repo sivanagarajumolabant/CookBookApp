@@ -199,7 +199,7 @@ export default function PreviewCode(props) {
               {/* {detaildata[0].Object_Type.split("\n").map((i, key) => {
                 return <div key={key}>{i}</div>;
               })} */}
-              {detaildata[0]?.Object_Type}
+              {detaildata[0].Object_Type}
               {/* </Typography> */}
             </div>
           </Grid>
@@ -218,7 +218,7 @@ export default function PreviewCode(props) {
               {/* {detaildata[0].Feature_Name.split("\n").map((i, key) => {
                 return <div key={key}>{i}</div>;
               })} */}
-              {detaildata[0]?.Feature_Name.substr(5)}
+              {detaildata[0].Feature_Name.substr(5)}
               {/* </Typography> */}
             </div>
           </Grid>
@@ -233,7 +233,7 @@ export default function PreviewCode(props) {
             </Typography>
             {/* <Typography component="h2"> */}
             <div className={classes.Description}>
-              {detaildata[0]?.Level}
+              {detaildata[0].Level}
             </div>
           </Grid>
 
@@ -272,7 +272,7 @@ export default function PreviewCode(props) {
                 {/* <h2>{'Source Description'}</h2> */}
                 <CKEditor
                   editor={ClassicEditor}
-                  data={detaildata[0]?.Source_FeatureDescription}
+                  data={detaildata[0].Source_FeatureDescription}
                   // value ={detaildata[0].Source_FeatureDescription}
                   onReady={editor => {
                     // You can store the "editor" and use when it is needed.
@@ -310,9 +310,7 @@ export default function PreviewCode(props) {
             <div>
               <Card className={classes.SourceCode}>
                 {/* <Typography component="h2"> */}
-                {detaildata[0]?.Source_Code.split("\n").map((i, key) => {
-                  return <div key={key}>{i}</div>;
-                })}
+                {detaildata[0].Source_Code}
               </Card>
             </div>
             {/* </Typography> */}
@@ -336,7 +334,7 @@ export default function PreviewCode(props) {
               )} */}
               <CKEditor
                 editor={ClassicEditor}
-                data={detaildata[0]?.Target_FeatureDescription}
+                data={detaildata[0].Target_FeatureDescription}
                 onReady={editor => {
                   // You can store the "editor" and use when it is needed.
                   console.log('Editor is ready to use!', editor);
@@ -372,7 +370,7 @@ export default function PreviewCode(props) {
             <div>
               <Card className={classes.SourceCode}>
                 {/* <Typography component="h2"> */}
-                {detaildata[0]?.Target_ActualCode}
+                {detaildata[0].Target_ActualCode}
               </Card>
             </div>
             {/* </Typography> */}
@@ -390,11 +388,7 @@ export default function PreviewCode(props) {
             <div>
               <Card className={classes.SourceCode}>
                 {/* <Typography component="h2"> */}
-                {detaildata[0]?.Target_Expected_Output.split("\n").map(
-                  (i, key) => {
-                    return <div key={key}>{i}</div>;
-                  }
-                )}
+                {detaildata[0].Target_Expected_Output}
               </Card>
             </div>
             {/* </Typography> */}
@@ -413,9 +407,7 @@ export default function PreviewCode(props) {
             <div>
               <Card className={classes.SourceCode}>
                 {/* <Typography component="h2"> */}
-                {detaildata[0]?.Conversion_Code.split("\n").map((i, key) => {
-                  return <div key={key}>{i}</div>;
-                })}
+                {detaildata[0].Conversion_Code}
               </Card>
             </div>
             {/* </Typography> */}
@@ -437,7 +429,7 @@ export default function PreviewCode(props) {
                 {/* {detaildata.length>?} */}
                 {detaildata[0]?.Source_Attachment?.split('/')?.pop()}
               </Grid>
-              {detaildata[0]?.Source_Attachment ?
+              {detaildata[0].Source_Attachment ?
                 <Grid item spacing={3} style={{ paddingLeft: 20 }}>
                   <Link onClick={() => handleDownload(detaildata[0].Source_Attachment)} style={{ textDecoration: 'none' }}>Download</Link>
 
@@ -461,7 +453,7 @@ export default function PreviewCode(props) {
                 {/* {detaildata.length>?} */}
                 {detaildata[0]?.Target_Attachment?.split('/')?.pop()}
               </Grid>
-              {detaildata[0]?.Target_Attachment ?
+              {detaildata[0].Target_Attachment ?
                 <Grid item spacing={3} style={{ paddingLeft: 20 }}>
                   <Link onClick={() => handleDownload(detaildata[0].Target_Attachment)} style={{ textDecoration: 'none' }}>Download</Link>
 
@@ -483,7 +475,7 @@ export default function PreviewCode(props) {
                 {/* {detaildata.length>?} */}
                 {detaildata[0]?.Conversion_Attachment?.split('/')?.pop()}
               </Grid>
-              {detaildata[0]?.Conversion_Attachment ?
+              {detaildata[0].Conversion_Attachment ?
                 <Grid item spacing={3} style={{ paddingLeft: 20 }}>
                   <Link onClick={() => handleDownload(detaildata[0].Conversion_Attachment)} style={{ textDecoration: 'none' }}>Download</Link>
 
