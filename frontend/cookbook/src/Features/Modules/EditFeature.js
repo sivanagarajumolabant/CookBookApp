@@ -143,8 +143,8 @@ export default function EditFeature(props) {
             "Target_Expected_Output": Target_Expected_Output,
             "Target_ActualCode": Target_ActualCode,
             'Source_Attachment': source_att,
-            "Conversion_Attachment": target_att,
-            "Target_Attachment": conver_att,
+            "Conversion_Attachment": conver_att,
+            "Target_Attachment": target_att,
             "Source_Code": Source_Code,
             "Conversion_Code": Conversion_Code
         }
