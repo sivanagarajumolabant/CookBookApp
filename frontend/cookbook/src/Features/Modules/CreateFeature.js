@@ -26,6 +26,7 @@ import Notification from '../Notifications/Notification';
 import API_BASE_URL from '../../Config/config';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import config from '../../Config/config';
 // import Font from '@ckeditor/ckeditor5-font/src/font';
 
 
@@ -121,13 +122,19 @@ export default function CreateFeature(props) {
         }
     }
 
-    let body = {
-        "Object_Type": obj_type,
-        "Migration_TypeId": sval
-    }
+    
 
     useEffect(() => {
-        axios.post(`${API_BASE_URL}/sequence`, body).then(
+        let body = {
+            "Object_Type": obj_type,
+            "Migration_TypeId": sval
+        }
+        let conf = {
+            headers: {
+              'Authorization': 'Bearer ' + config.ACCESS_TOKEN()
+            }
+          }
+        axios.post(`${config.API_BASE_URL()}/sequence`, body,conf).then(
             (res) => {
                 //   console.log(res);
                 setPrerunval(res.data[0]);
@@ -237,8 +244,13 @@ export default function CreateFeature(props) {
         Object.keys(formData).forEach((key) => {
             form.append(key, formData[key]);
         });
+        let conf = {
+            headers: {
+              'Authorization': 'Bearer ' + config.ACCESS_TOKEN()
+            }
+          }
 
-        axios.post(`${API_BASE_URL}/create`, form)
+        axios.post(`${config.API_BASE_URL()}/create`, form, conf)
             .then(res => {
                 // console.log(res.data)
                 setNotify({
@@ -395,16 +407,24 @@ export default function CreateFeature(props) {
 
     const handleConvert = (e) => {
         e.preventDefault();
+    
         // console.log(formValues.Conversion_Code)
         // console.log(formValues.Source_Code)
         // console.log(formValues.Feature_Name)
-
+        
         let body = {
             "sourcecode": formValues.Source_Code,
-            "convcode": formValues.Conversion_Code,
-            "featurename": formValues.Feature_Name
+            "convcode": "r@rawstringstart'"+formValues.Conversion_Code+"'@rawstringend",
+            "featurename": formValues.Feature_Name,
+            "migration_typeid":formValues.Migration_TypeId ,
+            "object_type":obj_type
         }
-        axios.post(`${API_BASE_URL}/convert_python_code1`, body)
+        let conf = {
+            headers: {
+              'Authorization': 'Bearer ' + config.ACCESS_TOKEN()
+            }
+          }
+        axios.post(`${config.API_BASE_URL()}/convert_python_code1`, body,conf)
             .then(res => {
                 // console.log("res",res.data)
                 setformvalues({
@@ -661,7 +681,7 @@ export default function CreateFeature(props) {
                             required
                         /> */}
                     <FormControl variant="outlined" className={classes.formControl}>
-                        <InputLabel >Precision</InputLabel>
+                        <InputLabel >Predecessor</InputLabel>
                         <Select
                             native
                             // value={state.age}
@@ -669,8 +689,8 @@ export default function CreateFeature(props) {
                             label="Precision"
                             name='Sequence'
 
-                        >   <option value="Select Precision" selected>Select Precision</option>
-                            <option value="No Precision" >No Precision</option>
+                        >   <option value="Select Precision" selected>Select Predecessor</option>
+                            <option value="No Precision" >No Predecessor</option>
                             {prerunval.map((item, ind) => {
                                 return <option value={item.Feature_Name}>{item.Feature_Name.substr(5)}</option>
                             })}
