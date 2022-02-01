@@ -24,6 +24,7 @@ import API_BASE_URL from '../../Config/config';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { useHistory } from "react-router-dom";
+import config from '../../Config/config';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -154,7 +155,12 @@ export default function EditFeature(props) {
             form.append(key, formData[key]);
 
         });
-        axios.put(`${API_BASE_URL}/update/${editdata.detaildata[0].Feature_Id}`, form)
+        let conf = {
+            headers: {
+              'Authorization': 'Bearer ' + config.ACCESS_TOKEN()
+            }
+          }
+        axios.put(`${config.API_BASE_URL()}/update/${editdata.detaildata[0].Feature_Id}`, form, conf)
             .then(res => {
                 console.log(res.data)
                 setNotify({
@@ -379,17 +385,26 @@ export default function EditFeature(props) {
 
     const handleConvert = (e) => {
         e.preventDefault();
+        
+
         // console.log(formValues.Conversion_Code)
         // console.log(formValues.Source_Code)
         // console.log(formValues.Feature_Name)
         let wout_prefix = (editdata.detaildata[0].Feature_Name).substr(5)
-
+        
         let body = {
             "sourcecode": Source_Code,
             "convcode": Conversion_Code,
-            "featurename": wout_prefix
+            "featurename": wout_prefix,
+            "migration_typeid": editdata.detaildata[0].Migration_TypeId,
+            "object_type":editdata.detaildata[0].Object_Type
         }
-        axios.post(`${API_BASE_URL}/convert_python_code1`, body)
+        let conf = {
+            headers: {
+              'Authorization': 'Bearer ' + config.ACCESS_TOKEN()
+            }
+          }
+        axios.post(`${config.API_BASE_URL()}/convert_python_code1`, body,conf)
             .then(res => {
                 // console.log("res",res.data)
                 setTarget_ActualCode(res.data)
@@ -650,7 +665,7 @@ export default function EditFeature(props) {
 
                     <TextField
                         id="outlined-multiline-static"
-                        label="Sequence No"
+                        label="Predecessor"
                         multiline
                         fullWidth
                         // onChange={(e, v) => handleChange(v)}

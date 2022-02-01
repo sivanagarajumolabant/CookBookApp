@@ -79,22 +79,30 @@ def convert_python_code1(request):
     feature_name = body_data['featurename']
     python_code = body_data['convcode']
     source_code = body_data['sourcecode']
+    migration_typeid = body_data['migration_typeid']
+    object_type = body_data['object_type']
+    # print(python_code)
     # sys.path.insert(0, path_executable)
     path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
     module_folder_name = "Modules"
-    module_path = path+'/'+module_folder_name
+    module_path = path+'/'+module_folder_name + '/' + migration_typeid + '/' + object_type + '/'
     sys.path.append(module_path)
     if not os.path.exists(module_path):
         os.makedirs(module_path)
     python_code = re.sub(r'def\s+main','def '+feature_name,python_code)
+    # print(python_code)
     file_path =module_path+'/'+feature_name+'.py'
     sys.path.insert(0,file_path)
+    python_code = python_code.replace("r@rawstringstart'",'')
+    python_code = python_code.replace("'@rawstringend",'')
+    # # print(python_code)
+    # python_code = "".join([s for s in python_code.splitlines(True) if s])
     with open(file_path,'w') as f:
         f.write(python_code)
     path_code_main = file_path
-    print('path_code_main : ',path_code_main)
-    print("input ",source_code)
-    print("python code ", python_code )
+    # print('path_code_main : ',path_code_main)
+    # print("input ",source_code)
+    # print("python code ", python_code )
     # os.chdir(path_code_main)
     # print(os.path)
 

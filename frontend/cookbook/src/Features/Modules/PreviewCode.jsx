@@ -14,6 +14,7 @@ import fileDownload from "js-file-download";
 import API_BASE_URL from "../../Config/config";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import config from "../../Config/config";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -95,7 +96,12 @@ export default function PreviewCode(props) {
 
   useEffect(() => {
     if (menuitem) {
-      axios.get(`${API_BASE_URL}/detail/${menuitem || null}`).then(
+      let conf = {
+        headers: {
+          'Authorization': 'Bearer ' + config.ACCESS_TOKEN()
+        }
+      }
+      axios.get(`${config.API_BASE_URL()}/detail/${menuitem || null}`,conf).then(
         (res) => {
           console.log(res);
           setDetaildata(res.data);
@@ -132,9 +138,14 @@ export default function PreviewCode(props) {
   const handleDownload = (dfile) => {
     // console.log(dfile);
     let dnfile = dfile.split('/').pop()
-    axios.get(`${API_BASE_URL}/downloads/${dnfile}`, {
+    let conf = {
+      headers: {
+        'Authorization': 'Bearer ' + config.ACCESS_TOKEN()
+      }
+    }
+    axios.get(`${config.API_BASE_URL()}/downloads/${dnfile}`, {
       responseType: 'blob',
-    }).then(res => {
+    },conf).then(res => {
       // console.log(res)
       fileDownload(res.data, dnfile);
       // console.log(res);
@@ -244,7 +255,7 @@ export default function PreviewCode(props) {
               component="h2"
               className={classes.Object_Type}
             >
-              PreRun Module
+              Predecessor
             </Typography>
             {/* <Typography component="h2"> */}
             <div className={classes.Description}>
