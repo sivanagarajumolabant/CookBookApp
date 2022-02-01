@@ -76,7 +76,7 @@ const useTreeItemStyles = makeStyles((theme) => ({
 function StyledTreeItem(props) {
   const history = useHistory();
   const classes = useTreeItemStyles();
-  const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
+  // const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
   const {
     labelText,
     labelIcon: LabelIcon,
@@ -88,6 +88,8 @@ function StyledTreeItem(props) {
     deleteitem,
     datavalue,
     sub,
+    confirmDialog, 
+    setConfirmDialog,
     ...other
   } = props;
 
@@ -169,10 +171,7 @@ function StyledTreeItem(props) {
         }}
         {...other}
       />
-      <ConfirmDialog
-        confirmDialog={confirmDialog}
-        setConfirmDialog={setConfirmDialog}
-      />
+      
     </>
   );
 }
@@ -193,7 +192,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function GmailTreeView({ menuList, dropdown, deleteitem }) {
+export default function GmailTreeView({ menuList, dropdown, deleteitem, confirmDialog,setConfirmDialog }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   let history = useHistory();
@@ -236,6 +235,8 @@ export default function GmailTreeView({ menuList, dropdown, deleteitem }) {
                   labelIcon={ViewModuleIcon}
                   deleteitem={deleteitem}
                   datavalue={data}
+                  confirmDialog ={confirmDialog}
+                  setConfirmDialog={setConfirmDialog}
                 // data={data}
                 />
               );

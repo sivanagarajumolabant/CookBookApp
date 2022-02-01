@@ -14,7 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import SignUp from './Signup';
 import axios from 'axios'
-import API_BASE_URL from '../Config/config';
+import config from '../Config/config';
 import Alert from '@material-ui/lab/Alert';
 import { useHistory } from "react-router-dom";
 function Copyright() {
@@ -70,7 +70,7 @@ function SignIn() {
     // history.push("/dashboard");
     // localStorage.setItem('isAuth', true)
     // history.push("/dashboard");
-    let loginurl = API_BASE_URL + '/login/'
+    let loginurl = config.API_BASE_URL() + '/login/'
     axios.post(loginurl, user).then((res) => {
       if (res.status === 200 && res.data.access !== null) {
         localStorage.setItem('isAuth', true)

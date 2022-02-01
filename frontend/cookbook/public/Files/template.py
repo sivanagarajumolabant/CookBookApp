@@ -1,259 +1,308 @@
-# import re
+import re,os
+import pandas as pd
+#importing packages
 
-#Example Snippets:
-#=================
-# here data as string like Source code
-# def xml_extract_3(data):
-#     insert_data = re.findall(r'\binsert into\b.*?;',data,flags=re.I | re.DOTALL)
-#     for ins in insert_data:
-#         old_data=ins
-#         if ("EXTRACT" in ins) and ('VALUES' in ins) and (';' in ins):
-#             ins = re.sub(r'values\s+\(','values(',ins,flags=re.I)
-#             ins=ins.replace('extract','EXTRACT').replace('values','VALUES').replace('getnumberval','GETNUMBERVAL').replace('getstringval','GETSTRINGVAL').replace('to_date','TO_DATE')
-#             values_data = re.findall(r'\bvalues\((.*?)\);',ins,flags=re.I | re.DOTALL)
-#             comma_split=split_main(values_data[0])
-#             for sp in comma_split:
-#                 if ("EXTRACT" in sp) and ("TO_DATE" not in sp):
-#                     a = re.findall(r'(.*?)\.',sp,flags=re.I | re.DOTALL)[0].strip()
-#                     b = re.findall(r'\(\'(.*?)\'\)',sp,flags=re.I | re.DOTALL)[0].strip()
-#                     if ".GETNUMBERVAL()" in sp:
-#                         statement ='\n' + "(UNNEST(XPATH('" + b + "'," + a + ")))" + "::VARCHAR::NUMERIC"
-#                         ins = ins.replace(sp,statement)
-#                         # data = data.replace(ins,ins_data)
-#                     if ".GETSTRINGVAL()" in sp:
-#                         statement ='\n' +  "(UNNEST(XPATH('" + b + "'," + a + ")))" + "::VARCHAR"
-#                         ins = ins.replace(sp, statement)
-#                         # data = data.replace(ins, ins_data)
-#                 if ("EXTRACT" in sp) and ("TO_DATE" in sp):
-#                     a = re.findall(r'\((.*?)\.', sp, flags=re.I | re.DOTALL)[0].strip()
-#                     # print(a)
-#                     b = re.findall(r'\(\'(.*?)\'\)', sp, flags=re.I | re.DOTALL)[0].strip()
-#                     if ".GETSTRINGVAL()" in sp:
-#                         statement ='\n' + "TO_DATE(UNNEST(XPATH('" + b + "'," + a + "))'dd-mm-yyyy HH24:MI:SS'))" + "::text::date"
-#                         # print(statement)
-#                         ins = ins.replace(sp, statement)
-#                         # data = data.replace(ins, ins_data)
-#         data=data.replace(old_data,ins)
-#    # print(data)
+# Snippet 1:
+def function_pre_lower(data):     #function to Convert the whole string to lower case except the data which is in single quotes 
+    data = re.sub(r"\b(?<!')(\w+)(?!')\b", lambda match: match.group().lower(), data)
+    return data
 
-#    # return data
+input_1 = "the Data had the ' The data Main forum ' values Main to Copy"
+output_1 = function_pre_lower(input)
+#output:
+"""
+the data had the ' The data Main forum ' values main to copy """
 
 
+# Snippet 2:
+def data_remove_comments(read_text):          #This function is used to remove comments in the data
+    dir_all = re.findall(r'\/\*([\s\S]*?)\*/', read_text)
+    for j in dir_all:
+        read_text = read_text.replace('/*' + j + '*/', '')
+    read_text_split = read_text.split('\n')
+    dash_comments_list = []
+    if len(read_text_split):
+        for whole_lines in read_text_split:
+            if not whole_lines.strip().lstrip().startswith('dbms.') or whole_lines.strip().lstrip().startswith('dbms_'):
+                dash_comments = re.findall(r'--.*', whole_lines)
+                dash_comments_list.append(dash_comments)
+        remov_dash_empty_list = [ele for ele in dash_comments_list if ele != []]
+        for i in remov_dash_empty_list:
+            read_text = read_text.replace(i[0], '')
+    return read_text
 
-#Example Snippet:
-#===============
-# import re
-# def xml_extration(data):  # Assigned by Vijayalakshmi on 6-12-2021     XmlExtraction Versionv1
-#     data = re.sub(r' +', ' ', data)
-#     data = re.sub(r'xmltype', 'xml', data, flags=re.I | re.DOTALL)
-#     data = re.sub(r'\bEXTRACT\s+\(', 'extract(', data, flags=re.I | re.DOTALL)
-#     data = re.sub(r'\bTABLE\s+\(', 'table(', data, flags=re.I | re.DOTALL)
-#     data = re.sub(r'\bEXTRACTVALUE\s+\(', 'extractvalue(', data, flags=re.I | re.DOTALL)
-#     data = re.sub(r'\:\=', ' := ', data, flags=re.I | re.DOTALL)
-#     data = re.sub(r'=', ' = ', data, flags=re.I | re.DOTALL)
-#     data = re.sub(r'\:\s+\=', ' := ', data, flags=re.I | re.DOTALL)
-#     # data = extractscenario(data, 'extract')
-#     # data = extractscenario(data, 'extractvalue')
-#     data = re.sub(r'\(\s+xmlsequence', '(xmlsequence', data, flags=re.I | re.DOTALL)
-#     data = re.sub(r"'\s+\)", "')", data)
-#     data = re.sub(r"\bfrom\b\s+table\(", "from table(", data, flags=re.I | re.DOTALL)
-#     data = re.sub(r"\)", ") ", data, flags=re.I | re.DOTALL)
-#     modified_data = re.findall(r'\binsert into\b.*?;', data, flags=re.I | re.DOTALL)
-#     for ll in modified_data:
-#         if ('select ' and 'from table(xmlsequence') in ll:
-#             mod_select_string = ll
-#             select_stmnt = re.findall(r'\bselect\b.*?from table\(xmlsequence', ll, flags=re.I | re.DOTALL)
-#             comma_split = split_main(select_stmnt[0])
-#             comma_main = []
-#             count = 0
-#             for i in comma_split:
-#                 if 'from table(xmlsequence' not in i:
-#                     rep = i + ' as "alias{0}", '.format(count)
-#                     comma_main.append(rep)
-#                     count = count + 1
-#                 else:
-#                     comma_main.append(i)
-#             comma_main = ''.join(comma_main).replace('from table(xmlsequence',
-#                                                      ' as "alias' + str(count) + '" from table(xmlsequence', 1)
-#             mod_select_string = mod_select_string.replace(select_stmnt[0], comma_main)
-#             xml_sequence_data = re.findall(r'\bxmlsequence\(extract\(.*?\'\)', mod_select_string,
-#                                            flags=re.I | re.DOTALL)
-#             for zmr in xml_sequence_data:
-#                 if ',' in zmr:
-#                     mid_split_data = zmr.split(',')
-#                     a = mid_split_data[1].rsplit(')', 1)[0]
-#                     b = mid_split_data[0]
-#                     b = re.sub(r'\bxmlsequence\(extract\(', '', b, flags=re.I | re.DOTALL)
-#                     adding_select_stmnt = "select unnest (xpath (" + a + ',' + b + ")) as value " + 'removingasvaluesextrabracket'
-#                     zmr_data = zmr.replace(zmr, adding_select_stmnt)
-#                     mod_select_string = mod_select_string.replace(zmr, zmr_data)
-#             mod_select_string = re.sub(r'\bremovingasvaluesextrabracket\s+\)', '', mod_select_string)
-#             extract_data = re.findall(r'\bextract\b\(.*?\'\)', mod_select_string, flags=re.I | re.DOTALL)
-#             extractvalue_data = re.findall(r'\bextractvalue\b\(.*?\'\)', mod_select_string, flags=re.I | re.DOTALL)
-#             all_extract_data = extract_data + extractvalue_data
-#             for i in all_extract_data:
-#                 try:
-#                     var2 = i.split(',')[1].rsplit(')')[0]
-#                     adding_select_stmnt = "(select unnest(xpath(" + var2 + ',l1i.value'")))"
-#                     mod_select_string = mod_select_string.replace(i, adding_select_stmnt)
-#                 except IndexError:
-#                     print('new case')
-#             removing_dotdata = re.findall(r',l1i.value\)\)\)(.*?)\sas\s"', mod_select_string, re.DOTALL)
-#             for cs in removing_dotdata:
-#                 if '.' in cs:
-#                     cs = cs.replace(' )', ')').replace('))', ')')  # changes done on 23-12-2021
-#                     mod_select_string = mod_select_string.replace(cs, '')
-#             mod_select_string = re.sub(r'\bselect\b', 'select res.* from ( select', mod_select_string, 1, re.I)
-#             mod_select_string = re.sub(r'\bfrom\b\stable\(', 'from ( with ctc as(', mod_select_string)
-#             last_value = mod_select_string.rsplit(')')[-1].strip()
-#             mod_select_string = re.sub(rf'{last_value}', 'select value from ctc) l1i ) res;', mod_select_string,
-#                                        re.DOTALL)
-#             data = data.replace(ll, mod_select_string)
-#     return data
+input_2 = """
+create or replace function p_addedocpatient (iclob_patientdetails text, in_registrationtype registrationmaster.registrationtype%type, iv_registrationsource registrationmaster.registrationsource%type, iv_registrationdesc registrationmaster.registrationdescription%type, iv_loginid registrationmaster.updatedby%type, on_registrationid inout numeric) AS $body$
+DECLARE
+ lv_patient numeric;
+sequencename varchar(100);
+v_location numeric;
 
-# Example Snippets
-#=================
-
-# def declare_begin_data(collection_string):
-#     ''' Taking data between declare and begin and collecting variables and tablename'''
-#     dec_begin = re.findall(r'\bdeclare\b.*?\bbegin\b', collection_string, flags=re.DOTALL | re.I)
-#     data_varibles_1 = []
-#     data_varibles_2 = []
-#     store_before_val = []
-#     dict_format = {}
-#     dict_format2 ={}
-#     for db in dec_begin:
-#         oldstring = db
-#         newstring = db
-#         if 'type' in db:
-#             ty_colon = re.findall(r'\btype\s.*?;', db, flags=re.DOTALL | re.I)
-#             for ty in ty_colon:
-#                 if ('is table of ' and '%rowtype index by ') in ty:
-#                     ty_istab1 = re.findall(r'\btype\s(.*?)\bis table of\s', ty, flags=re.DOTALL | re.I)[0].strip()
-#                     # new changes
-#                     is_rowtype = re.findall(r'\bis table of\s(.*?)%rowtype index by\s', ty, flags=re.DOTALL | re.I)[
-#                         0].strip()#removed \b before %rowtype by cs  25/01
-#                     # end new changes
-#                     ty_colon_comment = '--' + ty #removed comments by cs 25/01
-#                     newstring = newstring.replace(ty, ty_colon_comment)
-#                     data_varibles_1.append(ty_istab1)
-#                     data_varibles_2.append(is_rowtype)
-#                     dict_format[ty_istab1] = is_rowtype
-#
-#         for data_var in data_varibles_1:
-#             taking_data_var = re.findall(rf'\S+\s+\b{data_var}\b;', db, re.DOTALL)[0]
-#             data_comm_var = '\n--' + taking_data_var  #removed comments by cs 25/01
-#             newstring = newstring.replace(taking_data_var, data_comm_var)
-#             taking_data_var_1 = taking_data_var.split()[0]
-#             taking_data_var_2 = taking_data_var.split()[1][:-1]
-#             for key,value in dict_format.items():
-#                 if str(key) == str(taking_data_var_2).strip():
-#                     dict_format2[taking_data_var_1] = value
-#             store_before_val.append(taking_data_var_1)
-#         collection_string = collection_string.replace(oldstring, newstring)
-#     unique_types = list(set(store_before_val))
-#     return collection_string, data_varibles_2, unique_types,dict_format2
-#
-
-# def reading_storage_sheet(unique_data_varibles_2, unique_column_names, cschema_type):
-#     '''Reading storage excel sheet('DataTypeMapping_Matched', 'DataTypeMapping_Not Matched') and
-#        reading 'postgres_tab_name', 'postgres_column_name', 'postgres_datatype', 'CHARACTER_MAXIMUM_LENGTH' Column
-#        and fetching datatype and length
-#      '''
-#     data_excels_storing = []
-#     try:
-#         sql_path_data = db_transit_path + '/' + str(cschema_type).upper() + '/' + 'EXCEL' + '/' + 'PHARMACY_STORAGEOBJECTS_validation.xlsx'
-#         data_with_column_names = pd.read_excel(sql_path_data,
-#                                                sheet_name=['DataTypeMapping_Matched', 'DataTypeMapping_Not Matched'])
-#         sheet_names = data_with_column_names.values()
-#         for sheet in sheet_names:
-#             data_taking_column = sheet[
-#                 ['postgres_tab_name', 'postgres_column_name', 'postgres_datatype', 'CHARACTER_MAXIMUM_LENGTH']]
-#             data_taking_column_df2 = data_taking_column.values.tolist()
-#             for table_name in unique_data_varibles_2:
-#                 for col_name in unique_column_names:
-#                     table_name = table_name.upper()
-#                     column_name = col_name.upper()
-#                     for id in data_taking_column_df2:
-#                         if (table_name in id) and (column_name in id):
-#                             if id not in data_excels_storing:
-#                                 data_excels_storing.append(id)
-#     except Exception as error:
-#         print('Excel sheet not found', error)
-#     return data_excels_storing
-#
-#
+--fugidkbvdfnvfldbnfdbf
+/* fudsgdskhfkdlgndknfdlkbnfdlb */
+"""
+output_2 = data_remove_comments(input_2)
+#Output:
+"""
+create or replace function p_addedocpatient (iclob_patientdetails text, in_registrationtype registrationmaster.registrationtype%type, iv_registrationsource registrationmaster.registrationsource%type, iv_registrationdesc registrationmaster.registrationdescription%type, iv_loginid registrationmaster.updatedby%type, on_registrationid inout numeric) AS $body$
+DECLARE
+ lv_patient numeric;
+sequencename varchar(100);
+v_location numeric; """
 
 
+# Snippet 3:
+def commonlogicextract(kimberly, x):#this function is used to search for 'x' and returns list of all the instances from 'x' values till closed braket
+    startIndex = [m.start() for m in re.finditer(rf'\b{x}\(', kimberly)]
+    listdata = []
+    for index in startIndex:
+        current = []
+        bracket_level = 0
+        for s in kimberly[index + len(x) + 1:]:
+            if s != '(' and s != ')' and bracket_level >= 0:
+                current.append(s)
+            elif s == '(':
+                current.append(s)
+                bracket_level += 1
+            elif s == ')':
+                bracket_level -= 1
+                if bracket_level < 0:
+                    current.append(s)
+                    break
+                else:
+                    current.append(s)
+        listdata.append(x + '(' + ''.join(current))
+    return listdata
 
-# def declaring_variables(data_taking_column_df2_list, variable_withcolumn,dictionary_format):
-#     ''' Forming a declare statement with the help of data type which we have collected from excel sheet '''
-#     datatypes = []
-#     for vars in variable_withcolumn:
-#         compare_data_0 = vars.rsplit('_', 1)[0]
-#         compare_data_1 = vars.rsplit('_', 1)[1]
-#         for key,value in dictionary_format.items():
-#             if key == compare_data_0:
-#                 for des in data_taking_column_df2_list:
-#                     if (des[1] == compare_data_1.upper()) and (des[0] == value.upper()):
-#                         des_dtype = des[2]
-#                         des_dtype_value = des[3]
-#                         if des_dtype_value != 'NAN':
-#                             dtype_length = math.ceil(float(des_dtype_value))
-#                             declare_variables = vars + ' ' + des_dtype + '(' + str(dtype_length) + ')[];'
-#                             if declare_variables not in datatypes :
-#                                 datatypes.append(declare_variables)
-#                         else:
-#                             declare_variables = vars + ' ' + des_dtype + '[];'
-#                             if declare_variables not in datatypes :
-#                                 datatypes.append(declare_variables)
-#     return datatypes
-#
-#
-# def coll_call_str(collection_string, cschema_type):  # Assigned by Prathyusha
-#     collection_string = handling_spaces(collection_string)
-#     collection_string, table_names, variable_names,dictionary_format= declare_begin_data(collection_string)
-#     coll_str_begin_before = re.split(r'\bbegin\s', collection_string, 1, flags=re.I)[0]
-#     coll_str_begin_after = re.split(r'\bbegin\s', collection_string, 1, flags=re.I)[1]
-#     append_data = []
-#     column_names = []
-#     '''Searching for the variable from begin to end of the string which we have collected from from declare to begin block and taking the name after that variable
-#     and replace the data between vaiable and . with underscore
-#      '''
-#     for bvar in variable_names:
-#         data_coleqls = re.findall(rf'\s{bvar}\b.*?\.\S+', coll_str_begin_after, flags=re.DOTALL | re.I)
-#         data_coleqls = [i.strip() for i in data_coleqls if i != '']
-#         if data_coleqls:
-#             for i in data_coleqls:
-#                 i = i.replace(',', '').replace(';', '').strip()
-#                 between_data = re.findall(rf'\b{bvar}\b(.*?)\.', i, flags=re.DOTALL | re.I)[0] + '.'
-#                 if between_data in i:
-#                     i_mod = i.replace(between_data, '_')
-#                     append_data.append(i_mod)
-#                     # new changes
-#                     getting_i_value = between_data.replace('(', '').replace(')', '').replace('.', '').strip()
-#                     modified_i_mod = i_mod + '[' + getting_i_value + ']'
-#                     coll_str_begin_after = coll_str_begin_after.replace(i, modified_i_mod)
-#                     # end new changes
-#                 column_names.append(i.split('.')[1])
-#     variable_withcolumn = list(set(append_data))
-#     unique_data_varibles_2 = list(set(table_names))
-#     unique_column_names = list(set(column_names))
-#     data_excels_storing = reading_storage_sheet(unique_data_varibles_2, unique_column_names, cschema_type)
-#     datatypes = declaring_variables(data_excels_storing, variable_withcolumn,dictionary_format)
-#     final_data = coll_str_begin_before + '\n'.join(datatypes) + '\n' + 'begin ' + coll_str_begin_after
-#     final_data = final_data.replace(' .', '.')
-#     collection_string = final_data
-#     return collection_string
+input_3 = """
+    trim(both extract(v_patient, '/RegistrationRequest/Patient/@Gender') .getstringval()),
+    trim(both extract(v_patient, '/RegistrationRequest/Patient/@Title') .getstringval()) 
+"""
+output_3 = commonlogicextract(kimberly, 'extract')
+# Output:
+''' [extract(v_patient, '/RegistrationRequest/Patient/@TransactionId'),extract(v_patient, '/RegistrationRequest/Patient/@Gender')] '''
 
+
+# snippet 4:
+def split_main(s):        #This function used to ignore comma inside the brackets while splitting the data with comma and returns a list
+    parts = []
+    bracket_level = 0
+    current = []
+    for c in (s + ","):
+        if c == "," and bracket_level == 0:
+            parts.append("".join(current))
+            current = []
+        else:
+            if c == "(":
+                bracket_level += 1
+            elif c == ")":
+                bracket_level -= 1
+            current.append(c)
+    current = ''.join(current).replace(',', '')
+    parts.append(current)
+    return parts
+
+input_4= """ SELECT lv_patient,
+ extract(value(li) , '/currentaddress/@AddressTypeID')  .getnumberval() ,
+ extract(value(li) , '/currentaddress/@Street')  .getnumberval() ; """
+output_4 = split_main(input_4)
+# Output:
+""" ['SELECT lv_patient', "\n extract(value(li) , '/currentaddress/@AddressTypeID')  .getnumberval() ",
+    "\n extract(value(li) , '/currentaddress/@Street')  .getnumberval() "] """
+
+
+# Snippet 5:
+def function_pre_lower(data):           #This function will search for data present in single quotes, deletes it and makes other data to lower
+    singlequoye = re.findall(r"\'.*?\'", data)
+    extractpartsdictformat = {}
+    if len(singlequoye):
+        arya = 0
+        for arc1 in singlequoye:
+            data = data.replace(arc1, 'sngqx' + str(arya) + 'sngqx', 1)
+            extractpartsdictformat['sngqx' + str(arya) + 'sngqx'] = arc1
+            arya = arya + 1
+    data = data.lower()
+
+    if len(extractpartsdictformat):
+        for barc in extractpartsdictformat:
+            data = data.replace(barc, extractpartsdictformat[barc], 1)
+    return data
+
+Input_5 = """ SET client_encoding TO 'UTF8'
+        FDGDUIDFHGDKFLGNLFK 'UGFDKK' djhfdFHDHDGH
+    """
+output_5 =function_pre_lower(input_5)
+# Output:
+""" set client_encoding to 'UTF8'
+        fdgduidfhgdkflgnlfk 'UGFDKK' djhfdfhdhdgh
+"""
+
+
+# Snippet 6:
+def select_funname(data, cschema_type):       #This function is used to retrieve function names from data and replace it by adding schema name to it
+    data = re.sub(r' +', ' ', data)
+    split_data = data.split('create or replace function')[1].split('(')[0].strip()
+    data = data.replace(split_data, str(cschema_type + '.' + split_data))
+    return data
+
+input_6 = """
+SET search_path = crm,public;
+create or replace function p_addedocpatient (iclob_patientdetails text) AS $body$
+DECLARE
+ lv_patient numeric; """
+output_6 = select_funname(data,'HRPAY')
+# Output:
+"""
+SET search_path = crm,public;
+create or replace function HRPAY.p_addedocpatient (iclob_patientdetails text) AS $body$
+DECLARE
+ lv_patient numeric; """
+
+
+# Snippet 7:
+def xml_extract_3(data): # This function will search for extract keyword from insert statement and constructs a statement by retirieving values from extract statement
+    insert_data = re.findall(r'\binsert into\b.*?;',data,flags=re.I | re.DOTALL)
+    for ins in insert_data:
+        modified_string = ins
+        ins = ins.casefold().replace('extract', 'EXTRACT').replace('values', 'VALUES').replace('getnumberval',
+                                                                                    'GETNUMBERVAL').replace(
+            'getstringval', 'GETSTRINGVAL').replace('to_date', 'TO_DATE')
+        if ("EXTRACT" in ins) and ('VALUES' in ins) and (';' in ins):
+            ins = re.sub(r'values\s+\(','values(',ins,flags=re.I)
+            values_data = re.findall(r'\bvalues\((.*?)\);',ins,flags=re.I | re.DOTALL)
+            comma_split=split_main(values_data[0])
+            for sp in comma_split:
+                sp = sp.replace("( '","('").replace("' )","')")
+                if ("EXTRACT" in sp) and ("TO_DATE" not in sp):
+                    a = re.findall(r'(.*?)\.',sp,flags=re.I | re.DOTALL)[0].strip()
+                    b = re.findall(r'\(\'(.*?)\'\)',sp,flags=re.I | re.DOTALL)[0].strip()
+                    if ".GETNUMBERVAL()" in sp:
+                        statement ='\n' + "(UNNEST(XPATH('" + b + "'," + a + ")))" + "::VARCHAR::NUMERIC"
+                        ins = ins.replace(sp,statement)
+                    if ".GETSTRINGVAL()" in sp:
+                        statement ='\n' +  "(UNNEST(XPATH('" + b + "'," + a + ")))" + "::VARCHAR"
+                        ins = ins.replace(sp, statement)
+
+                if ("EXTRACT" in sp) and ("TO_DATE" in sp):
+                    a = re.findall(r'(.*?)\.', sp, flags=re.I | re.DOTALL)[0].strip()
+                    b = re.findall(r'\(\'(.*?)\'\)', sp, flags=re.I | re.DOTALL)[0].strip()
+                    if ".GETSTRINGVAL()" in sp:
+                        statement ='\n' + "TO_DATE(UNNEST(XPATH('" + b + "'," + a + "))''dd-mm-yyyy HH24:MI:SS'))" + "::text::date"
+                        ins = ins.replace(sp, statement)
+        data = data.replace(modified_string,ins)
+    return data
+
+input_7 = """
+  CREATE OR REPLACE PROCEDURE "HR"."P_ADDEMPLOYEEDETAILS_NEW" (IC_EMPLOYEEDETAILS IN CLOB,
+ AS
+  LX_EMPLOYEEDETAILS    XMLTYPE;
+ BEGIN
+ INSERT INTO EMPLOYEE_MAIN_DETAILS
+    (EMPLOYEEID,
+     EMPLOYEECODE,
+	 TITLEID)
+	VALUES
+    (LN_EMPLOYEENUMBER,
+     LX_EMPLOYEEDETAILS.EXTRACT('EmployeeBasicDetails/@employeecode')
+     .GETSTRINGVAL(),
+     LX_EMPLOYEEDETAILS.EXTRACT('EmployeeBasicDetails/@TitleID')
+     .GETNUMBERVAL();
+ INSERT INTO EMPLOYEE_AUXILIARY_DETAILS
+    (EMP_AUX_ID,
+     MADIAN_NAME_OTHER_NAME,
+     MARRIAGE_DATE,
+	VALUES
+    (LN_EMPAUXILLARYNUMBER,
+     LX_EMPLOYEEDETAILS.EXTRACT('EmployeeBasicDetails/@MaidenName')
+     .GETSTRINGVAL(),
+     TO_DATE(LX_EMPLOYEEDETAILS.EXTRACT('EmployeeBasicDetails/@MarriageDate')
+             .GETSTRINGVAL(),
+             'dd-mm-yyyy HH24:MI:SS');
+ END;
+ """
+output_7 = xml_extract_3(input_7)
+# Output:
+"""
+  CREATE OR REPLACE PROCEDURE "HR"."P_ADDEMPLOYEEDETAILS_NEW" (IC_EMPLOYEEDETAILS IN CLOB,
+ AS
+  LX_EMPLOYEEDETAILS    XMLTYPE;
+ BEGIN
+ INSERT INTO EMPLOYEE_MAIN_DETAILS
+    (EMPLOYEEID,
+     EMPLOYEECODE,
+	 TITLEID)
+values(ln_employeenumber,
+(UNNEST(XPATH('employeebasicdetails/@employeecode',lx_employeedetails)))::VARCHAR,
+(UNNEST(XPATH('employeebasicdetails/@titleid',lx_employeedetails)))::VARCHAR::NUMERIC;
+ INSERT INTO EMPLOYEE_AUXILIARY_DETAILS
+    (EMP_AUX_ID,
+     MADIAN_NAME_OTHER_NAME,
+     MARRIAGE_DATE,
+values(ln_empauxillarynumber,
+       (UNNEST(XPATH('employeebasicdetails/@maidenname', lx_employeedetails)))::VARCHAR,
+        TO_DATE(UNNEST(XPATH('employeebasicdetails/@marriagedate',TO_DATE(lx_employeedetails))''dd-mm-yyyy HH24:MI:SS'))::text::date;
+ END; """
+
+
+# Snippet 8:
+def create_and_append_sqlfile_single(data):   #This function can be used to write the data into a file specified
+    with open('packageindexfile.txt', 'a') as f:
+        data = data.strip()
+        f.write("{}\n".format(data))
+        f.close()
+
+
+# Snippet 9:
+def create_and_append_configfile(config_path, data):      #This function can be used to write the data into a file in a specified path
+    with open(config_path, 'w') as f:
+        f.write("{}\n".format(data))
+
+
+# Snippet 10: This is used to read data in a excel file from specific path
+'''path = os.path.dirname(os.path.realpath(__file__))
+tables_list_xl = path + '/' + 'tables_list.xlsx'
+excel_data = pd.read_excel(tables_list_xl)
+list_data = excel_data['OBJECT_NAME'].tolist() '''
+
+#Examples of regular expressions:
+'''
+dec_begin = re.findall(r'\bdeclare\b.*?\bbegin\b', data, flags=re.DOTALL | re.I)-----Used to retrieve data from declare and begin
+phoneNumRegex = re.compile(r'\d\d\d-\d\d\d-\d\d\d\d')-----Regex to get the digits
+haRegex = re.compile(r'(Ha){3}')-----Regex to repeat the number of search in the statements.
+data = re.sub(r"\b(?<!')(\w+)(?!')\b", lambda match: match.group().lower(), data)-----Converts everything into lower case except the data in single quotes.
+begin_when_data = re.search(r'\bbegin(.*?)when\b', data,re.DOTALL).group(1)------Search the data between begin and when
+open_execute = re.findall(r'open\s+\S+\s+for\s+execute\s+select', data)-----finding the data from open to select.
+begin_end_data_str = re.findall(r'\bbegin\b.*?\bend\b', data, re.DOTALL)-----taking data from begin to end including the begin and end.
+dir_all = re.findall(r'\/\*[\s\S]*?\*/', data)------taking the data from /* to */
+[abc] – will find all occurrences of a or b or c.
+[a-z] will find all occurrences of a to z.
+[a-z0–9A-Z] will find all occurrences of ato z , A to Z, o to 9.
+pattern = '\d+' has all the patterns for digits,
+\s search for spaces
+\S search for non spaces
+'''
+
+# Steps to write new module:
+'''
+1.	Develop a feature function for the input
+2.	Use comments while writing function definition for everybody understanding
+3.	Do not use lower functions for whole input string in writing features. We can use in that lower function in conditions.
+4.	After writing feature function, put that code in a python file(with same name as function) which will become a Module
+5.	Module name should be same as feature name
+6.	Use input string and schema parameters while developing feature, as we are using schema name parameter while calling feature functions in driver program.
+'''
 
 # function  main
 def main(source_code):
     # start writing code here
-
     return source_code
 
 # calling main function here
 #if __name__ == '__main__':
 output = main(source_code)
+
+
+
+
+
 

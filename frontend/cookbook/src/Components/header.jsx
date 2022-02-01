@@ -1,5 +1,6 @@
 import React from "react";
 import clsx from "clsx";
+import config from '../../src/Config/config'
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import GetAppIcon from '@material-ui/icons/GetApp';
 import Drawer from "@material-ui/core/Drawer";
@@ -43,6 +44,7 @@ import ActionMenu from "../../src/Redux/actions/Menuaction";
 import { useDispatch, useSelector } from "react-redux";
 import DehazeSharpIcon from '@material-ui/icons/DehazeSharp';
 import { useState } from "react";
+// import config from "../../src/Config/config";
 
 const drawerWidth = 375;
 
@@ -226,7 +228,12 @@ export default function ClippedDrawer({ children }) {
     history.push("/");
   };
   const getmenus = async (value) => {
-    const res = await axios.get(`${API_BASE_URL}/fol/${value}`);
+    let conf = {
+      headers: {
+        'Authorization': 'Bearer ' + config.ACCESS_TOKEN()
+      }
+    }
+    const res = await axios.get(`${config.API_BASE_URL()}/fol/${value}`,conf);
     setmenuList(res.data);
     dispatch(Menuaction.reloadAction(false))
   };
@@ -244,11 +251,17 @@ export default function ClippedDrawer({ children }) {
 
   const deleteitem = async (data) => {
 
+    let conf = {
+      headers: {
+        'Authorization': 'Bearer ' + config.ACCESS_TOKEN()
+      }
+    }
     setConfirmDialog({
       confirmDialog,
       isOpen: false
     })
-    const res = await axios.delete(`${API_BASE_URL}/delete/${data.Feature_Id}`);
+
+    const res = await axios.delete(`${config.API_BASE_URL()}/delete/${data.Feature_Id}`,conf);
     getmenus(1);
 
 
@@ -434,6 +447,8 @@ export default function ClippedDrawer({ children }) {
                   menuList={menuList}
                   dropdown={dropdown}
                   deleteitem={deleteitem}
+                  confirmDialog ={confirmDialog}
+                  setConfirmDialog={setConfirmDialog}
                 />
               </Box>
               <Box py={1}>
@@ -466,6 +481,10 @@ export default function ClippedDrawer({ children }) {
       <Notification
         notify={notify}
         setNotify={setNotify}
+      />
+      <ConfirmDialog
+        confirmDialog={confirmDialog}
+        setConfirmDialog={setConfirmDialog}
       />
     </div>
   );
