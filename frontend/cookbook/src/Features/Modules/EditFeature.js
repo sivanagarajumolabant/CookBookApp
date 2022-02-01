@@ -391,10 +391,11 @@ export default function EditFeature(props) {
         // console.log(formValues.Source_Code)
         // console.log(formValues.Feature_Name)
         let wout_prefix = (editdata.detaildata[0].Feature_Name).substr(5)
-        
+        // "convcode": "r@rawstringstart'"+formValues.Conversion_Code+"'@rawstringend",
         let body = {
             "sourcecode": Source_Code,
-            "convcode": Conversion_Code,
+            // "convcode": Conversion_Code,
+            "convcode": "r@rawstringstart'"+Conversion_Code+"'@rawstringend",
             "featurename": wout_prefix,
             "migration_typeid": editdata.detaildata[0].Migration_TypeId,
             "object_type":editdata.detaildata[0].Object_Type
